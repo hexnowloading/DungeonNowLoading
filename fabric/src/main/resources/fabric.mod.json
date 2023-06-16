@@ -16,12 +16,11 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleMod"
+          "dev.hexnowloading.skyisland.SkyislandFabric"
         ]
     },
     "mixins": [
-        "examplemod.mixins.json",
-        "examplemod.fabric.mixins.json"
+        "skyisland.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=0.14",
