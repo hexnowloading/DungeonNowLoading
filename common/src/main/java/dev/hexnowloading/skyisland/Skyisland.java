@@ -1,5 +1,6 @@
 package dev.hexnowloading.skyisland;
 
+import net.minecraft.world.item.CreativeModeTab;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

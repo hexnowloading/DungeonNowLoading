@@ -12,6 +12,7 @@ public class SkyislandForgeItems {
 
     // Crafting Materials
     public static final RegistryObject<Item> WIND_JADE = ITEMS.register("wind_jade", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EYE_OF_THE_STORM = ITEMS.register("eye_of_the_storm", () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

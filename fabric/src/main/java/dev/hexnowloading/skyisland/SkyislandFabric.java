@@ -1,5 +1,8 @@
 package dev.hexnowloading.skyisland;
 
+import dev.hexnowloading.skyisland.registry.SkyislandFabricBlocks;
+import dev.hexnowloading.skyisland.registry.SkyislandFabricCreativeModeTabs;
+import dev.hexnowloading.skyisland.registry.SkyislandFabricItems;
 import net.fabricmc.api.ModInitializer;
 
 public class SkyislandFabric implements ModInitializer {
@@ -13,6 +16,10 @@ public class SkyislandFabric implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
         Constants.LOG.info("Hello Fabric world!");
         CommonClass.init();
+
+        SkyislandFabricBlocks.registerBlocks();
+        SkyislandFabricItems.registerItems();
+        SkyislandFabricCreativeModeTabs.registerCreativeModeTabs();
 
 
     }
