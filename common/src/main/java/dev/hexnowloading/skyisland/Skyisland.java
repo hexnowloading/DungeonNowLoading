@@ -1,6 +1,6 @@
 package dev.hexnowloading.skyisland;
 
-import net.minecraft.world.item.CreativeModeTab;
+import dev.hexnowloading.skyisland.registry.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +12,15 @@ public class Skyisland {
 
     public static void init()
     {
-
+        initRegistries();
     }
 
     private static void initRegistries()
     {
-
+        SkyislandBlocks.init();
+        SkyislandBlockEntityTypes.init();
+        SkyislandItems.init();
+        SkyislandCreativeModeTabs.init();
+        SkyislandEntityTypes.init();
     }
 }

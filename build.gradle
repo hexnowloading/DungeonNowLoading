@@ -7,11 +7,11 @@ plugins {
 }
 
 registrationUtils {
-    group '${group}.registration'
+    group 'dev.hexnowloading.skyisland.registration'
     projects {
-        Fabric { type 'fabric' } // The fabric project
-        Forge { type 'forge' } // The forge project
-        Common { type 'common' } // The common project
+        fabric { type 'fabric' } // The fabric project
+        forge { type 'forge' } // The forge project
+        common { type 'common' } // The common project
     }
 }
 

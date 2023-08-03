@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "skyisland:block/skylight_stone",
+    "side": "skyisland:block/crimson_grass_block_side",
+    "top": "skyisland:block/skylight_grass_block"
+  }
+}

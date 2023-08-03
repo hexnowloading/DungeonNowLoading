@@ -30,6 +30,7 @@
     },
     "suggests": {
         "another-mod": "*"
-    }
+    },
+    "accessWidener" : "skyisland.accesswidener"
 }
   
