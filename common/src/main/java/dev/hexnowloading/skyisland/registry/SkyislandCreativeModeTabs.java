@@ -16,7 +16,6 @@ public class SkyislandCreativeModeTabs {
             .displayItems(((itemDisplayParameters, output) -> {
                 output.accept(SkyislandItems.WIND_JADE.get());
                 output.accept(SkyislandItems.EYE_OF_THE_STORM.get());
-                output.accept(SkyislandItems.WIND_ALTER.get());
                 output.accept(SkyislandItems.SKYLIGHT_STONE.get());
                 output.accept(SkyislandItems.SKYLIGHT_GRASS_BLOCK.get());
             }))

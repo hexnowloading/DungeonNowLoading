@@ -4,7 +4,6 @@ import dev.hexnowloading.skyisland.Skyisland;
 import dev.hexnowloading.skyisland.registration.BlockRegistryObject;
 import dev.hexnowloading.skyisland.registration.RegistrationProvider;
 import dev.hexnowloading.skyisland.registration.RegistryObject;
-import dev.hexnowloading.skyisland.world.level.block.WindAlterBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

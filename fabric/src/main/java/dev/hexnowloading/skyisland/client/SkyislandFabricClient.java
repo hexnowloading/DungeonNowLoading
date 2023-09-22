@@ -1,9 +1,9 @@
 package dev.hexnowloading.skyisland.client;
 
 import dev.hexnowloading.skyisland.Skyisland;
+import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerModel;
+import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerRenderer;
 import dev.hexnowloading.skyisland.registry.SkyislandEntityTypes;
-import dev.hexnowloading.skyisland.world.entity.client.model.WindstoneModel;
-import dev.hexnowloading.skyisland.world.entity.client.renderer.WindstoneRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -18,10 +18,10 @@ public class SkyislandFabricClient implements ClientModInitializer {
     }
 
     private void registerRenderers() {
-        EntityRendererRegistry.register(SkyislandEntityTypes.WINDSTONE.get(), WindstoneRenderer::new);
+        EntityRendererRegistry.register(SkyislandEntityTypes.CHAOS_SPAWNER.get(), ChaosSpawnerRenderer::new);
     }
 
     private void registerModelLayers() {
-        EntityModelLayerRegistry.registerModelLayer(WindstoneModel.LAYER_LOCATION, WindstoneModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ChaosSpawnerModel.LAYER_LOCATION, ChaosSpawnerModel::createBodyLayer);
     }
 }

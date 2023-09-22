@@ -2,12 +2,7 @@ package dev.hexnowloading.skyisland.registry;
 
 import dev.hexnowloading.skyisland.Skyisland;
 import dev.hexnowloading.skyisland.registration.RegistrationProvider;
-import dev.hexnowloading.skyisland.registration.RegistryObject;
-import dev.hexnowloading.skyisland.registry.SkyislandBlocks;
-import dev.hexnowloading.skyisland.world.level.block.entity.WindAlterBlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class SkyislandBlockEntityTypes {

@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
           "dev.hexnowloading.skyisland.SkyislandFabric"
+        ],
+        "client": [
+            "dev.hexnowloading.skyisland.client.SkyislandFabricClient"
         ]
     },
     "mixins": [
