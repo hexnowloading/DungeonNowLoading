@@ -656,10 +656,8 @@ public class ChaosSpawnerEntity extends Monster {
                     double d3 = targetEntity.getX() - d0;
                     double d4 = targetEntity.getY(0.5) - d1;
                     double d5 = targetEntity.getZ() - (d2);
-                    ChaosSpawnerProjectileEntity chaosSpawnerProjectile = new ChaosSpawnerProjectileEntity(ChaosSpawnerEntity.this.level(), ChaosSpawnerEntity.this, d3, d4, d5);
+                    ChaosSpawnerProjectileEntity chaosSpawnerProjectile = new ChaosSpawnerProjectileEntity(ChaosSpawnerEntity.this, d3, d4, d5, ChaosSpawnerEntity.this.level());
                     chaosSpawnerProjectile.setPos(d0, d1, d2);
-                    //chaosSpawnerProjectile.setYRot(ChaosSpawnerEntity.this.getYRot());
-                    //chaosSpawnerProjectile.setXRot(ChaosSpawnerEntity.this.getXRot());
                     ChaosSpawnerEntity.this.level().addFreshEntity(chaosSpawnerProjectile);
                 }
             }
