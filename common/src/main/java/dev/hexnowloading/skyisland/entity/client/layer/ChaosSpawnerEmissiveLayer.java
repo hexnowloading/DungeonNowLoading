@@ -18,7 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class ChaosSpawnerEmissiveLayer<T extends ChaosSpawnerEntity, M extends ChaosSpawnerModel<T>> extends RenderLayer<T, M> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Skyisland.MOD_ID, "textures/entity/chaos_spawner/chaos_spawner_ghost_skull.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Skyisland.MOD_ID, "textures/entity/chaos_spawner/chaos_spawner_glowing_eye.png");
 
     public ChaosSpawnerEmissiveLayer(ChaosSpawnerRenderer renderer) {
         super(renderer);
@@ -39,13 +39,9 @@ public class ChaosSpawnerEmissiveLayer<T extends ChaosSpawnerEntity, M extends C
     public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, ChaosSpawnerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE, true));
         if (entitylivingbaseIn.getPhase() == 0) {
-            if (!entitylivingbaseIn.isAwakening()) {
-                this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, 15728640, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0F);
-            } else {
-                this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, 15728640, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, getTransparentToVisible(entitylivingbaseIn, partialTicks));
-            }
+            this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, 15728640, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0F);
         } else {
-            this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, 15728640, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, getAlphaForRender(entitylivingbaseIn, partialTicks));
+            this.getParentModel().renderToBuffer(matrixStackIn, ivertexbuilder, 15728640, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
         }
     }
 }

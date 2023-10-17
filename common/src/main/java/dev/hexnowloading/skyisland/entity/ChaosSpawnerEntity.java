@@ -1,8 +1,9 @@
 package dev.hexnowloading.skyisland.entity;
 
+import dev.hexnowloading.skyisland.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.skyisland.entity.util.EntityStates;
-import dev.hexnowloading.skyisland.registry.SkyislandEntityTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -14,7 +15,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.util.SpawnUtil;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -24,17 +25,28 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Shulker;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class ChaosSpawnerEntity extends Monster {
     private static final EntityDataAccessor<Boolean> DATA_FLAGS_ID = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.BOOLEAN);
@@ -42,6 +54,9 @@ public class ChaosSpawnerEntity extends Monster {
     private static final EntityDataAccessor<State> DATA_STATE;
     private static final EntityDataAccessor<BlockPos> SPAWN_POINT = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<Integer> AWAKENING_TICKS = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ATTACK_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+
+    protected int attackTickCount;
 
     public final AnimationState awakeningAnimationState = new AnimationState();
     public final AnimationState sleepingAnimationState = new AnimationState();
@@ -64,8 +79,14 @@ public class ChaosSpawnerEntity extends Monster {
 
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new ChaosSpawnerResetAI(this, 10.0D));
-        this.goalSelector.addGoal(2, new ChaosSpawnerSummonMobAttackAI(this, 1));
+        this.goalSelector.addGoal(1, new ChaosSpawnerResetAI(this, 30.0D));
+        //this.goalSelector.addGoal(2, new ChaosSpawnerSummonMobAttackAI(this, 1));
+        this.goalSelector.addGoal(2, new ChaosSpawnerAbilityA());
+        this.goalSelector.addGoal(2, new ChaosSpawnerAbilityB());
+        this.goalSelector.addGoal(2, new ChaosSpawnerAbilityC());
+        this.goalSelector.addGoal(2, new ChaosSpawnerAbilityE());
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 30.0F, 1.0F));
+        this.targetSelector.addGoal(1, new ChaosSpawnerPlayerTargetGoal());
     }
 
     @Override
@@ -76,6 +97,7 @@ public class ChaosSpawnerEntity extends Monster {
         this.entityData.define(PHASE, 0);
         this.entityData.define(DATA_FLAGS_ID, false);
         this.entityData.define(AWAKENING_TICKS, 0);
+        this.entityData.define(ATTACK_TICK, 0);
     }
 
     @Override
@@ -86,6 +108,7 @@ public class ChaosSpawnerEntity extends Monster {
         compoundTag.putInt("SpawnPointZ", this.getSpawnPointPos().getZ());
         compoundTag.putInt("Phase", this.entityData.get(PHASE));
         compoundTag.putInt("AwakeningTicks", this.entityData.get(AWAKENING_TICKS));
+        compoundTag.putInt("AttackTicks", this.attackTickCount);
     }
 
     @Override
@@ -96,6 +119,7 @@ public class ChaosSpawnerEntity extends Monster {
         int k = compoundTag.getInt("SpawnPointZ");
         this.entityData.set(SPAWN_POINT, new BlockPos(i, j, k));
         this.entityData.set(AWAKENING_TICKS, compoundTag.getInt("AwakeningTicks"));
+        this.attackTickCount = compoundTag.getInt("AttackTicks");
         int phase = compoundTag.getInt("Phase");
         if (phase < 1) {
             this.entityData.set(DATA_STATE, State.SLEEPING);
@@ -157,11 +181,48 @@ public class ChaosSpawnerEntity extends Monster {
             }
             this.entityData.set(AWAKENING_TICKS, k1);
             if (k1 == 0) {
+                for (int i = 0; i < 50; ++i) {
+                    ((ServerLevel) this.level()).sendParticles(ParticleTypes.FLAME, this.getRandomX(0.9D), this.getRandomY(), this.getRandomZ(0.9D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
                 enableBossBar();
+            }
+        }
+        if (this.entityData.get(PHASE) > 0) {
+            if (attackTickCount > 0) {
+                --this.attackTickCount;
+            } else {
+                AABB aabb = (new AABB(this.blockPosition())).inflate(3);
+                List<Player> list = this.level().getEntitiesOfClass(Player.class, aabb);
+                if (!list.isEmpty()) {
+                    this.attackTickCount = 40;
+                    Player player;
+                    for (Iterator var2 = list.iterator(); var2.hasNext(); this.pushNearbyPlayers(player)) {
+                        player = (Player) var2.next();
+                        player.hurt(this.damageSources().mobAttack(this), 10.0F);
+                    }
+                } else {
+                    int x = this.random.nextInt(100);
+                    if (x == 0) {
+                        this.entityData.set(DATA_STATE, State.ABILITY_A);
+                    } else if (x == 1) {
+                        this.entityData.set(DATA_STATE, State.ABILITY_B);
+                    } else if (x == 2) {
+                        this.entityData.set(DATA_STATE, State.ABILITY_C);
+                    } else {
+                        this.entityData.set(DATA_STATE, State.ABILITY_E);
+                    }
+                }
             }
         }
         super.customServerAiStep();
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+
+    private void pushNearbyPlayers(Player player) {
+        double x = player.getX() - this.getX();
+        double z = player.getZ() - this.getZ();
+        double a = Math.max(x * x + z * z, 0.001);
+        player.push(x / a * 4.0, 0.2, z / a * 4.0);
     }
 
     @Override
@@ -253,15 +314,34 @@ public class ChaosSpawnerEntity extends Monster {
         SLEEPING,
         AWAKENING,
         IDLE,
-
-        SUMMONING,
-        SKULL_MISSILE;
+        ABILITY_A,
+        ABILITY_B,
+        ABILITY_C,
+        ABILITY_D,
+        ABILITY_E,
+        ABILITY_F;
 
         private State() {}
     }
 
     BlockPos getSpawnPointPos() {
         return (BlockPos)this.entityData.get(SPAWN_POINT);
+    }
+
+    private class ChaosSpawnerLookControl extends LookControl {
+
+        public ChaosSpawnerLookControl(Mob mob) {
+            super(mob);
+        }
+
+        @Override
+        protected void clampHeadRotationToBody() {
+        }
+
+        @Override
+        protected Optional<Float> getYRotD() {
+            return super.getYRotD();
+        }
     }
 
     public class ChaosSpawnerResetAI extends Goal {
@@ -271,7 +351,7 @@ public class ChaosSpawnerEntity extends Monster {
 
         public ChaosSpawnerResetAI(ChaosSpawnerEntity livingEntity, double range) {
             this.livingEntity = livingEntity;
-            this.range = 10.0D;
+            this.range = 30.0D;
             this.level = livingEntity.level();
         }
 
@@ -295,6 +375,329 @@ public class ChaosSpawnerEntity extends Monster {
             this.livingEntity.entityData.set(PHASE, 0);
             this.livingEntity.setHealth(this.livingEntity.getMaxHealth());
             this.livingEntity.setPos(getSpawnPointPos().getX() + 0.5, getSpawnPointPos().getY(), getSpawnPointPos().getZ() + 0.5);
+            this.livingEntity.attackTickCount = 0;
+        }
+    }
+
+    public class ChaosSpawnerAbilityA extends Goal {
+
+        @Override
+        public boolean canUse() {
+            return ChaosSpawnerEntity.this.entityData.get(DATA_STATE) == State.ABILITY_A && ChaosSpawnerEntity.this.getTarget() != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return canUse();
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            ChaosSpawnerEntity.this.attackTickCount = 100;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            ChaosSpawnerEntity.this.attackTickCount = 0;
+            ChaosSpawnerEntity.this.entityData.set(DATA_STATE, State.IDLE);
+        }
+
+        @Override
+        public void tick() {
+            if (ChaosSpawnerEntity.this.attackTickCount == 100) {
+                summonRandomMob();
+            }
+            if (ChaosSpawnerEntity.this.attackTickCount == 100) {
+                for (int i = 0; i < 50; ++i) {
+                    ((ServerLevel) ChaosSpawnerEntity.this.level()).sendParticles(ParticleTypes.CLOUD, ChaosSpawnerEntity.this.getRandomX(1.0D), ChaosSpawnerEntity.this.getRandomY(), ChaosSpawnerEntity.this.getRandomZ(1.0D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
+
+        protected void summonRandomMob() {
+            ServerLevel serverLevel = (ServerLevel)ChaosSpawnerEntity.this.level();
+            for (int i = 0; i < 4; ++i) {
+                BlockPos blockPos = ChaosSpawnerEntity.this.blockPosition();
+                if (i == 0) {
+                    blockPos = ChaosSpawnerEntity.this.blockPosition().offset(5, 1, 0);
+                }
+                if (i == 1) {
+                    blockPos = ChaosSpawnerEntity.this.blockPosition().offset(-5, 1, 0);
+                }
+                if (i == 2) {
+                    blockPos = ChaosSpawnerEntity.this.blockPosition().offset(0, 1, 5);
+                }
+                if (i == 3) {
+                    blockPos = ChaosSpawnerEntity.this.blockPosition().offset(0, 1, -5);
+                }
+                int x = ChaosSpawnerEntity.this.random.nextInt(3);
+                if (x == 0) {
+                    Zombie zombie = EntityType.ZOMBIE.create(ChaosSpawnerEntity.this.level());
+                    if (zombie != null) {
+                        zombie.moveTo(blockPos, 0.0F, 0.0F);
+                        zombie.finalizeSpawn(serverLevel, ChaosSpawnerEntity.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                        serverLevel.addFreshEntity(zombie);
+                    }
+                }
+                if (x == 1) {
+                    Spider spider = EntityType.SPIDER.create(ChaosSpawnerEntity.this.level());
+                    if (spider != null) {
+                        spider.moveTo(blockPos, 0.0F, 0.0F);
+                        spider.finalizeSpawn(serverLevel, ChaosSpawnerEntity.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                        serverLevel.addFreshEntity(spider);
+                    }
+                }
+                if (x == 2) {
+                    Skeleton skeleton = EntityType.SKELETON.create(ChaosSpawnerEntity.this.level());
+                    if (skeleton != null) {
+                        skeleton.moveTo(blockPos, 0.0F, 0.0F);
+                        skeleton.finalizeSpawn(serverLevel, ChaosSpawnerEntity.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                        serverLevel.addFreshEntity(skeleton);
+                    }
+                }
+            }
+        }
+    }
+
+    public class ChaosSpawnerAbilityB extends Goal {
+
+        @Override
+        public boolean canUse() {
+            return ChaosSpawnerEntity.this.entityData.get(DATA_STATE) == State.ABILITY_B && ChaosSpawnerEntity.this.getTarget() != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return canUse();
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            ChaosSpawnerEntity.this.attackTickCount = 100;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            ChaosSpawnerEntity.this.attackTickCount = 0;
+            ChaosSpawnerEntity.this.entityData.set(DATA_STATE, State.IDLE);
+        }
+
+        @Override
+        public void tick() {
+            if (ChaosSpawnerEntity.this.attackTickCount == 100) {
+                summonTnt();
+            }
+        }
+
+        private void summonTnt() {
+            ServerLevel serverLevel = (ServerLevel) ChaosSpawnerEntity.this.level();
+            for (int i = 0; i < 4; ++i) {
+                int x = ChaosSpawnerEntity.this.blockPosition().getX() + ChaosSpawnerEntity.this.random.nextInt(5, 10) * (ChaosSpawnerEntity.this.random.nextBoolean() ? 1 : -1);
+                int y = ChaosSpawnerEntity.this.blockPosition().getY() + 5;
+                int z = ChaosSpawnerEntity.this.blockPosition().getZ() + ChaosSpawnerEntity.this.random.nextInt(5, 10) * (ChaosSpawnerEntity.this.random.nextBoolean() ? 1 : -1);
+                // BlockPos blockPos = ChaosSpawnerEntity.this.blockPosition().offset(x, 4, x);
+                PrimedTnt primedTnt = new PrimedTnt(ChaosSpawnerEntity.this.level(), x, y, z, (LivingEntity) null);
+                ChaosSpawnerEntity.this.level().addFreshEntity(primedTnt);
+            }
+        }
+    }
+
+    public class ChaosSpawnerAbilityC extends Goal {
+
+        @Override
+        public boolean canUse() {
+            return ChaosSpawnerEntity.this.entityData.get(DATA_STATE) == State.ABILITY_C && ChaosSpawnerEntity.this.getTarget() != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return canUse();
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            ChaosSpawnerEntity.this.attackTickCount = 100;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            ChaosSpawnerEntity.this.attackTickCount = 0;
+            ChaosSpawnerEntity.this.entityData.set(DATA_STATE, State.IDLE);
+        }
+
+        @Override
+        public void tick() {
+            if (ChaosSpawnerEntity.this.attackTickCount == 100) { summonSpawner(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 80) { summonSpawner(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 60) { summonSpawner(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 40) { summonSpawner(); }
+
+        }
+
+        private void summonSpawner() {
+            ServerLevel serverLevel = (ServerLevel) ChaosSpawnerEntity.this.level();
+            for (int i = 0; i < 20; ++i) {
+                int x = ChaosSpawnerEntity.this.blockPosition().getX() + ChaosSpawnerEntity.this.random.nextInt(5, 10) * (ChaosSpawnerEntity.this.random.nextBoolean() ? 1 : -1);
+                int y = ChaosSpawnerEntity.this.blockPosition().getY() + ChaosSpawnerEntity.this.random.nextInt(-2, 3);
+                int z = ChaosSpawnerEntity.this.blockPosition().getZ() + ChaosSpawnerEntity.this.random.nextInt(5, 10) * (ChaosSpawnerEntity.this.random.nextBoolean() ? 1 : -1);
+                BlockPos blockPosBelowSpawner = new BlockPos(x, y-1, z);
+                BlockPos blockPosAtSpawner = new BlockPos(x, y, z);
+                BlockState blockStateBelowSpawner = serverLevel.getBlockState(blockPosBelowSpawner);
+                BlockState blockStateAtSpawner = serverLevel.getBlockState(blockPosAtSpawner);
+                if (!blockStateBelowSpawner.isAir() && blockStateAtSpawner.isAir()) {
+                    serverLevel.setBlock(blockPosAtSpawner, Blocks.SPAWNER.defaultBlockState(), 3);
+                    BlockEntity blockEntity = serverLevel.getBlockEntity(blockPosAtSpawner);
+                    if (blockEntity instanceof SpawnerBlockEntity) {
+                        SpawnerBlockEntity spawnerBlockEntity = (SpawnerBlockEntity) blockEntity;
+                        spawnerBlockEntity.setEntityId(randomEntityId(ChaosSpawnerEntity.this.random), ChaosSpawnerEntity.this.random);
+                    }
+                    break;
+                }
+            }
+        }
+
+        private EntityType<?> randomEntityId(RandomSource randomSource) {
+            List<EntityType> list = Arrays.asList(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.SPIDER, EntityType.CREEPER);
+            return list.get(randomSource.nextInt(list.size()));
+        }
+    }
+
+    public class ChaosSpawnerAbilityD extends Goal {
+        int range = 3;
+
+        @Override
+        public boolean canUse() {
+            if (ChaosSpawnerEntity.this.entityData.get(DATA_STATE) != State.SLEEPING) {
+                AABB aabb = (new AABB(ChaosSpawnerEntity.this.blockPosition())).inflate(range);
+                List<Player> list = ChaosSpawnerEntity.this.level().getEntitiesOfClass(Player.class, aabb);
+                return list.isEmpty();
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return canUse();
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            ChaosSpawnerEntity.this.attackTickCount = 100;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            ChaosSpawnerEntity.this.attackTickCount = 0;
+            ChaosSpawnerEntity.this.entityData.set(DATA_STATE, State.IDLE);
+        }
+
+        @Override
+        public void tick() {
+            if (ChaosSpawnerEntity.this.attackTickCount == 20) {
+                for (int i = 0; i < 50; ++i) {
+                    ((ServerLevel) ChaosSpawnerEntity.this.level()).sendParticles(ParticleTypes.DRAGON_BREATH, ChaosSpawnerEntity.this.getRandomX(1.0D), ChaosSpawnerEntity.this.getRandomY(), ChaosSpawnerEntity.this.getRandomZ(1.0D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
+    }
+
+    public class ChaosSpawnerAbilityE extends Goal {
+
+        @Override
+        public boolean canUse() {
+            return ChaosSpawnerEntity.this.entityData.get(DATA_STATE) == State.ABILITY_E && ChaosSpawnerEntity.this.getTarget() != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return canUse();
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            ChaosSpawnerEntity.this.attackTickCount = 100;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            ChaosSpawnerEntity.this.attackTickCount = 0;
+            ChaosSpawnerEntity.this.entityData.set(DATA_STATE, State.IDLE);
+        }
+
+        @Override
+        public void tick() {
+            if (ChaosSpawnerEntity.this.attackTickCount == 100) { performRangedAttack(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 80) { performRangedAttack(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 60) { performRangedAttack(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 40) { performRangedAttack(); }
+            if (ChaosSpawnerEntity.this.attackTickCount == 20) { performRangedAttack(); }
+        }
+
+        private void performRangedAttack() {
+            LivingEntity targetEntity = ChaosSpawnerEntity.this.getTarget();
+            if (targetEntity != null) {
+                double maxTargetDistance = 30.0;
+                if(targetEntity.distanceTo(ChaosSpawnerEntity.this) < maxTargetDistance) {
+                    double viewDistance = 3.0;
+                    Vec3 viewVector = ChaosSpawnerEntity.this.getViewVector(1.0F);
+                    double d0 = ChaosSpawnerEntity.this.getX() + viewVector.x * viewDistance;
+                    double d1 = 0.5 + ChaosSpawnerEntity.this.getY(0.5);
+                    double d2 = ChaosSpawnerEntity.this.getZ() + viewVector.z * viewDistance;
+                    double d3 = targetEntity.getX() - d0;
+                    double d4 = targetEntity.getY(0.5) - d1;
+                    double d5 = targetEntity.getZ() - (d2);
+                    ChaosSpawnerProjectileEntity chaosSpawnerProjectile = new ChaosSpawnerProjectileEntity(ChaosSpawnerEntity.this.level(), ChaosSpawnerEntity.this, d3, d4, d5);
+                    chaosSpawnerProjectile.setPos(d0, d1, d2);
+                    //chaosSpawnerProjectile.setYRot(ChaosSpawnerEntity.this.getYRot());
+                    //chaosSpawnerProjectile.setXRot(ChaosSpawnerEntity.this.getXRot());
+                    ChaosSpawnerEntity.this.level().addFreshEntity(chaosSpawnerProjectile);
+                }
+            }
+        }
+    }
+
+    public class ChaosSpawnerAbilityF extends Goal {
+
+        @Override
+        public boolean canUse() {
+            return ChaosSpawnerEntity.this.entityData.get(DATA_STATE) == State.ABILITY_F && ChaosSpawnerEntity.this.getTarget() != null;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return canUse();
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            ChaosSpawnerEntity.this.attackTickCount = 100;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            ChaosSpawnerEntity.this.attackTickCount = 0;
+            ChaosSpawnerEntity.this.entityData.set(DATA_STATE, State.IDLE);
+        }
+
+        @Override
+        public void tick() {
+            if (ChaosSpawnerEntity.this.attackTickCount == 60) {
+                for (int i = 0; i < 50; ++i) {
+                    ((ServerLevel) ChaosSpawnerEntity.this.level()).sendParticles(ParticleTypes.DRAGON_BREATH, ChaosSpawnerEntity.this.getRandomX(1.0D), ChaosSpawnerEntity.this.getRandomY(), ChaosSpawnerEntity.this.getRandomZ(1.0D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
+            }
         }
     }
 
@@ -311,22 +714,82 @@ public class ChaosSpawnerEntity extends Monster {
         @Override
         public boolean canUse() {
             return this.chaosSpawnerEntity.entityData.get(PHASE) == phase;
+
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            LivingEntity livingEntity = this.chaosSpawnerEntity.getTarget();
+            return livingEntity != null && livingEntity.isAlive();
         }
 
         public void start() {
+            super.start();
             this.attackTime = 100;
-
         }
 
         public void stop() {
+            super.stop();
+            this.attackTime = 0;
         }
 
         public void tick() {
             --this.attackTime;
             ServerLevel serverLevel = (ServerLevel) this.chaosSpawnerEntity.level();
-            if (attackTime % 20 == 0) {
+            if (attackTime == 99) {
+                for (int i = 0; i < 50; ++i) {
+                    ((ServerLevel) this.chaosSpawnerEntity.level()).sendParticles(ParticleTypes.CLOUD, this.chaosSpawnerEntity.getRandomX(1.0D), this.chaosSpawnerEntity.getRandomY(), this.chaosSpawnerEntity.getRandomZ(1.0D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
+            }
+            if (attackTime == 0) {
+                for (int i = 0; i < 50; ++i) {
+                    ((ServerLevel) this.chaosSpawnerEntity.level()).sendParticles(ParticleTypes.FLAME, this.chaosSpawnerEntity.getRandomX(1.0D), this.chaosSpawnerEntity.getRandomY(), this.chaosSpawnerEntity.getRandomZ(1.0D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
+                }
+                summonZombie();
+            }
+        }
 
-                SpawnUtil.trySpawnMob(EntityType.ZOMBIE, MobSpawnType.SPAWNER, serverLevel, this.chaosSpawnerEntity.blockPosition(), 20, 3, 3, SpawnUtil.Strategy.ON_TOP_OF_COLLIDER).isPresent();
+        protected void summonZombie() {
+            ServerLevel serverLevel = (ServerLevel)this.chaosSpawnerEntity.level();
+            for (int i = 0; i < 4; ++i) {
+                BlockPos blockPos = this.chaosSpawnerEntity.blockPosition();
+                if (i == 0) {
+                    blockPos = this.chaosSpawnerEntity.blockPosition().offset(5, 1, 0);
+                }
+                if (i == 1) {
+                    blockPos = this.chaosSpawnerEntity.blockPosition().offset(-5, 1, 0);
+                }
+                if (i == 2) {
+                    blockPos = this.chaosSpawnerEntity.blockPosition().offset(0, 1, 5);
+                }
+                if (i == 3) {
+                    blockPos = this.chaosSpawnerEntity.blockPosition().offset(0, 1, -5);
+                }
+                int x = this.chaosSpawnerEntity.random.nextInt(3);
+                if (x == 0) {
+                    Zombie zombie = EntityType.ZOMBIE.create(this.chaosSpawnerEntity.level());
+                    if (zombie != null) {
+                        zombie.moveTo(blockPos, 0.0F, 0.0F);
+                        zombie.finalizeSpawn(serverLevel, this.chaosSpawnerEntity.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                        serverLevel.addFreshEntity(zombie);
+                    }
+                }
+                if (x == 1) {
+                    Spider spider = EntityType.SPIDER.create(this.chaosSpawnerEntity.level());
+                    if (spider != null) {
+                        spider.moveTo(blockPos, 0.0F, 0.0F);
+                        spider.finalizeSpawn(serverLevel, this.chaosSpawnerEntity.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                        serverLevel.addFreshEntity(spider);
+                    }
+                }
+                if (x == 2) {
+                    Skeleton skeleton = EntityType.SKELETON.create(this.chaosSpawnerEntity.level());
+                    if (skeleton != null) {
+                        skeleton.moveTo(blockPos, 0.0F, 0.0F);
+                        skeleton.finalizeSpawn(serverLevel, this.chaosSpawnerEntity.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                        serverLevel.addFreshEntity(skeleton);
+                    }
+                }
             }
         }
     }
@@ -337,6 +800,32 @@ public class ChaosSpawnerEntity extends Monster {
         }
 
         public void clientTick() {
+        }
+    }
+
+    class ChaosSpawnerPlayerTargetGoal extends Goal {
+        private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(64.0D);
+        private int nextScanTick = reducedTickDelay(20);
+
+        @Override
+        public boolean canUse() {
+            if (this.nextScanTick > 0) {
+                --this.nextScanTick;
+            } else {
+                this.nextScanTick = reducedTickDelay(60);
+                List<Player> list = ChaosSpawnerEntity.this.level().getNearbyPlayers(this.attackTargeting, ChaosSpawnerEntity.this, ChaosSpawnerEntity.this.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
+                if (!list.isEmpty()) {
+                    ChaosSpawnerEntity.this.setTarget(list.get(ChaosSpawnerEntity.this.random.nextInt(list.size())));
+                    System.out.println(ChaosSpawnerEntity.this.getTarget());
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean canContinueToUse() {
+            LivingEntity livingEntity = ChaosSpawnerEntity.this.getTarget();
+            return livingEntity != null && ChaosSpawnerEntity.this.canAttack(livingEntity, TargetingConditions.DEFAULT);
         }
     }
 }
