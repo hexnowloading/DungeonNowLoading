@@ -58,6 +58,13 @@ subprojects {
             name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
             url = 'https://maven.blamejared.com'
         }
+        maven {
+            name = "Forge Config API Port"
+            url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+            content {
+                includeGroupAndSubgroups 'fuzs.forgeconfigapiport'
+            }
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {

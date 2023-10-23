@@ -6,7 +6,7 @@ package dev.hexnowloading.skyisland.entity.client.model;// Made with Blockbench 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.hexnowloading.skyisland.Skyisland;
-import dev.hexnowloading.skyisland.entity.ChaosSpawnerEntity;
+import dev.hexnowloading.skyisland.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.skyisland.entity.client.animation.ChaosSpawnerAnimation;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;

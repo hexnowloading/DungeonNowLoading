@@ -1,6 +1,7 @@
 package dev.hexnowloading.skyisland.registry;
 
 import dev.hexnowloading.skyisland.Skyisland;
+import dev.hexnowloading.skyisland.platform.Services;
 import dev.hexnowloading.skyisland.registration.RegistrationProvider;
 import dev.hexnowloading.skyisland.registration.RegistryObject;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,7 +30,7 @@ public class SkyislandItems {
 
     // SPAWN EGG
     //public static final RegistryObject<Item> WINDSTONE_SPAWNEGG = ITEMS.register("windstone_spawn_egg", () -> new SpawnEggItem(SkyislandEntityTypes.WINDSTONE.get(), 0xF6B201, 0xA80E0E, new Item.Properties()));
-    public static final RegistryObject<Item> CHAOS_SPAWNER_SPAWNEGG = ITEMS.register("spawn_egg_chaos_spawner", () -> new SpawnEggItem(SkyislandEntityTypes.CHAOS_SPAWNER.get(), 0xF6B201, 0xA80E0E, new Item.Properties()));
+    public static final RegistryObject<Item> CHAOS_SPAWNER_SPAWNEGG = register("spawn_egg_chaos_spawner", Services.ITEM.makeSpawnEgg(SkyislandEntityTypes.CHAOS_SPAWNER::get, 0xF6B201, 0xA80E0E, new Item.Properties()));
     @SafeVarargs
     private static RegistryObject<Item> register(String name, Supplier<? extends Item> supplier, ResourceKey<CreativeModeTab>... tabs)
     {

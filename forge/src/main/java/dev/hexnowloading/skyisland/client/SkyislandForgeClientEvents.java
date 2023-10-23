@@ -1,6 +1,5 @@
 package dev.hexnowloading.skyisland.client;
 
-import dev.hexnowloading.skyisland.entity.ChaosSpawnerEntity;
 import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerProjectileModel;
 import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerProjectileRenderer;

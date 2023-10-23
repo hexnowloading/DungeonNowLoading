@@ -1,6 +1,5 @@
 package dev.hexnowloading.skyisland.entity.projectile;
 
-import dev.hexnowloading.skyisland.entity.ChaosSpawnerEntity;
 import dev.hexnowloading.skyisland.registry.SkyislandEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -10,16 +9,13 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,15 +30,15 @@ import java.util.UUID;
 
 public class ChaosSpawnerProjectileEntity extends Entity {
     private UUID ownerUUID;
-    private int ownerNetworkId;
     private Entity cachedOwner;
     private boolean leftOwner;
     private boolean hasBeenShot;
     public double xPower;
     public double yPower;
     public double zPower;
-    private float INERTIA = 0.95F;
-    private ParticleOptions TRAIL_PARTICLE = ParticleTypes.SMOKE;
+    private float INERTIA = 1F; // Keep it at 1 to maintain smooth motion at all speed.
+    private ParticleOptions SPAWN_PARTICLE = ParticleTypes.POOF;
+    private ParticleOptions TRAIL_PARTICLE = ParticleTypes.DRAGON_BREATH;
 
     public ChaosSpawnerProjectileEntity(EntityType<? extends ChaosSpawnerProjectileEntity> entityType, Level level) {
         super(entityType, level);
@@ -52,7 +48,7 @@ public class ChaosSpawnerProjectileEntity extends Entity {
         this(SkyislandEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), level);
         this.moveTo(x, y, z, this.getYRot(), this.getXRot());
         this.reapplyPosition();
-        double d0 = Math.sqrt(xP * xP + xP * xP + zP * zP);
+        double d0 = Math.sqrt(xP * xP + yP * yP + zP * zP);
         if (d0 != 0.0D) {
             this.xPower = xP / d0 * 0.1D;
             this.yPower = yP / d0 * 0.1D;
@@ -81,6 +77,7 @@ public class ChaosSpawnerProjectileEntity extends Entity {
             Entity owner = this.getOwner();
             if (this.level().isClientSide || (owner == null || !owner.isRemoved()) && this.level().hasChunkAt(this.blockPosition())) {
                 super.tick();
+
                 HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
                 if (hitResult.getType() != HitResult.Type.MISS) {
                     this.onHit(hitResult);
@@ -95,12 +92,18 @@ public class ChaosSpawnerProjectileEntity extends Entity {
                 this.setDeltaMovement(deltaMovement.add(this.xPower, this.yPower, this.zPower).scale(inertia));
                 this.level().addParticle(this.TRAIL_PARTICLE, d0, d1 + 0.5, d2, 0.0, 0.0, 0.0);
                 this.setPos(d0, d1, d2);
-                ProjectileUtil.rotateTowardsMovement(this, 1.0F);
+                ProjectileUtil.rotateTowardsMovement(this, 1F);
+                if (this.tickCount == 3) {
+                    this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITHER_SHOOT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    for(int i = 0; i < 5; ++i) {
+                        this.level().addParticle(this.SPAWN_PARTICLE, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
+                    }
+                }
             } else {
                 discard();
             }
         }
-        super.tick();
+        //super.tick();
     }
 
     public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
@@ -129,9 +132,13 @@ public class ChaosSpawnerProjectileEntity extends Entity {
 
     protected void onHitEntity(EntityHitResult entityHitResult) {
         if (!this.level().isClientSide) {
-            boolean entityHurted = entityHitResult.getEntity().hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 8.0F);
-            if (entityHurted) {
-                if (entityHitResult.getEntity().isAlive()) {
+            Entity target = entityHitResult.getEntity();
+            if (target instanceof Player) {
+                boolean entityHurted = target.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 8.0F);
+                if (((Player) target).isBlocking()) {
+                    ((Player) target).disableShield(true);
+                }
+                if (entityHurted && target.isAlive()) {
                     this.doEnchantDamageEffects((LivingEntity) this.getOwner(), entityHitResult.getEntity());
                 }
             }
@@ -197,17 +204,27 @@ public class ChaosSpawnerProjectileEntity extends Entity {
     }
 
     @Override
-    public void lerpMotion(double p_37279_, double p_37280_, double p_37281_) {
-        this.setDeltaMovement(p_37279_, p_37280_, p_37281_);
+    public void lerpMotion(double x, double y, double z) {
+        this.setDeltaMovement(x, y, z);
         if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
-            double d0 = Math.sqrt(p_37279_ * p_37279_ + p_37281_ * p_37281_);
-            this.setXRot((float)(Mth.atan2(p_37280_, d0) * (double)(180F / (float)Math.PI)));
-            this.setYRot((float)(Mth.atan2(p_37279_, p_37281_) * (double)(180F / (float)Math.PI)));
+            float f = Mth.sqrt((float) (x * x + z * z));
+            this.setXRot((float) (Mth.atan2(y, f) * (double) (180F / (float) Math.PI)));
+            this.setYRot( (float) (Mth.atan2(x, z) * (double) (180F / (float) Math.PI)));
             this.xRotO = this.getXRot();
             this.yRotO = this.getYRot();
             this.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
         }
+    }
 
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 4.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 4.0D;
+        }
+
+        d0 *= 64.0D;
+        return distance < d0 * d0;
     }
 
     @Override

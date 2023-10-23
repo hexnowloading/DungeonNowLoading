@@ -1,10 +1,10 @@
 package dev.hexnowloading.skyisland.platform;
 
-import dev.hexnowloading.skyisland.platform.services.IPlatformHelper;
+import dev.hexnowloading.skyisland.platform.services.PlatformHelper;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
-public class ForgePlatformHelper implements IPlatformHelper {
+public class ForgePlatformHelper implements PlatformHelper {
 
     @Override
     public String getPlatformName() {

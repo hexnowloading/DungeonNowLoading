@@ -14,6 +14,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation project(":common")
+
+    include modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forgeconfigapiport_version}")
 }
 
 loom {
@@ -49,10 +51,6 @@ tasks.named("sourcesJar", Jar) {
     from(project(":common").sourceSets.main.allSource)
 }
 
-processResources {
-    from project(":common").sourceSets.main.resources
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -64,5 +62,28 @@ publishing {
         maven {
             url "file://" + System.getenv("local_maven")
         }
+    }
+}
+
+def resourceTargets = ['fabric.mod.json', 'pack.mcmeta']
+
+def replaceProperties = [
+        mod_id: mod_id,
+        version: version,
+        mod_name: mod_name,
+        mod_author: mod_author,
+        fabric_loader_version: fabric_loader_version,
+        minecraft_version: minecraft_version,
+        forgeconfigapiport_version: forgeconfigapiport_version
+]
+
+processResources {
+    from project(":common").sourceSets.main.resources
+
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
     }
 }

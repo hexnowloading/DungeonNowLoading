@@ -1,6 +1,6 @@
 package dev.hexnowloading.skyisland.entity.util;
 
-import dev.hexnowloading.skyisland.entity.ChaosSpawnerEntity;
+import dev.hexnowloading.skyisland.entity.boss.ChaosSpawnerEntity;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 

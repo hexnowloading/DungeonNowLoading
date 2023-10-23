@@ -3,18 +3,14 @@ package dev.hexnowloading.skyisland.entity.client.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.hexnowloading.skyisland.Skyisland;
-import dev.hexnowloading.skyisland.entity.ChaosSpawnerEntity;
+import dev.hexnowloading.skyisland.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerRenderer;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.entity.LivingEntity;
 
 public class ChaosSpawnerEmissiveLayer<T extends ChaosSpawnerEntity, M extends ChaosSpawnerModel<T>> extends RenderLayer<T, M> {
 
