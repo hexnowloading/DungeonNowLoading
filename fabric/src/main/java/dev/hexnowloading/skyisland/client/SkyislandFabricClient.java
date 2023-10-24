@@ -5,6 +5,7 @@ import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerProjectileModel;
 import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerProjectileRenderer;
 import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerRenderer;
+import dev.hexnowloading.skyisland.entity.client.renderer.SpecialItemEntityRenderer;
 import dev.hexnowloading.skyisland.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.skyisland.registry.SkyislandEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
@@ -26,6 +27,9 @@ public class SkyislandFabricClient implements ClientModInitializer {
 
         // Projectiles
         EntityRendererRegistry.register(SkyislandEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);
+
+        // Misc
+        EntityRendererRegistry.register(SkyislandEntityTypes.SPECIAL_ITEM_ENTITY.get(), SpecialItemEntityRenderer::new);
     }
 
     private void registerModelLayers() {

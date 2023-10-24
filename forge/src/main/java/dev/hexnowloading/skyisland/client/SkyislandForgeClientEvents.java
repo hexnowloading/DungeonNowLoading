@@ -4,6 +4,7 @@ import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.skyisland.entity.client.model.ChaosSpawnerProjectileModel;
 import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerProjectileRenderer;
 import dev.hexnowloading.skyisland.entity.client.renderer.ChaosSpawnerRenderer;
+import dev.hexnowloading.skyisland.entity.client.renderer.SpecialItemEntityRenderer;
 import dev.hexnowloading.skyisland.registry.SkyislandEntityTypes;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 
@@ -21,5 +22,8 @@ public class SkyislandForgeClientEvents {
 
         // Projectiles
         event.registerEntityRenderer(SkyislandEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);
+
+        // Misc
+        event.registerEntityRenderer(SkyislandEntityTypes.SPECIAL_ITEM_ENTITY.get(), SpecialItemEntityRenderer::new);
     }
 }

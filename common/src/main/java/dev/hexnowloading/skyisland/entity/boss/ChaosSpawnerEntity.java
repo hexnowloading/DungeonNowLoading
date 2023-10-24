@@ -1,5 +1,8 @@
 package dev.hexnowloading.skyisland.entity.boss;
 
+import com.google.common.collect.Sets;
+import dev.hexnowloading.skyisland.config.BossConfig;
+import dev.hexnowloading.skyisland.entity.misc.SpecialItemEntity;
 import dev.hexnowloading.skyisland.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.skyisland.entity.util.EntityScale;
 import dev.hexnowloading.skyisland.entity.util.EntityStates;
@@ -7,6 +10,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -33,9 +39,13 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.JumpGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -62,10 +72,12 @@ public class ChaosSpawnerEntity extends Monster {
     private static final EntityDataAccessor<Integer> ATTACK_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTIVE_RANGE = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PLAYER_COUNT = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Optional<UUID>> PLAYER_UUID = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
     private static final int MAX_BOSS_RANGE = 30;
 
     protected int attackTickCount;
+    private final Set<UUID> playerUUIDs;
 
     public final AnimationState awakeningAnimationState = new AnimationState();
     public final AnimationState sleepingAnimationState = new AnimationState();
@@ -77,6 +89,7 @@ public class ChaosSpawnerEntity extends Monster {
         this.bossEvent = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
         this.xpReward = 500;
         this.moveControl = new ChaosSpawnerMoveControl(this);
+        this.playerUUIDs = Sets.newHashSet();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -131,6 +144,23 @@ public class ChaosSpawnerEntity extends Monster {
         compoundTag.putInt("AttackTicks", this.attackTickCount);
         compoundTag.putInt("ActiveRange", this.entityData.get(ACTIVE_RANGE));
         compoundTag.putInt("PlayerCount", this.entityData.get(PLAYER_COUNT));
+        ListTag listTag = new ListTag();
+        CompoundTag uuidCompoundTag;
+        for (Iterator var = this.playerUUIDs.iterator(); var.hasNext(); listTag.add(uuidCompoundTag)) {
+            UUID uuid1 = (UUID)var.next();
+            uuidCompoundTag = new CompoundTag();
+            uuidCompoundTag.putUUID(uuid1.toString(), uuid1);
+        }
+        compoundTag.put("PlayerUUIDs", listTag);
+//        ListTag listTag;
+//        int a;
+//        if (compoundTag.contains("PlayerUUIDs", 9)) {
+//            listTag = compoundTag.getList("PlayerUUIDs", 5);
+//
+//            for (a = 0; a < listTag.size(); ++a) {
+//                this.playerUUIDs[a] = listTag.getCompound(a);
+//            }
+//        }
     }
 
     @Override
@@ -153,6 +183,14 @@ public class ChaosSpawnerEntity extends Monster {
         }
         if (this.hasCustomName()) {
             this.bossEvent.setName(this.getDisplayName());
+        }
+        ListTag listTag;
+        int a;
+        if (compoundTag.contains("PlayerUUIDs", 9)) {
+            listTag = compoundTag.getList("PlayerUUIDs", 10);
+            for (a = 0; a < listTag.size(); ++a) {
+                this.playerUUIDs.add(listTag.getCompound(a).getUUID("PlayerUUIDs"));
+            }
         }
     }
 
@@ -288,9 +326,14 @@ public class ChaosSpawnerEntity extends Monster {
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
         if (this.isAlive() && this.entityData.get(PHASE) < 1) {
             AABB bossArena = new AABB(this.blockPosition()).inflate(this.entityData.get(ACTIVE_RANGE));
-            int playerCount = this.level().getEntitiesOfClass(ServerPlayer.class, bossArena).size();
-            this.entityData.set(PLAYER_COUNT, playerCount);
+            List<ServerPlayer> players = this.level().getEntitiesOfClass(ServerPlayer.class, bossArena);
+            for (ServerPlayer p : players) {
+                playerUUIDs.add(p.getUUID());
+            }
+            int playerCount = players.size();
             EntityScale.scaleHealth(this, playerCount);
+            EntityScale.scaleAttack(this, playerCount);
+            this.entityData.set(PLAYER_COUNT, playerCount);
             this.entityData.set(AWAKENING_TICKS, 100);
             this.entityData.set(DATA_STATE, State.AWAKENING);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
@@ -305,6 +348,29 @@ public class ChaosSpawnerEntity extends Monster {
             return false;
         }
         return super.hurt(damageSource, damage);
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(DamageSource damageSource, int a, boolean b) {
+        super.dropCustomDeathLoot(damageSource, a, b);
+        for (UUID playerUUID : this.playerUUIDs) {
+            this.spawnSpecialItemEntity(new ItemStack(Items.APPLE), 0.0F, playerUUID);
+            //specialItemEntity.setPickerUUID(playerUUID);
+        }
+    }
+
+    public SpecialItemEntity spawnSpecialItemEntity(ItemStack itemStack, float i, UUID uuid) {
+        if (itemStack.isEmpty()) {
+            return null;
+        } else if (this.level().isClientSide) {
+            return null;
+        } else {
+            SpecialItemEntity specialItemEntity = new SpecialItemEntity(this.level(), this.getX(), this.getY() + i, this.getZ(), itemStack);
+            specialItemEntity.setDefaultPickUpDelay();
+            specialItemEntity.setPickerUUID(uuid);
+            this.level().addFreshEntity(specialItemEntity);
+            return specialItemEntity;
+        }
     }
 
     @Override
@@ -385,13 +451,13 @@ public class ChaosSpawnerEntity extends Monster {
 
         public ChaosSpawnerResetAI(ChaosSpawnerEntity livingEntity, double range) {
             this.livingEntity = livingEntity;
-            this.range = 30.0D;
+            this.range = range;
             this.level = livingEntity.level();
         }
 
         @Override
         public boolean canUse() {
-            if (this.livingEntity.entityData.get(DATA_STATE) != State.SLEEPING) {
+            if (this.livingEntity.entityData.get(DATA_STATE) != State.SLEEPING && BossConfig.TOGGLE_BOSS_RESET.get()) {
                 AABB aabb = (new AABB(this.livingEntity.blockPosition())).inflate(range);
                 List<Player> list = level.getEntitiesOfClass(Player.class, aabb);
                 return list.isEmpty();
