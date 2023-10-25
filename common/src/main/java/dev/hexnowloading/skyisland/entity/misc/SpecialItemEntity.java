@@ -2,6 +2,9 @@ package dev.hexnowloading.skyisland.entity.misc;
 
 import dev.hexnowloading.skyisland.registry.SkyislandEntityTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -11,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class SpecialItemEntity extends ItemEntity implements TraceableEntity {
@@ -66,10 +70,10 @@ public class SpecialItemEntity extends ItemEntity implements TraceableEntity {
     }
 
 
-//    @Override
-//    public boolean broadcastToPlayer(ServerPlayer serverPlayer) {
-//        return serverPlayer.getUUID() == this.picker && super.broadcastToPlayer(serverPlayer);
-//    }
+    @Override
+    public boolean broadcastToPlayer(ServerPlayer serverPlayer) {
+        return serverPlayer.getUUID() == this.picker && super.broadcastToPlayer(serverPlayer);
+    }
 
     public void setPickerUUID(UUID uuid) {
         this.picker = uuid;

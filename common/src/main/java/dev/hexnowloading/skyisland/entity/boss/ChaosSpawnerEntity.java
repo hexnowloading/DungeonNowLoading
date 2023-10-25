@@ -18,6 +18,7 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,6 +54,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -78,6 +84,7 @@ public class ChaosSpawnerEntity extends Monster {
 
     protected int attackTickCount;
     private final Set<UUID> playerUUIDs;
+    private UUID currentPlayerUUID;
 
     public final AnimationState awakeningAnimationState = new AnimationState();
     public final AnimationState sleepingAnimationState = new AnimationState();
@@ -90,6 +97,7 @@ public class ChaosSpawnerEntity extends Monster {
         this.xpReward = 500;
         this.moveControl = new ChaosSpawnerMoveControl(this);
         this.playerUUIDs = Sets.newHashSet();
+        this.currentPlayerUUID = UUID.randomUUID();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -352,11 +360,37 @@ public class ChaosSpawnerEntity extends Monster {
 
     @Override
     protected void dropCustomDeathLoot(DamageSource damageSource, int a, boolean b) {
-        super.dropCustomDeathLoot(damageSource, a, b);
-        for (UUID playerUUID : this.playerUUIDs) {
-            this.spawnSpecialItemEntity(new ItemStack(Items.APPLE), 0.0F, playerUUID);
-            //specialItemEntity.setPickerUUID(playerUUID);
+        if (BossConfig.TOGGLE_MULTIPLAYER_LOOT.get()) {
+            for (UUID playerUUID : this.playerUUIDs) {
+                this.currentPlayerUUID = playerUUID;
+                this.spawnLootTableItems(damageSource, true);
+            }
+        } else {
+            super.dropCustomDeathLoot(damageSource, a, b);
         }
+    }
+
+    @Override
+    protected void dropFromLootTable(DamageSource $$0, boolean $$1) {
+        if (!BossConfig.TOGGLE_MULTIPLAYER_LOOT.get()) {
+            super.dropFromLootTable($$0, $$1);
+        }
+    }
+
+    public void spawnLootTableItems(DamageSource damageSource, boolean b) {
+        ResourceLocation resourceLocation = this.getLootTable();
+        LootTable lootTable = this.level().getServer().getLootData().getLootTable(resourceLocation);
+        LootParams.Builder lootparams$builder = (new LootParams.Builder((ServerLevel) this.level())).withParameter(LootContextParams.THIS_ENTITY, this).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.DAMAGE_SOURCE, damageSource).withOptionalParameter(LootContextParams.KILLER_ENTITY, damageSource.getEntity()).withOptionalParameter(LootContextParams.DIRECT_KILLER_ENTITY, damageSource.getDirectEntity());
+        if (b && this.lastHurtByPlayer != null) {
+            lootparams$builder = lootparams$builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, this.lastHurtByPlayer).withLuck(this.lastHurtByPlayer.getLuck());
+        }
+
+        LootParams lootParams = lootparams$builder.create(LootContextParamSets.ENTITY);
+        lootTable.getRandomItems(lootParams, this.getLootTableSeed(), this::spawnSpecialItemAtLocation);
+    }
+
+    public SpecialItemEntity spawnSpecialItemAtLocation(ItemStack itemStack) {
+        return spawnSpecialItemEntity(itemStack, 0.0F, this.currentPlayerUUID);
     }
 
     public SpecialItemEntity spawnSpecialItemEntity(ItemStack itemStack, float i, UUID uuid) {
@@ -366,8 +400,8 @@ public class ChaosSpawnerEntity extends Monster {
             return null;
         } else {
             SpecialItemEntity specialItemEntity = new SpecialItemEntity(this.level(), this.getX(), this.getY() + i, this.getZ(), itemStack);
-            specialItemEntity.setDefaultPickUpDelay();
             specialItemEntity.setPickerUUID(uuid);
+            specialItemEntity.setDefaultPickUpDelay();
             this.level().addFreshEntity(specialItemEntity);
             return specialItemEntity;
         }
