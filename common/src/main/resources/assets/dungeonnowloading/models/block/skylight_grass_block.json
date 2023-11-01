@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "dungeonnowloading:block/skylight_stone",
+    "side": "dungeonnowloading:block/crimson_grass_block_side",
+    "top": "dungeonnowloading:block/skylight_grass_block"
+  }
+}

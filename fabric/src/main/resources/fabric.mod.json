@@ -16,14 +16,14 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-          "dev.hexnowloading.skyisland.SkyislandFabric"
+            "dev.hexnowloading.dungeonnowloading.DNLFabric"
         ],
         "client": [
-            "dev.hexnowloading.skyisland.client.SkyislandFabricClient"
+            "dev.hexnowloading.dungeonnowloading.client.DNLFabricClient"
         ]
     },
     "mixins": [
-        "skyisland.fabric.mixins.json"
+        "dungeonnowloading.fabric.mixins.json"
     ],
     "depends": {
         "fabricloader": "${fabric_loader_version}",
@@ -34,6 +34,6 @@
     "suggests": {
         "another-mod": "*"
     },
-    "accessWidener" : "skyisland.accesswidener"
+    "accessWidener" : "dungeonnowloading.accesswidener"
 }
   

@@ -7,7 +7,7 @@ plugins {
 }
 
 registrationUtils {
-    group 'dev.hexnowloading.skyisland.registration'
+    group 'dev.hexnowloading.dungeonnowloading.registration'
     projects {
         fabric { type 'fabric' } // The fabric project
         forge { type 'forge' } // The forge project

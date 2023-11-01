@@ -3,9 +3,9 @@ loaderVersion = "[46,)" #mandatory This is typically bumped every Minecraft vers
 license = "C0-1.0" # Review your options at https://choosealicense.com/.
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 [[mods]] #mandatory
-modId = "skyisland" #mandatory
+modId = "dungeonnowloading" #mandatory
 version = "${file.jarVersion}" #mandatory
-displayName = "Skyisland" #mandatory
+displayName = "Dungeon Now Loading" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/)
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
 logoFile = "multiloader.png" #optional (needs to be in the root of your mod jar (root of your 'resources' folder))

@@ -21,7 +21,7 @@ plugins {
 }
 
 // This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
-rootProject.name = 'Sky Island Multiloader Mod'
+rootProject.name = 'Dungeon Now Loading Multiloader Mod'
 include("common")
 include("fabric")
 include("forge")
