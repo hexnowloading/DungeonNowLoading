@@ -1,0 +1,16 @@
+{
+    "name": "weapon_dungeon:bow/mobs/skeleton",
+    "fallback": "weapon_dungeon:bow/mobs/skeleton",
+    "elements": [
+      {
+        "weight": 1,
+        "element": {
+          "element_type": "minecraft:single_pool_element",
+          "projection": "rigid",
+          "location": "weapon_dungeon:bow/mobs/skeleton",
+          "processors": "minecraft:empty"
+        }
+      }
+    ]
+  }
+  

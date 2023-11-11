@@ -1,0 +1,16 @@
+{
+    "name": "weapon_dungeon:trident/mobs/villager",
+    "fallback": "weapon_dungeon:trident/mobs/villager",
+    "elements": [
+      {
+        "weight": 1,
+        "element": {
+          "element_type": "minecraft:single_pool_element",
+          "projection": "rigid",
+          "location": "weapon_dungeon:trident/mobs/villager",
+          "processors": "minecraft:empty"
+        }
+      }
+    ]
+  }
+  

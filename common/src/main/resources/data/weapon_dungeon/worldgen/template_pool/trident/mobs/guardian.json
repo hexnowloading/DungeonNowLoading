@@ -1,0 +1,16 @@
+{
+    "name": "weapon_dungeon:trident/mobs/guardian",
+    "fallback": "weapon_dungeon:trident/mobs/guardian",
+    "elements": [
+      {
+        "weight": 1,
+        "element": {
+          "element_type": "minecraft:single_pool_element",
+          "projection": "rigid",
+          "location": "weapon_dungeon:trident/mobs/guardian",
+          "processors": "minecraft:empty"
+        }
+      }
+    ]
+  }
+  

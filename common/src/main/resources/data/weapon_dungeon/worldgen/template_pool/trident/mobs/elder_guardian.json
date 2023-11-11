@@ -1,0 +1,16 @@
+{
+    "name": "weapon_dungeon:trident/mobs/elder_guardian",
+    "fallback": "weapon_dungeon:trident/mobs/elder_guardian",
+    "elements": [
+      {
+        "weight": 1,
+        "element": {
+          "element_type": "minecraft:single_pool_element",
+          "projection": "rigid",
+          "location": "weapon_dungeon:trident/mobs/elder_guardian",
+          "processors": "minecraft:empty"
+        }
+      }
+    ]
+  }
+  
