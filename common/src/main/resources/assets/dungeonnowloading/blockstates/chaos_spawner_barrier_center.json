@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_center",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_center",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_center"
+    },
+    "facing=south": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_center",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_center",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_center",
+      "y": 270
+    }
+  }
+}

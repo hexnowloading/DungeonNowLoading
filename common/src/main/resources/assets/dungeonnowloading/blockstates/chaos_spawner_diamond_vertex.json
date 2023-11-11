@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "facing=east,half=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "y": 270
+    },
+    "facing=north,half=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "y": 180
+    },
+    "facing=south,half=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex"
+    },
+    "facing=west,half=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "y": 90
+    },
+    "facing=east,half=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "x": 180,
+      "y": 90
+    },
+    "facing=north,half=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "x": 180
+    },
+    "facing=south,half=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_diamond_vertex",
+      "x": 180,
+      "y": 270
+    }
+  }
+}
