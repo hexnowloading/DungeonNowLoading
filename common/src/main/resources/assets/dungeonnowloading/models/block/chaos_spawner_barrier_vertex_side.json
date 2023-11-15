@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"render_type": "cutout",
+	"render_type": "translucent",
 	"textures": {
 		"2": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
 		"particle": "dungeonnowloading:block/chaos_spawner_barrier_center"

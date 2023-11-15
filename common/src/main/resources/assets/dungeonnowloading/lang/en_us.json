@@ -1,5 +1,15 @@
 {
-  "creativemodetab.dungeonnowloading_tab": "Dungeon Now Loading",
+  "creativemodetab.dungeonnowloading.tab": "Dungeon Now Loading",
   "item.dungeonnowloading.wind_jade": "Wind Jade",
+  "block.dungeonnowloading.chaos_spawner_barrier_center": "Chaos Spawner Barrier Center",
+  "block.dungeonnowloading.chaos_spawner_barrier_edge": "Chaos Spawner Barrier Edge",
+  "block.dungeonnowloading.chaos_spawner_barrier_vertex": "Chaos Spawner Barrier Vertex",
+  "block.dungeonnowloading.chaos_spawner_edge": "Chaos Spawner Frame Edge",
+  "block.dungeonnowloading.chaos_spawner_edge.tooltip": "Crouch to place vertically",
+  "block.dungeonnowloading.chaos_spawner_diamond_edge": "Diamond Chaos Spawner Frame Edge",
+  "block.dungeonnowloading.chaos_spawner_diamond_vertex": "Diamond Chaos Spawner Frame Vertex",
+  "block.dungeonnowloading.chaos_spawner_broken_edge": "Broken Chaos Spawner Frame Edge",
+  "block.dungeonnowloading.chaos_spawner_broken_diamond_edge": "Broken Diamond Chaos Spawner Frame Edge",
+  "block.dungeonnowloading.chaos_spawner_broken_diamond_vertex": "Broken Diamond Chaos Spawner Frame Vertex",
   "entity.dungeonnowloading.chaos_spawner": "Chaos Spawner"
 }

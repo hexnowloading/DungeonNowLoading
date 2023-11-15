@@ -1,0 +1,53 @@
+{
+  "variants": {
+    "facing=east,all_sides=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "y": 270
+    },
+    "facing=north,all_sides=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "y": 180
+    },
+    "facing=south,all_sides=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge"
+    },
+    "facing=west,all_sides=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "y": 90
+    },
+    "facing=east,all_sides=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "x": 180,
+      "y": 90
+    },
+    "facing=north,all_sides=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "x": 180
+    },
+    "facing=south,all_sides=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,all_sides=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge",
+      "x": 180,
+      "y": 270
+    },
+    "facing=east,all_sides=vertical": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge_side",
+      "y": 270
+    },
+    "facing=north,all_sides=vertical": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge_side",
+      "y": 180
+    },
+    "facing=south,all_sides=vertical": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge_side"
+    },
+    "facing=west,all_sides=vertical": {
+      "model": "dungeonnowloading:block/chaos_spawner_broken_diamond_edge_side",
+      "y": 90
+    }
+  }
+}

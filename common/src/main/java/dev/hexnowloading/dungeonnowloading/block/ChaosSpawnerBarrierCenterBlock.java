@@ -1,32 +1,110 @@
 package dev.hexnowloading.dungeonnowloading.block;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
+import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.pattern.BlockInWorld;
+import net.minecraft.world.level.block.state.pattern.BlockPattern;
+import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
+import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Iterator;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ChaosSpawnerBarrierCenterBlock extends Block implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty BARRIER_ACTIVE = DNLProperties.BARRIER_ACTIVE;
+    protected static final VoxelShape NORTH_AABB = Block.box(0.0, 0.0, 1.0, 16.0, 16.0, 2.0);
+    protected static final VoxelShape SOUTH_AABB = Block.box(0.0, 0.0, 14.0, 16.0, 16.0, 15.0);
+    protected static final VoxelShape EAST_AABB = Block.box(14.0, 0.0, 0.0, 15.0, 16.0, 16.0);
+    protected static final VoxelShape WEST_AABB = Block.box(1.0, 0.0, 0.0, 2.0, 16.0, 16.0);
+    protected static final VoxelShape UP_AABB = Block.box(0.0, 14.0, 0.0, 16.0, 15.0, 16.0);
+    protected static final VoxelShape DOWN_AABB = Block.box(0.0, 1.0, 0.0, 16.0, 2.0, 16.0);
+    //private BlockPattern chaosSpawnerFull;
+    /*private static final Predicate<BlockState> CHAOS_SPAWNER_DIAMOND_PREDICATE;
+    private static final Predicate<BlockState> CHAOS_SPAWNER_EDGE_PREDICATE;
+    private static final Predicate<BlockState> CHAOS_SPAWNER_BARRIER_PREDICATE;
+*/
+    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_X = ImmutableList.of(
+            new BlockPos(0, 2, 0),
+            new BlockPos(0, 2, 2),
+            new BlockPos(0, 0, 2),
+            new BlockPos(0, -2, 2),
+            new BlockPos(0, -2, 0),
+            new BlockPos(0, -2, -2),
+            new BlockPos(0, 0, -2),
+            new BlockPos(0, 2, -2)
+    );
+
+    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_Y = ImmutableList.of(
+            new BlockPos(2, 0, 0),
+            new BlockPos(2, 0, 2),
+            new BlockPos(0, 0, 2),
+            new BlockPos(-2, 0, 2),
+            new BlockPos(-2, 0, 0),
+            new BlockPos(-2, 0, -2),
+            new BlockPos(0, 0, -2),
+            new BlockPos(2, 0, -2)
+    );
+
+    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_Z = ImmutableList.of(
+            new BlockPos(0, 2, 0),
+            new BlockPos(2, 2, 0),
+            new BlockPos(2, 0, 0),
+            new BlockPos(2, -2, 0),
+            new BlockPos(0, -2, 0),
+            new BlockPos(-2, -2, 0),
+            new BlockPos(-2, 0, 0),
+            new BlockPos(-2, 2, 0)
+    );
 
     public ChaosSpawnerBarrierCenterBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE).setValue(BARRIER_ACTIVE, true));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(FACING, WATERLOGGED);
+        stateBuilder.add(FACING, WATERLOGGED, BARRIER_ACTIVE);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        switch ((Direction) blockState.getValue(FACING)) {
+            case NORTH:
+            default:
+                return NORTH_AABB;
+            case EAST:
+                return EAST_AABB;
+            case SOUTH:
+                return SOUTH_AABB;
+            case WEST:
+                return WEST_AABB;
+            case UP:
+                return UP_AABB;
+            case DOWN:
+                return DOWN_AABB;
+        }
     }
 
     @Override
@@ -46,6 +124,70 @@ public class ChaosSpawnerBarrierCenterBlock extends Block implements SimpleWater
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        return (BlockState)this.defaultBlockState().setValue(FACING, blockPlaceContext.getNearestLookingDirection().getOpposite());
+        return (BlockState)this.defaultBlockState()
+                .setValue(FACING, blockPlaceContext.getNearestLookingDirection().getOpposite())
+                .setValue(BARRIER_ACTIVE, true);
     }
+
+    public static void checkBarrierCondition(Level level, BlockPos blockPos, Direction.Axis direction) {
+        if (level.getBlockState(blockPos).is(DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get())) {
+            Iterator iterator = null;
+            if (direction == Direction.Axis.X) {
+                iterator = BLOCK_LOCATIONS_X.iterator();
+            } else if (direction == Direction.Axis.Y) {
+                iterator = BLOCK_LOCATIONS_Y.iterator();
+            } else if (direction == Direction.Axis.Z) {
+                iterator = BLOCK_LOCATIONS_Z.iterator();
+            }
+            int brokenFrame = 0;
+            while(iterator.hasNext()) {
+                BlockPos offsetAmount = (BlockPos) iterator.next();
+                if (level.getBlockState(blockPos.offset(offsetAmount)).is(DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.get()) || level.getBlockState(blockPos.offset(offsetAmount)).is(DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.get())) {
+                    break;
+                }
+                brokenFrame++;
+            }
+            if (brokenFrame == 8) {
+
+                level.destroyBlock(blockPos, false);
+            }
+        }
+    }
+
+    /*public static void checkBarrierCondition(Level level, BlockPos blockPos, BlockState blockState) {
+        if (level.getBlockState(blockPos).is(DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get())) {
+            BlockPattern.BlockPatternMatch blockPatternMatch = BlockPatternBuilder.start().aisle("^ ^ ^", "     ", "^   ^", "     ", "^ ^ ^")
+                    .where('#', BlockInWorld.hasState(CHAOS_SPAWNER_EDGE_PREDICATE))
+                    .where('^', BlockInWorld.hasState(CHAOS_SPAWNER_DIAMOND_PREDICATE))
+                    .where('~', BlockInWorld.hasState(CHAOS_SPAWNER_BARRIER_PREDICATE))
+                    .build().find(level, blockPos);
+            if (blockPatternMatch != null) {
+                level.destroyBlock(blockPos, false);
+            }
+        }
+    }*/
+
+    /*private BlockPattern getOrCreateChaosSpawnerFull() {
+        if (this.chaosSpawnerFull == null) {
+            this.chaosSpawnerFull = BlockPatternBuilder.start().aisle("^ ^ ^", "     ", "^   ^", "     ", "^ ^ ^")
+                    .where('#', BlockInWorld.hasState(CHAOS_SPAWNER_EDGE_PREDICATE))
+                    .where('^', BlockInWorld.hasState(CHAOS_SPAWNER_DIAMOND_PREDICATE))
+                    .where('~', BlockInWorld.hasState(CHAOS_SPAWNER_BARRIER_PREDICATE))
+                    .build();
+        }
+        return this.chaosSpawnerFull;
+    }
+*/
+    /*static {
+        CHAOS_SPAWNER_DIAMOND_PREDICATE = (blockState) -> {
+            return blockState != null && (blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_EDGE.get()) || blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_VERTEX.get()));
+        };
+        CHAOS_SPAWNER_EDGE_PREDICATE = (blockState) -> {
+            return blockState != null && (blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_EDGE.get()) || blockState.is(DNLBlocks.CHAOS_SPAWNER_EDGE.get()));
+        };
+        CHAOS_SPAWNER_BARRIER_PREDICATE = (blockState) -> {
+            return blockState != null && (blockState.is(DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get()) || blockState.is(DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get()) || blockState.is(DNLBlocks.CHAOS_SPAWNER_BARRIER_VERTEX.get()));
+        };
+    }*/
+
 }

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "dungeonnowloading:chaos_spawner_edge",
+    "dungeonnowloading:chaos_spawner_diamond_edge",
+    "dungeonnowloading:chaos_spawner_diamond_vertex"
+  ]
+}

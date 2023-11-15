@@ -8,5 +8,5 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 public class DNLProperties {
     public static final EnumProperty<AllSides> ALL_SIDES = EnumProperty.create("all_sides", AllSides.class);
     public static final EnumProperty<BlockFaces> BLOCK_FACES = EnumProperty.create("block_face", BlockFaces.class);
-    public static final BooleanProperty SIDE_HALF_2 = BooleanProperty.create("side_half_2");
+    public static final BooleanProperty BARRIER_ACTIVE = BooleanProperty.create("barrier_active");
 }
