@@ -23,10 +23,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_VERTEX.get());
-                output.accept(DNLItems.WIND_JADE.get());
-                output.accept(DNLItems.EYE_OF_THE_STORM.get());
-                output.accept(DNLItems.SKYLIGHT_STONE.get());
-                output.accept(DNLItems.SKYLIGHT_GRASS_BLOCK.get());
+                output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
             }))
             .build());
 
