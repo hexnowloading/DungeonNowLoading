@@ -1,11 +1,14 @@
 package dev.hexnowloading.dungeonnowloading.entity.boss;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
+import dev.hexnowloading.dungeonnowloading.block.*;
 import dev.hexnowloading.dungeonnowloading.config.BossConfig;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.dungeonnowloading.entity.util.EntityScale;
 import dev.hexnowloading.dungeonnowloading.entity.util.EntityStates;
+import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -72,11 +75,18 @@ public class ChaosSpawnerEntity extends Monster {
     private static final EntityDataAccessor<Integer> ATTACK_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ACTIVE_RANGE = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PLAYER_COUNT = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BARRIER_NORTH_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BARRIER_EAST_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BARRIER_SOUTH_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BARRIER_WEST_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BARRIER_UP_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BARRIER_DOWN_TICK = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Optional<UUID>> PLAYER_UUID = SynchedEntityData.defineId(ChaosSpawnerEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
     private static final int MAX_BOSS_RANGE = 30;
 
     protected int attackTickCount;
+    private int barrierCheckTickCount;
     private final Set<UUID> playerUUIDs;
     private UUID currentPlayerUUID;
 
@@ -133,6 +143,12 @@ public class ChaosSpawnerEntity extends Monster {
         this.entityData.define(ATTACK_TICK, 0);
         this.entityData.define(ACTIVE_RANGE, MAX_BOSS_RANGE);
         this.entityData.define(PLAYER_COUNT, 0);
+        this.entityData.define(BARRIER_NORTH_TICK, -1);
+        this.entityData.define(BARRIER_EAST_TICK, -1);
+        this.entityData.define(BARRIER_SOUTH_TICK, -1);
+        this.entityData.define(BARRIER_WEST_TICK, -1);
+        this.entityData.define(BARRIER_UP_TICK, -1);
+        this.entityData.define(BARRIER_DOWN_TICK, -1);
     }
 
     @Override
@@ -146,6 +162,12 @@ public class ChaosSpawnerEntity extends Monster {
         compoundTag.putInt("AttackTicks", this.attackTickCount);
         compoundTag.putInt("ActiveRange", this.entityData.get(ACTIVE_RANGE));
         compoundTag.putInt("PlayerCount", this.entityData.get(PLAYER_COUNT));
+        compoundTag.putInt("BarrierNorthTicks", this.entityData.get(BARRIER_NORTH_TICK));
+        compoundTag.putInt("BarrierEastTicks,", this.entityData.get(BARRIER_EAST_TICK));
+        compoundTag.putInt("BarrierSouthTicks,", this.entityData.get(BARRIER_SOUTH_TICK));
+        compoundTag.putInt("BarrierWestTicks,", this.entityData.get(BARRIER_WEST_TICK));
+        compoundTag.putInt("BarrierUpTicks,", this.entityData.get(BARRIER_UP_TICK));
+        compoundTag.putInt("BarrierDownTicks,", this.entityData.get(BARRIER_DOWN_TICK));
         ListTag listTag = new ListTag();
         CompoundTag uuidCompoundTag;
         for (Iterator var = this.playerUUIDs.iterator(); var.hasNext(); listTag.add(uuidCompoundTag)) {
@@ -154,15 +176,6 @@ public class ChaosSpawnerEntity extends Monster {
             uuidCompoundTag.putUUID(uuid1.toString(), uuid1);
         }
         compoundTag.put("PlayerUUIDs", listTag);
-//        ListTag listTag;
-//        int a;
-//        if (compoundTag.contains("PlayerUUIDs", 9)) {
-//            listTag = compoundTag.getList("PlayerUUIDs", 5);
-//
-//            for (a = 0; a < listTag.size(); ++a) {
-//                this.playerUUIDs[a] = listTag.getCompound(a);
-//            }
-//        }
     }
 
     @Override
@@ -175,6 +188,12 @@ public class ChaosSpawnerEntity extends Monster {
         this.entityData.set(AWAKENING_TICKS, compoundTag.getInt("AwakeningTicks"));
         this.entityData.set(ACTIVE_RANGE, compoundTag.getInt("ActiveRange"));
         this.entityData.set(PLAYER_COUNT, compoundTag.getInt("PlayerCount"));
+        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierNorthTicks"));
+        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierEastTicks"));
+        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierSouthTicks"));
+        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierWestTicks"));
+        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierUpTicks"));
+        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierDownTicks"));
         this.attackTickCount = compoundTag.getInt("AttackTicks");
         int phase = compoundTag.getInt("Phase");
         if (phase < 1) {
@@ -188,7 +207,7 @@ public class ChaosSpawnerEntity extends Monster {
         }
         ListTag listTag;
         int a;
-        if (compoundTag.contains("PlayerUUIDs", 9)) {
+        if (compoundTag.contains("PlayerUUIDs", 10)) {
             listTag = compoundTag.getList("PlayerUUIDs", 10);
             for (a = 0; a < listTag.size(); ++a) {
                 this.playerUUIDs.add(listTag.getCompound(a).getUUID("PlayerUUIDs"));
@@ -213,10 +232,10 @@ public class ChaosSpawnerEntity extends Monster {
         this.bossEvent.setName(this.getDisplayName());
     }
 
-//    @Override
-//    public boolean isNoGravity() {
-//        return this.entityData.get(DATA_STATE) != State.ABILITY_F;
-//    }
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
 
     @Override
     // Called when entity starts rendering
@@ -239,6 +258,11 @@ public class ChaosSpawnerEntity extends Monster {
     protected void customServerAiStep() {
         if (this.entityData.get(AWAKENING_TICKS) > 0) {
             int k1 = this.entityData.get(AWAKENING_TICKS) - 1;
+            if (k1 <= 80 && k1 >= 40) {
+                double t = (double) (80 - k1) / 40D;
+                double easeOutOffsetY = t * (2 - t) * (2 - t) * (2 - t);
+                this.moveTo(this.getX(), this.entityData.get(SPAWN_POINT).getY() + easeOutOffsetY * 1.5D, this.getZ());
+            }
             if (k1 <= 0) {
                 this.entityData.set(PHASE, 1);
                 this.entityData.set(DATA_STATE, State.IDLE);
@@ -248,40 +272,117 @@ public class ChaosSpawnerEntity extends Monster {
                 for (int i = 0; i < 50; ++i) {
                     ((ServerLevel) this.level()).sendParticles(ParticleTypes.FLAME, this.getRandomX(0.9D), this.getRandomY(), this.getRandomZ(0.9D), 1, 0.0D, 0.0D, 0.0D, 0.0D);
                 }
+                this.fillFrames();
                 enableBossBar();
             }
         }
         if (this.entityData.get(PHASE) > 0) {
-            if (attackTickCount > 0) {
-                --this.attackTickCount;
-            } else {
-                AABB aabb = (new AABB(this.blockPosition())).inflate(3);
-                List<Player> list = this.level().getEntitiesOfClass(Player.class, aabb);
-                if (!list.isEmpty()) {
-                    this.attackTickCount = 40;
-                    Player player;
-                    for (Iterator<Player> var2 = list.iterator(); var2.hasNext(); this.pushNearbyPlayers(player)) {
-                        player = (Player) var2.next();
-                        player.hurt(this.damageSources().mobAttack(this), 10.0F);
-                    }
-                } else {
-                    int x = this.random.nextInt(100);
-                    if (x == 0) {
-                        this.entityData.set(DATA_STATE, State.ABILITY_A);
-                    } else if (x == 1) {
-                        this.entityData.set(DATA_STATE, State.ABILITY_B);
-                    } else if (x == 2) {
-                        this.entityData.set(DATA_STATE, State.ABILITY_C);
-                    } else if (x == 3) {
-                        this.entityData.set(DATA_STATE, State.ABILITY_E);
-                    } else {
-                        this.entityData.set(DATA_STATE, State.ABILITY_G);
-                    }
-                }
-            }
+            this.abilitySelection();
+            this.checkBarrierTick();
         }
         super.customServerAiStep();
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+
+    private void abilitySelection() {
+        if (attackTickCount > 0) {
+            --this.attackTickCount;
+        } else {
+            AABB aabb = (new AABB(this.blockPosition())).inflate(3);
+            List<Player> list = this.level().getEntitiesOfClass(Player.class, aabb);
+            if (!list.isEmpty()) {
+                this.attackTickCount = 40;
+                Player player;
+                for (Iterator<Player> var2 = list.iterator(); var2.hasNext(); this.pushNearbyPlayers(player)) {
+                    player = (Player) var2.next();
+                    player.hurt(this.damageSources().mobAttack(this), 10.0F);
+                }
+            } else {
+                int x = this.random.nextInt(2 );
+                if (x == 0) {
+                    this.entityData.set(DATA_STATE, State.ABILITY_A);
+                } else if (x == 1) {
+                    this.entityData.set(DATA_STATE, State.ABILITY_E);
+                }
+            }
+        }
+    }
+
+    private void checkBarrierTick() {
+        if (barrierCheckTickCount > 0) {
+            barrierCheckTickCount--;
+        } else {
+            barrierCheckTickCount = 20;
+            BlockPos cageCenterPos = this.entityData.get(SPAWN_POINT).above(2);
+            checkBarrierIsBroken(cageCenterPos.offset(0, 0, -2), BARRIER_NORTH_TICK);
+            checkBarrierIsBroken(cageCenterPos.offset(2, 0, 0), BARRIER_EAST_TICK);
+            checkBarrierIsBroken(cageCenterPos.offset(0, 0, 2), BARRIER_SOUTH_TICK);
+            checkBarrierIsBroken(cageCenterPos.offset(-2, 0, 0), BARRIER_WEST_TICK);
+            checkBarrierIsBroken(cageCenterPos.offset(0, 2, 0), BARRIER_UP_TICK);
+            checkBarrierIsBroken(cageCenterPos.offset(0, -2, 0), BARRIER_DOWN_TICK);
+        }
+        regenerateBarrierTick(FRAME_POS_NORTH, BARRIER_NORTH_TICK, this.entityData.get(SPAWN_POINT).above(2).offset(0, 0, -2), 0);
+        regenerateBarrierTick(FRAME_POS_EAST, BARRIER_EAST_TICK, this.entityData.get(SPAWN_POINT).above(2).offset(2, 0, 0), 1);
+        regenerateBarrierTick(FRAME_POS_SOUTH, BARRIER_SOUTH_TICK, this.entityData.get(SPAWN_POINT).above(2).offset(0, 0, 2), 2);
+        regenerateBarrierTick(FRAME_POS_WEST, BARRIER_WEST_TICK, this.entityData.get(SPAWN_POINT).above(2).offset(-2, 0, 0), 3);
+        regenerateBarrierTick(FRAME_POS_UP, BARRIER_UP_TICK, this.entityData.get(SPAWN_POINT).above(2).offset(0, 2, 0), 4);
+        regenerateBarrierTick(FRAME_POS_DOWN, BARRIER_DOWN_TICK, this.entityData.get(SPAWN_POINT).above(2).offset(0, -2, 0), 5);
+    }
+
+    private void checkBarrierIsBroken(BlockPos blockPos, EntityDataAccessor<Integer> entityDataAccessor) {
+        if (!this.level().getBlockState(blockPos).is(DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get()) && this.entityData.get(entityDataAccessor) < 0) {
+            this.entityData.set(entityDataAccessor, 100);
+        }
+    }
+
+    private void regenerateBarrierTick(ImmutableList<BlockPos> framePositions , EntityDataAccessor<Integer> entityDataAccessor, BlockPos barrierCenterPos, int barrierDirection) {
+        if (this.entityData.get(entityDataAccessor) > 0) {
+            int barrierRegenerateTickCount = this.entityData.get(entityDataAccessor) - 1;
+            this.entityData.set(entityDataAccessor, barrierRegenerateTickCount);
+        } else if (this.entityData.get(entityDataAccessor) != -1) {
+            BlockPos cageCenterPos = this.entityData.get(SPAWN_POINT).above(2);
+            Iterator<BlockPos> iterator = framePositions.iterator();
+            int fixedFrame = 0;
+            while(iterator.hasNext()) {
+                BlockPos framePos = cageCenterPos.offset(iterator.next());
+                BlockState frameState = this.level().getBlockState(framePos);
+                if (frameState.is(DNLBlocks.CHAOS_SPAWNER_EDGE.get()) || frameState.is(DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.get()) || frameState.is(DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.get())) {
+                    fixedFrame++;
+                } else {
+                    if (frameState.getBlock() instanceof ChaosSpawnerEdgeBlock) {
+                        ChaosSpawnerEdgeBlock.fixFrame(this.level(), framePos, frameState);
+                    } else if (frameState.getBlock() instanceof  ChaosSpawnerVertexBlock) {
+                        ChaosSpawnerVertexBlock.fixFrame(this.level(), framePos, frameState);
+                    }
+                    this.entityData.set(entityDataAccessor, 20);
+                    break;
+                }
+            }
+            if (fixedFrame == 16) {
+                this.entityData.set(entityDataAccessor, -1);
+                this.placeFullBarrier(barrierCenterPos, barrierDirection);
+            }
+        }
+    }
+
+    private void placeFullBarrier(BlockPos barrierCenterPos, int barrierDirection) {
+        ChaosSpawnerBarrierCenterBlock.placeBarrier(this.level(), barrierCenterPos, barrierDirection);
+        ChaosSpawnerBarrierEdgeBlock.placeBarrier(this.level(), barrierCenterPos, barrierDirection);
+        ChaosSpawnerBarrierVertexBlock.placeBarrier(this.level(), barrierCenterPos, barrierDirection);
+    }
+
+    private void fillFrames() {
+        Iterator<BlockPos> iterator = FRAME_POSITIONS.iterator();
+        BlockPos cageCenterPos = this.entityData.get(SPAWN_POINT).above(2);
+        while (iterator.hasNext()) {
+            BlockPos framePos = cageCenterPos.offset((BlockPos) iterator.next());
+            BlockState frameState = this.level().getBlockState(framePos);
+            if (frameState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_EDGE.get()) || frameState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_EDGE.get())) {
+                ChaosSpawnerEdgeBlock.fixFrame(this.level(), framePos, frameState);
+            } else if (frameState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_VERTEX.get())) {
+                ChaosSpawnerVertexBlock.fixFrame(this.level(), framePos, frameState);
+            }
+        }
     }
 
     private void pushNearbyPlayers(Player player) {
@@ -378,7 +479,6 @@ public class ChaosSpawnerEntity extends Monster {
         if (b && this.lastHurtByPlayer != null) {
             lootparams$builder = lootparams$builder.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, this.lastHurtByPlayer).withLuck(this.lastHurtByPlayer.getLuck());
         }
-
         LootParams lootParams = lootparams$builder.create(LootContextParamSets.ENTITY);
         lootTable.getRandomItems(lootParams, this.getLootTableSeed(), this::spawnSpecialItemAtLocation);
     }
@@ -401,41 +501,34 @@ public class ChaosSpawnerEntity extends Monster {
         }
     }
 
-    @Override
+    /*@Override
     public boolean canBeCollidedWith() {
         return this.isAlive();
-    }
+    }*/
 
     @Override
     public void push(Entity entity) {
     }
 
     @Override
-    protected boolean updateInWaterStateAndDoFluidPushing() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    protected void jumpFromGround() {
-        Vec3 $$0 = this.getDeltaMovement();
-        this.setDeltaMovement($$0.x, (double)this.getJumpPower(), $$0.z);
-        this.hasImpulse = true;
+    public boolean isPushedByFluid() {
+        return false;
     }
 
-    //    @Override
-//    public Vec3 getDeltaMovement() {
-//        if (this.entityData.get(DATA_STATE) != State.ABILITY_F || this.entityData.get(DATA_STATE) == State.ABILITY_G) {
-//            return Vec3.ZERO;
-//        }
-//        return super.getDeltaMovement();
-//    }
-//
-//    @Override
-//    public void setDeltaMovement(Vec3 vec3) {
-//        if (this.entityData.get(DATA_STATE) == State.ABILITY_F || this.entityData.get(DATA_STATE) == State.ABILITY_G) {
-//            super.setDeltaMovement(vec3);
-//        }
-//    }
+    @Override
+    protected float getStandingEyeHeight(Pose $$0, EntityDimensions $$1) {
+        return 1.0F;
+    }
+
+    @Override
+    protected boolean updateInWaterStateAndDoFluidPushing() {
+        return false;
+    }
 
     public boolean isAwakening() { return this.entityData.get(DATA_STATE) == State.AWAKENING; }
 
@@ -488,6 +581,7 @@ public class ChaosSpawnerEntity extends Monster {
             if (this.livingEntity.entityData.get(DATA_STATE) != State.SLEEPING && BossConfig.TOGGLE_BOSS_RESET.get()) {
                 AABB aabb = (new AABB(this.livingEntity.blockPosition())).inflate(range);
                 List<Player> list = level.getEntitiesOfClass(Player.class, aabb);
+                list.removeIf(player -> !player.isAlive());
                 return list.isEmpty();
             }
             return false;
@@ -501,6 +595,12 @@ public class ChaosSpawnerEntity extends Monster {
             this.livingEntity.entityData.set(DATA_STATE, State.SLEEPING);
             this.livingEntity.entityData.set(AWAKENING_TICKS, 0);
             this.livingEntity.entityData.set(PHASE, 0);
+            this.livingEntity.entityData.set(BARRIER_NORTH_TICK, -1);
+            this.livingEntity.entityData.set(BARRIER_EAST_TICK, -1);
+            this.livingEntity.entityData.set(BARRIER_SOUTH_TICK, -1);
+            this.livingEntity.entityData.set(BARRIER_WEST_TICK, -1);
+            this.livingEntity.entityData.set(BARRIER_UP_TICK, -1);
+            this.livingEntity.entityData.set(BARRIER_DOWN_TICK, -1);
             this.livingEntity.setHealth(this.livingEntity.getMaxHealth());
             this.livingEntity.setPos(getSpawnPointPos().getX() + 0.5, getSpawnPointPos().getY(), getSpawnPointPos().getZ() + 0.5);
             this.livingEntity.attackTickCount = 0;
@@ -1219,4 +1319,165 @@ public class ChaosSpawnerEntity extends Monster {
             return livingEntity != null && ChaosSpawnerEntity.this.canAttack(livingEntity, TargetingConditions.DEFAULT);
         }
     }
+
+    private static final ImmutableList<BlockPos> FRAME_POSITIONS = ImmutableList.of(
+            new BlockPos(2, 2, 2),
+            new BlockPos(2, 2, 1),
+            new BlockPos(2, 2, 0),
+            new BlockPos(2, 2, -1),
+            new BlockPos(2, 2, -2),
+            new BlockPos(-2, 2, 2),
+            new BlockPos(-2, 2, 1),
+            new BlockPos(-2, 2, 0),
+            new BlockPos(-2, 2, -1),
+            new BlockPos(-2, 2, -2),
+            new BlockPos(1, 2, 2),
+            new BlockPos(0, 2, 2),
+            new BlockPos(-1, 2, 2),
+            new BlockPos(1, 2, -2),
+            new BlockPos(0, 2, -2),
+            new BlockPos(-1, 2, -2),
+            new BlockPos(2, -2, 2),
+            new BlockPos(2, -2, 1),
+            new BlockPos(2, -2, 0),
+            new BlockPos(2, -2, -1),
+            new BlockPos(2, -2, -2),
+            new BlockPos(-2, -2, 2),
+            new BlockPos(-2, -2, 1),
+            new BlockPos(-2, -2, 0),
+            new BlockPos(-2, -2, -1),
+            new BlockPos(-2, -2, -2),
+            new BlockPos(1, -2, 2),
+            new BlockPos(0, -2, 2),
+            new BlockPos(-1, -2, 2),
+            new BlockPos(1, -2, -2),
+            new BlockPos(0, -2, -2),
+            new BlockPos(-1, -2, -2),
+            new BlockPos(2, 1, 2),
+            new BlockPos(2, 0, 2),
+            new BlockPos(2, -1, 2),
+            new BlockPos(2, 1, -2),
+            new BlockPos(2, 0, -2),
+            new BlockPos(2, -1, -2),
+            new BlockPos(-2, 1, -2),
+            new BlockPos(-2, 0, -2),
+            new BlockPos(-2, -1, -2),
+            new BlockPos(-2, -1, 2),
+            new BlockPos(-2, 0, 2),
+            new BlockPos(-2, -1, 2)
+    );
+
+    private ImmutableList<BlockPos> FRAME_POS_NORTH = ImmutableList.of(
+            new BlockPos(0, 2, -2),
+            new BlockPos(-1, 2, -2),
+            new BlockPos(-2, 2, -2),
+            new BlockPos(-2, 1, -2),
+            new BlockPos(-2, 0, -2),
+            new BlockPos(-2, -1, -2),
+            new BlockPos(-2, -2, -2),
+            new BlockPos(-1, -2, -2),
+            new BlockPos(0, -2, -2),
+            new BlockPos(1, -2, -2),
+            new BlockPos(2, -2, -2),
+            new BlockPos(2, -1, -2),
+            new BlockPos(2, 0, -2),
+            new BlockPos(2, 1, -2),
+            new BlockPos(2, 2, -2),
+            new BlockPos(1, 2, -2)
+    );
+
+    private ImmutableList<BlockPos> FRAME_POS_EAST = ImmutableList.of(
+            new BlockPos(2, 2, 0),
+            new BlockPos(2, 2, -1),
+            new BlockPos(2, 2, -2),
+            new BlockPos(2, 1, -2),
+            new BlockPos(2, 0, -2),
+            new BlockPos(2, -1, -2),
+            new BlockPos(2, -2, -2),
+            new BlockPos(2, -2, -1),
+            new BlockPos(2, -2, 0),
+            new BlockPos(2, -2, 1),
+            new BlockPos(2, -2, 2),
+            new BlockPos(2, -1, 2),
+            new BlockPos(2, 0, 2),
+            new BlockPos(2, 1, 2),
+            new BlockPos(2, 2, 2),
+            new BlockPos(2, 2, 1)
+    );
+
+    private ImmutableList<BlockPos> FRAME_POS_SOUTH = ImmutableList.of(
+            new BlockPos(0, 2, 2),
+            new BlockPos(1, 2, 2),
+            new BlockPos(2, 2, 2),
+            new BlockPos(2, 1, 2),
+            new BlockPos(2, 0, 2),
+            new BlockPos(2, -1, 2),
+            new BlockPos(2, -2, 2),
+            new BlockPos(1, -2, 2),
+            new BlockPos(0, -2, 2),
+            new BlockPos(-1, -2, 2),
+            new BlockPos(-2, -2, 2),
+            new BlockPos(-2, -1, 2),
+            new BlockPos(-2, 0, 2),
+            new BlockPos(-2, 1, 2),
+            new BlockPos(-2, 2, 2),
+            new BlockPos(-1, 2, 2)
+    );
+
+    private ImmutableList<BlockPos> FRAME_POS_WEST = ImmutableList.of(
+            new BlockPos(-2, 2, 0),
+            new BlockPos(-2, 2, 1),
+            new BlockPos(-2, 2, 2),
+            new BlockPos(-2, 1, 2),
+            new BlockPos(-2, 0, 2),
+            new BlockPos(-2, -1, 2),
+            new BlockPos(-2, -2, 2),
+            new BlockPos(-2, -2, 1),
+            new BlockPos(-2, -2, 0),
+            new BlockPos(-2, -2, -1),
+            new BlockPos(-2, -2, -2),
+            new BlockPos(-2, -1, -2),
+            new BlockPos(-2, 0, -2),
+            new BlockPos(-2, 1, -2),
+            new BlockPos(-2, 2, -2),
+            new BlockPos(-2, 2, -1)
+    );
+
+    private ImmutableList<BlockPos> FRAME_POS_UP = ImmutableList.of(
+            new BlockPos(0, 2, -2),
+            new BlockPos(1, 2, -2),
+            new BlockPos(2, 2, -2),
+            new BlockPos(2, 2, -1),
+            new BlockPos(2, 2, 0),
+            new BlockPos(2, 2, 1),
+            new BlockPos(2, 2, 2),
+            new BlockPos(1, 2, 2),
+            new BlockPos(0, 2, 2),
+            new BlockPos(-1, 2, 2),
+            new BlockPos(-2, 2, 2),
+            new BlockPos(-2, 2, 1),
+            new BlockPos(-2, 2, 0),
+            new BlockPos(-2, 2, -1),
+            new BlockPos(-2, 2, -2),
+            new BlockPos(-1, 2, -2)
+    );
+
+    private ImmutableList<BlockPos> FRAME_POS_DOWN = ImmutableList.of(
+            new BlockPos(0, -2, -2),
+            new BlockPos(1, -2, -2),
+            new BlockPos(2, -2, -2),
+            new BlockPos(2, -2, -1),
+            new BlockPos(2, -2, 0),
+            new BlockPos(2, -2, 1),
+            new BlockPos(2, -2, 2),
+            new BlockPos(1, -2, 2),
+            new BlockPos(0, -2, 2),
+            new BlockPos(-1, -2, 2),
+            new BlockPos(-2, -2, 2),
+            new BlockPos(-2, -2, 1),
+            new BlockPos(-2, -2, 0),
+            new BlockPos(-2, -2, -1),
+            new BlockPos(-2, -2, -2),
+            new BlockPos(-1, -2, -2)
+    );
 }

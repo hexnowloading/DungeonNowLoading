@@ -128,6 +128,10 @@ public class ChaosSpawnerVertexBlock extends Block implements SimpleWaterloggedB
         }
     }
 
+    public static void fixFrame(Level level, BlockPos blockPos, BlockState blockState) {
+        level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(HALF, blockState.getValue(HALF)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+    }
+
     private void signalToBarrierCenter(Level level, BlockPos blockPos, BlockState blockState) {
         if (blockState.getValue(HALF).equals(Half.TOP)) {
             if (blockState.getValue(FACING).equals(Direction.NORTH)) {

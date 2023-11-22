@@ -2,10 +2,12 @@ package dev.hexnowloading.dungeonnowloading.block;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,7 +35,6 @@ import java.util.function.Predicate;
 public class ChaosSpawnerBarrierCenterBlock extends Block implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final BooleanProperty BARRIER_ACTIVE = DNLProperties.BARRIER_ACTIVE;
     protected static final VoxelShape NORTH_AABB = Block.box(0.0, 0.0, 1.0, 16.0, 16.0, 2.0);
     protected static final VoxelShape SOUTH_AABB = Block.box(0.0, 0.0, 14.0, 16.0, 16.0, 15.0);
     protected static final VoxelShape EAST_AABB = Block.box(14.0, 0.0, 0.0, 15.0, 16.0, 16.0);
@@ -45,47 +46,16 @@ public class ChaosSpawnerBarrierCenterBlock extends Block implements SimpleWater
     private static final Predicate<BlockState> CHAOS_SPAWNER_EDGE_PREDICATE;
     private static final Predicate<BlockState> CHAOS_SPAWNER_BARRIER_PREDICATE;
 */
-    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_X = ImmutableList.of(
-            new BlockPos(0, 2, 0),
-            new BlockPos(0, 2, 2),
-            new BlockPos(0, 0, 2),
-            new BlockPos(0, -2, 2),
-            new BlockPos(0, -2, 0),
-            new BlockPos(0, -2, -2),
-            new BlockPos(0, 0, -2),
-            new BlockPos(0, 2, -2)
-    );
 
-    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_Y = ImmutableList.of(
-            new BlockPos(2, 0, 0),
-            new BlockPos(2, 0, 2),
-            new BlockPos(0, 0, 2),
-            new BlockPos(-2, 0, 2),
-            new BlockPos(-2, 0, 0),
-            new BlockPos(-2, 0, -2),
-            new BlockPos(0, 0, -2),
-            new BlockPos(2, 0, -2)
-    );
-
-    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_Z = ImmutableList.of(
-            new BlockPos(0, 2, 0),
-            new BlockPos(2, 2, 0),
-            new BlockPos(2, 0, 0),
-            new BlockPos(2, -2, 0),
-            new BlockPos(0, -2, 0),
-            new BlockPos(-2, -2, 0),
-            new BlockPos(-2, 0, 0),
-            new BlockPos(-2, 2, 0)
-    );
 
     public ChaosSpawnerBarrierCenterBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE).setValue(BARRIER_ACTIVE, true));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(FACING, WATERLOGGED, BARRIER_ACTIVE);
+        stateBuilder.add(FACING, WATERLOGGED);
     }
 
     @Override
@@ -125,8 +95,7 @@ public class ChaosSpawnerBarrierCenterBlock extends Block implements SimpleWater
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
         return (BlockState)this.defaultBlockState()
-                .setValue(FACING, blockPlaceContext.getNearestLookingDirection().getOpposite())
-                .setValue(BARRIER_ACTIVE, true);
+                .setValue(FACING, blockPlaceContext.getNearestLookingDirection().getOpposite());
     }
 
     public static void checkBarrierCondition(Level level, BlockPos blockPos, Direction.Axis direction) {
@@ -148,11 +117,104 @@ public class ChaosSpawnerBarrierCenterBlock extends Block implements SimpleWater
                 brokenFrame++;
             }
             if (brokenFrame == 8) {
-
                 level.destroyBlock(blockPos, false);
+                Iterator barrierIterator = null;
+                if (direction == Direction.Axis.X) {
+                    barrierIterator = BARRIER_LOCATIONS_X.iterator();
+                } else if (direction == Direction.Axis.Y) {
+                    barrierIterator = BARRIER_LOCATIONS_Y.iterator();
+                } else if (direction == Direction.Axis.Z) {
+                    barrierIterator = BARRIER_LOCATIONS_Z.iterator();
+                }
+                while(barrierIterator.hasNext()) {
+                    BlockPos breakPos = blockPos.offset((BlockPos) barrierIterator.next());
+                    level.destroyBlock(breakPos, false);
+                }
             }
         }
     }
+
+    public static void placeBarrier(Level level, BlockPos blockPos, int direction) {
+        if (direction == 0) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false), 2);
+        } else if (direction == 1) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(WATERLOGGED, false), 2);
+        } else if (direction == 2) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(WATERLOGGED, false), 2);
+        } else if (direction == 3) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(WATERLOGGED, false), 2);
+        } else if (direction == 4) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get().defaultBlockState().setValue(FACING, Direction.UP).setValue(WATERLOGGED, false), 2);
+        } else if (direction == 5) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get().defaultBlockState().setValue(FACING, Direction.DOWN).setValue(WATERLOGGED, false), 2);
+        }
+    }
+
+    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_X = ImmutableList.of(
+            new BlockPos(0, 2, 0),
+            new BlockPos(0, 2, 2),
+            new BlockPos(0, 0, 2),
+            new BlockPos(0, -2, 2),
+            new BlockPos(0, -2, 0),
+            new BlockPos(0, -2, -2),
+            new BlockPos(0, 0, -2),
+            new BlockPos(0, 2, -2)
+    );
+
+    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_Y = ImmutableList.of(
+            new BlockPos(2, 0, 0),
+            new BlockPos(2, 0, 2),
+            new BlockPos(0, 0, 2),
+            new BlockPos(-2, 0, 2),
+            new BlockPos(-2, 0, 0),
+            new BlockPos(-2, 0, -2),
+            new BlockPos(0, 0, -2),
+            new BlockPos(2, 0, -2)
+    );
+
+    private static final ImmutableList<BlockPos> BLOCK_LOCATIONS_Z = ImmutableList.of(
+            new BlockPos(0, 2, 0),
+            new BlockPos(2, 2, 0),
+            new BlockPos(2, 0, 0),
+            new BlockPos(2, -2, 0),
+            new BlockPos(0, -2, 0),
+            new BlockPos(-2, -2, 0),
+            new BlockPos(-2, 0, 0),
+            new BlockPos(-2, 2, 0)
+    );
+
+    private static final ImmutableList<BlockPos> BARRIER_LOCATIONS_X = ImmutableList.of(
+            new BlockPos(0, 1, 0),
+            new BlockPos(0, 1, -1),
+            new BlockPos(0, 0, -1),
+            new BlockPos(0, -1, -1),
+            new BlockPos(0, -1, 0),
+            new BlockPos(0, -1, 1),
+            new BlockPos(0, 0, 1),
+            new BlockPos(0, 1, 1)
+    );
+
+    private static final ImmutableList<BlockPos> BARRIER_LOCATIONS_Y = ImmutableList.of(
+            new BlockPos(1, 0, 0),
+            new BlockPos(1, 0, -1),
+            new BlockPos(0, 0, -1),
+            new BlockPos(-1, 0, -1),
+            new BlockPos(-1, 0, 0),
+            new BlockPos(-1, 0, 1),
+            new BlockPos(0, 0, 1),
+            new BlockPos(1, 0, 1)
+    );
+
+    private static final ImmutableList<BlockPos> BARRIER_LOCATIONS_Z = ImmutableList.of(
+            new BlockPos(0, 1, 0),
+            new BlockPos(-1, 1, 0),
+            new BlockPos(-1, 0, 0),
+            new BlockPos(-1, -1, 0),
+            new BlockPos(0, -1, 0),
+            new BlockPos(1, -1, 0),
+            new BlockPos(1, 0, 0),
+            new BlockPos(1, 1, 0)
+    );
 
     /*public static void checkBarrierCondition(Level level, BlockPos blockPos, BlockState blockState) {
         if (level.getBlockState(blockPos).is(DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get())) {

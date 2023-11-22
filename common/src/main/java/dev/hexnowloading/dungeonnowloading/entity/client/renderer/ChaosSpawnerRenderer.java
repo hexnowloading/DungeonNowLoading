@@ -17,7 +17,7 @@ public class ChaosSpawnerRenderer<T extends ChaosSpawnerEntity> extends MobRende
     }
 
     protected void scale(ChaosSpawnerEntity entitylivingbaseIn, PoseStack matrixStackIn, float partialTickTime) {
-        matrixStackIn.scale(3.0F, 3.0F, 3.0F);
+        matrixStackIn.scale(5.0F, 5.0F, 5.0F);
     }
 
     @Override

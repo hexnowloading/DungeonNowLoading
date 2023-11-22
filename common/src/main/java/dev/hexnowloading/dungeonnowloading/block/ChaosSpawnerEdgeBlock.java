@@ -169,6 +169,14 @@ public class ChaosSpawnerEdgeBlock extends Block implements SimpleWaterloggedBlo
         }
     }
 
+    public static void fixFrame(Level level, BlockPos blockPos, BlockState blockState) {
+        if (blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_EDGE.get())) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+        } else if (blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_EDGE.get())) {
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_EDGE.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+        }
+    }
+
     private void signalToBarrierCenter(Level level, BlockPos blockPos, BlockState blockState) {
         if (blockState.getValue(ALL_SIDES).equals(AllSides.TOP)) {
             if (blockState.getValue(FACING).equals(Direction.NORTH)) {
