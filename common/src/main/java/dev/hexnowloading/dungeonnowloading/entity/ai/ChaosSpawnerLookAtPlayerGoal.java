@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
@@ -29,9 +30,7 @@ public class ChaosSpawnerLookAtPlayerGoal extends Goal {
         this.onlyHorizontal = onlyHorizontal;
         this.setFlags(EnumSet.of(Flag.LOOK));
         if (lookAtType == Player.class) {
-            this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).ignoreLineOfSight().ignoreInvisibilityTesting().selector((lookTarget) -> {
-                return EntitySelector.notRiding(chaosSpawnerEntity).test(lookTarget);
-            });
+            this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).ignoreLineOfSight().ignoreInvisibilityTesting().selector((lookTarget) -> EntitySelector.notRiding(chaosSpawnerEntity).test(lookTarget));
         } else {
             this.lookAtContext = TargetingConditions.forNonCombat().range(lookDistance).ignoreLineOfSight().ignoreInvisibilityTesting();
         }
@@ -58,7 +57,7 @@ public class ChaosSpawnerLookAtPlayerGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (lookAt.isAlive()) {
+        if (!lookAt.isAlive()) {
             return false;
         } else if (chaosSpawnerEntity.distanceToSqr(lookAt) > (double) (lookDistance * lookDistance)) {
             return false;
@@ -80,9 +79,19 @@ public class ChaosSpawnerLookAtPlayerGoal extends Goal {
     @Override
     public void tick() {
         if (lookAt.isAlive()) {
-            double b = onlyHorizontal ? chaosSpawnerEntity.getEyeY() : lookAt.getEyeY();
-            chaosSpawnerEntity.getLookControl().setLookAt(lookAt.getX(), b, lookAt.getZ());
-            --lookTime;
+            if (chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.PUSH)) {
+                double viewDistance = 2.0F;
+                Vec3 viewVector = chaosSpawnerEntity.getViewVector(1.0F);
+                double d0 = viewVector.x * viewDistance;
+                double d1 = viewVector.y * viewDistance;
+                double d2 = viewVector.z * viewDistance;
+                chaosSpawnerEntity.getLookControl().setLookAt(chaosSpawnerEntity.getX() + d0, chaosSpawnerEntity.getY(0.5) + d1, chaosSpawnerEntity.getZ() + d2);
+                --lookTime;
+            } else {
+                double b = onlyHorizontal ? chaosSpawnerEntity.getEyeY() : lookAt.getEyeY();
+                chaosSpawnerEntity.getLookControl().setLookAt(lookAt.getX(), b, lookAt.getZ());
+                --lookTime;
+            }
         }
     }
 }

@@ -5,8 +5,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.scores.Team;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChaosSpawnerPlayerTargetGoal extends Goal {
 
@@ -23,12 +25,16 @@ public class ChaosSpawnerPlayerTargetGoal extends Goal {
         if (nextScanTick > 0) {
             --nextScanTick;
         } else {
-            nextScanTick = reducedTickDelay(60);
-            List<Player> list = chaosSpawnerEntity.level().getNearbyPlayers(attackTargeting, chaosSpawnerEntity, chaosSpawnerEntity.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
-            if (!list.isEmpty()) {
-                chaosSpawnerEntity.setTarget(list.get(chaosSpawnerEntity.getRandom().nextInt(list.size())));
-                return true;
+            if (chaosSpawnerEntity.getPhase() != 0) {
+                nextScanTick = reducedTickDelay(60);
+                List<Player> list = chaosSpawnerEntity.level().getNearbyPlayers(attackTargeting, chaosSpawnerEntity, chaosSpawnerEntity.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
+                list = list.stream().filter(player -> !player.getAbilities().instabuild).collect(Collectors.toList());
+                if (!list.isEmpty()) {
+                    chaosSpawnerEntity.setTarget(list.get(chaosSpawnerEntity.getRandom().nextInt(list.size())));
+                    return true;
+                }
             }
+            chaosSpawnerEntity.setTarget(null);
         }
         return false;
     }
@@ -36,6 +42,27 @@ public class ChaosSpawnerPlayerTargetGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         LivingEntity livingEntity = chaosSpawnerEntity.getTarget();
-        return livingEntity != null && chaosSpawnerEntity.canAttack(livingEntity, TargetingConditions.DEFAULT);
+        if (livingEntity == null) {
+            return false;
+        }
+        if (!chaosSpawnerEntity.canAttack(livingEntity, TargetingConditions.DEFAULT)) {
+            return false;
+        }
+        if (livingEntity instanceof Player) {
+            return !((Player) livingEntity).getAbilities().instabuild;
+        }
+        if (livingEntity.getTeam() != null) {
+            Team team = chaosSpawnerEntity.getTeam();
+            Team team2 = livingEntity.getTeam();
+            if (team == team2) {
+                return false;
+            }
+        }
+        double d = chaosSpawnerEntity.getFollowDistance();
+        if (chaosSpawnerEntity.distanceToSqr(livingEntity) > d * d) {
+            return false;
+        }
+        chaosSpawnerEntity.setTarget(livingEntity);
+        return true;
     }
 }

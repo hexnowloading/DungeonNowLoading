@@ -1,7 +1,12 @@
 package dev.hexnowloading.dungeonnowloading.entity.ai;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.sun.jna.WString;
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
+import dev.hexnowloading.dungeonnowloading.entity.util.WeightedRandomBag;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
@@ -9,61 +14,148 @@ import net.minecraft.world.phys.Vec3;
 public class ChaosSpawnerShootGhostBulletGoal extends Goal {
 
     private final ChaosSpawnerEntity chaosSpawnerEntity;
-    private final int type;
+    private String type;
 
-    public ChaosSpawnerShootGhostBulletGoal(ChaosSpawnerEntity chaosSpawnerEntity, int type) {
+    public ChaosSpawnerShootGhostBulletGoal(ChaosSpawnerEntity chaosSpawnerEntity) {
         this.chaosSpawnerEntity = chaosSpawnerEntity;
-        this.type = type;
     }
 
     @Override
     public boolean canUse() {
-        return chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.ABILITY_E) && chaosSpawnerEntity.getTarget() != null;
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return canUse();
+        return chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET) && chaosSpawnerEntity.getTarget() != null;
     }
 
     @Override
     public void start() {
         super.start();
         chaosSpawnerEntity.setAttackTick(100);
-    }
-
-    @Override
-    public void stop() {
-        super.stop();
-        chaosSpawnerEntity.setAttackTick(0);
-        chaosSpawnerEntity.setDataState(ChaosSpawnerEntity.State.IDLE);
+        WeightedRandomBag<String> bulletPatterns = new WeightedRandomBag<>();
+        if (chaosSpawnerEntity.getPhase() == 1) {
+            bulletPatterns.addEntry("Single", 1);
+            bulletPatterns.addEntry("Arc", 1);
+            bulletPatterns.addEntry("Burst", 1);
+        } else if (chaosSpawnerEntity.getPhase() == 2) {
+            bulletPatterns.addEntry("Rapid", 1);
+            bulletPatterns.addEntry("Strong Arc", 1);
+            bulletPatterns.addEntry("Strong Burst", 1);
+        }
+        type = bulletPatterns.getRandom();
     }
 
     @Override
     public void tick() {
-        if (chaosSpawnerEntity.getAttackTick() == 100) { performRangedAttack(); }
-        if (chaosSpawnerEntity.getAttackTick() == 80) { performRangedAttack(); }
-        if (chaosSpawnerEntity.getAttackTick() == 60) { performRangedAttack(); }
-        if (chaosSpawnerEntity.getAttackTick() == 40) { performRangedAttack(); }
-        if (chaosSpawnerEntity.getAttackTick() == 20) { performRangedAttack(); }
+        switch (type) {
+            case "Single" -> {
+                for (int i = 0; i < 5; i++) {
+                    if (chaosSpawnerEntity.getAttackTick() == 100 - i * 20) { performSingleShot(); }
+                }
+            }
+            case "Rapid" -> {
+                for (int j = 0; j < 3; j++) {
+                    for (int i = 0; i < 5; i++) {
+                        if (chaosSpawnerEntity.getAttackTick() == (100 - 30 * j) - i * 4) { performSingleShot(); }
+                    }
+                }
+            }
+            case "Arc" -> {
+                for (int i = 0; i < 3; i++) {
+                    if (chaosSpawnerEntity.getAttackTick() == 100 - i * 30) { performArcShot(); }
+                }
+            }
+            case "Strong Arc" -> {
+                for (int i = 0; i < 3; i++) {
+                    if (chaosSpawnerEntity.getAttackTick() == 100 - i * 30) { performStrongArcShot(); }
+                }
+            }
+            case "Burst" -> {
+                for (int i = 0; i < 3; i++) {
+                    if (chaosSpawnerEntity.getAttackTick() == 100 - i * 30) { performBurstShot(i % 2 * 22.5F); }
+                }
+            }
+            case "Strong Burst" -> {
+                for (int i = 0; i < 3; i++) {
+                    if (chaosSpawnerEntity.getAttackTick() == 100 - i * 30) { performStrongBurstShot(i % 2 * 11.5F); }
+                }
+            }
+        }
+        if (chaosSpawnerEntity.getAttackTick() == 0) {
+            chaosSpawnerEntity.stopAttacking();
+        }
     }
 
-    private void performRangedAttack() {
+    private void performSingleShot() {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
             if (targetEntity.distanceTo(chaosSpawnerEntity) < 30.0D) {
-                vecFromCenterToFrontOfFace();
+                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+                vecFromCenterToFrontOfFace(0.0F);
             }
         }
     }
 
-    private void vecFromCenterToFrontOfFace() {
+    private void performArcShot() {
+        LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
+        if (targetEntity != null) {
+            if (targetEntity.distanceTo(chaosSpawnerEntity) < 30.0D) {
+                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+                vecFromCenterToFrontOfFace(0.0F);
+                vecFromCenterToFrontOfFace(-10.0F);
+                vecFromCenterToFrontOfFace(10.0F);
+            }
+        }
+    }
+
+    private void performStrongArcShot() {
+        LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
+        if (targetEntity != null) {
+            if (targetEntity.distanceTo(chaosSpawnerEntity) < 30.0D) {
+                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+                vecFromCenterToFrontOfFace(0.0F);
+                vecFromCenterToFrontOfFace(-10.0F);
+                vecFromCenterToFrontOfFace(10.0F);
+                vecFromCenterToFrontOfFace(-20.0F);
+                vecFromCenterToFrontOfFace(20.0F);
+            }
+        }
+    }
+
+    private void performBurstShot(float angle) {
+        float offset = (float) Math.toRadians(angle);
+        Vec3 vec3 = new Vec3(1, 0, 0);
+        vec3 = vec3.yRot(offset);
+        chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+        for (int i = 0; i < 8; i++) {
+            vec3 = vec3.yRot(0.78539816339F * i);
+            ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, vec3.x, vec3.y,vec3.z);
+            chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + vec3.x, chaosSpawnerProjectileEntity.getY(-0.5) + vec3.y, chaosSpawnerProjectileEntity.getZ() + vec3.z);
+            chaosSpawnerEntity.level().addFreshEntity(chaosSpawnerProjectileEntity);
+        }
+    }
+
+    private void performStrongBurstShot(float angle) {
+        float offset = (float) Math.toRadians(angle);
+        Vec3 vec3 = new Vec3(1, 0, 0);
+        vec3 = vec3.yRot(offset);
+        chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+        for (int i = 0; i < 16; i++) {
+            vec3 = vec3.yRot(0.39269908169F * i);
+            ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, vec3.x, vec3.y,vec3.z);
+            chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + vec3.x, chaosSpawnerProjectileEntity.getY(-0.5) + vec3.y, chaosSpawnerProjectileEntity.getZ() + vec3.z);
+            chaosSpawnerEntity.level().addFreshEntity(chaosSpawnerProjectileEntity);
+        }
+    }
+
+    private void vecFromCenterToFrontOfFace(float angle) {
         double viewDistance = 2.0F;
         Vec3 viewVector = chaosSpawnerEntity.getViewVector(1.0F);
+        if (angle != 0.0F) {
+            float offset = (float) Math.toRadians(angle);
+            viewVector = viewVector.yRot(offset);
+        }
         double d0 = viewVector.x * viewDistance;
         double d1 = viewVector.y * viewDistance;
         double d2 = viewVector.z * viewDistance;
-        ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, d0, d1, d2, chaosSpawnerEntity.level());
+        ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, d0, d1, d2);
         chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + d0, chaosSpawnerProjectileEntity.getY(0.5) + d1, chaosSpawnerProjectileEntity.getZ() + d2);
         chaosSpawnerEntity.level().addFreshEntity(chaosSpawnerProjectileEntity);
     }

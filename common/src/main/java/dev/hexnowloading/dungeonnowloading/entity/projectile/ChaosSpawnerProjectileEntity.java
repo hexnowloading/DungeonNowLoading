@@ -1,5 +1,6 @@
 package dev.hexnowloading.dungeonnowloading.entity.projectile;
 
+import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -15,6 +16,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
@@ -26,6 +28,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ChaosSpawnerProjectileEntity extends Entity {
@@ -36,9 +39,9 @@ public class ChaosSpawnerProjectileEntity extends Entity {
     public double xPower;
     public double yPower;
     public double zPower;
-    private float INERTIA = 1F; // Keep it at 1 to maintain smooth motion at all speed.
-    private ParticleOptions SPAWN_PARTICLE = ParticleTypes.POOF;
-    private ParticleOptions TRAIL_PARTICLE = ParticleTypes.DRAGON_BREATH;
+    private final float INERTIA = 1F; // Keep it at 1 to maintain smooth motion at all speed.
+    private final ParticleOptions SPAWN_PARTICLE = ParticleTypes.POOF;
+    private final ParticleOptions TRAIL_PARTICLE = ParticleTypes.DRAGON_BREATH;
 
     public ChaosSpawnerProjectileEntity(EntityType<? extends ChaosSpawnerProjectileEntity> entityType, Level level) {
         super(entityType, level);
@@ -56,8 +59,8 @@ public class ChaosSpawnerProjectileEntity extends Entity {
         }
     }
 
-    public ChaosSpawnerProjectileEntity(LivingEntity owner, double xP, double yP, double zP, Level level) {
-        this(owner.getX(), owner.getY(), owner.getZ(), xP, yP, zP, level);
+    public ChaosSpawnerProjectileEntity(LivingEntity owner, double xP, double yP, double zP) {
+        this(owner.getX(), owner.getY(), owner.getZ(), xP, yP, zP, owner.level());
         this.setOwner(owner);
         this.setRot(owner.getYRot(), owner.getXRot());
     }
@@ -94,7 +97,9 @@ public class ChaosSpawnerProjectileEntity extends Entity {
                 this.setPos(d0, d1, d2);
                 ProjectileUtil.rotateTowardsMovement(this, 1F);
                 if (this.tickCount == 3) {
-                    this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITHER_SHOOT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    if (!(this.getOwner() instanceof ChaosSpawnerEntity)) { // to avoid playing the sound multiple times when Chaos Spawner shoots multiple projectiles.
+                        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITHER_SHOOT, this.getSoundSource(), 10.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                    }
                     for(int i = 0; i < 5; ++i) {
                         this.level().addParticle(this.SPAWN_PARTICLE, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
                     }
@@ -134,11 +139,15 @@ public class ChaosSpawnerProjectileEntity extends Entity {
         if (!this.level().isClientSide) {
             Entity target = entityHitResult.getEntity();
             if (target instanceof Player) {
-                boolean entityHurted = target.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), 8.0F);
+                int damageAmount = 1;
+                if (this.getOwner() instanceof ChaosSpawnerEntity) {
+                    damageAmount = (int) (((ChaosSpawnerEntity) this.getOwner()).getAttackDamage() * 0.8F);
+                }
+                boolean entityHurted = target.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), (float) damageAmount);
                 if (((Player) target).isBlocking()) {
                     ((Player) target).disableShield(true);
                 }
-                if (entityHurted && target.isAlive()) {
+                if (entityHurted && target.isAlive() && this.getOwner() != null) {
                     this.doEnchantDamageEffects((LivingEntity) this.getOwner(), entityHitResult.getEntity());
                 }
             }

@@ -21,6 +21,7 @@ public class ChaosSpawnerModel<T extends ChaosSpawnerEntity> extends Hierarchica
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner"), "main");
 	private final ModelPart root;
 	private final ModelPart skull_1;
+	private float yRotOld;
 
 	public ChaosSpawnerModel(ModelPart root) {
 		this.root = root;
@@ -44,13 +45,30 @@ public class ChaosSpawnerModel<T extends ChaosSpawnerEntity> extends Hierarchica
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.animate(entity.awakeningAnimationState, ChaosSpawnerAnimation.CHAOS_SPAWNER_AWAKENING, ageInTicks);
 		this.animate(entity.sleepingAnimationState, ChaosSpawnerAnimation.CHAOS_SPAWNER_SLEEPING, ageInTicks);
-		if (entity.getPhase() != 0) {
-			this.animateHeadLookTarget(netHeadYaw, headPitch);
+		this.animate(entity.smashAnimationState, ChaosSpawnerAnimation.CHAOS_SPAWNER_SMASH, ageInTicks);
+		if (entity.getPhase() == 0) {
+			if (entity.isAwakening() && entity.getAwakeningTick() < 80) {
+				this.animateIdlePose(ageInTicks);
+			}
+		} else {
 			this.animateIdlePose(ageInTicks);
+			this.animateHeadLookTarget(entity, netHeadYaw, headPitch);
 		}
 	}
 
-	private void animateHeadLookTarget(float netHeadYaw, float headPitch) {
+	private void animateHeadLookTarget(T entity, float netHeadYaw, float headPitch) {
+		/*if (entity.isAttacking(ChaosSpawnerEntity.State.PUSH)) {
+			if (entity.getAttackTick() > 80) {
+				this.skull_1.yRot = headPitch * ((float)Math.PI / 180F);
+			} else if (entity.getAttackTick() == 80) {
+				this.yRotOld = this.skull_1.yRot;
+			} else {
+				this.skull_1.yRot = this.yRotOld;
+			}
+		} else {
+			this.skull_1.xRot = headPitch * ((float)Math.PI / 180F);
+			this.skull_1.yRot = netHeadYaw * ((float)Math.PI / 180F);
+		}*/
 		this.skull_1.xRot = headPitch * ((float)Math.PI / 180F);
 		this.skull_1.yRot = netHeadYaw * ((float)Math.PI / 180F);
 	}
@@ -59,8 +77,10 @@ public class ChaosSpawnerModel<T extends ChaosSpawnerEntity> extends Hierarchica
 		float f = ageInTicks * 0.1F;
 		float f1 = Mth.cos(f);
 		float f2 = Mth.sin(f);
+		//float f3 = Mth.cos(f * 0.5F);
 		this.skull_1.zRot += 0.06F * f1;
 		this.skull_1.yRot += 0.06F * f2;
+		//this.skull_1.y += 0.48F * f3;
 	}
 
 	@Override

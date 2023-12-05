@@ -27,7 +27,7 @@ public class DNLEntityTypes {
     public static final RegistryObject<EntityType<ChaosSpawnerProjectileEntity>> CHAOS_SPAWNER_PROJECTILE = ENTITY_TYPE.register("chaos_spawner_projectile", () -> EntityType.Builder.<ChaosSpawnerProjectileEntity>of(ChaosSpawnerProjectileEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner_projectile").toString()));
 
     // Misc
-    public static final RegistryObject<EntityType<SpecialItemEntity>> SPECIAL_ITEM_ENTITY = ENTITY_TYPE.register("special_item_entity", () -> EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "special_item_entity").toString()));
+    public static final RegistryObject<EntityType<SpecialItemEntity>> SPECIAL_ITEM_ENTITY = ENTITY_TYPE.register("special_item_entity", () -> EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "special_item_entity").toString()));
 
     public static Map<EntityType<? extends LivingEntity>, AttributeSupplier> getAllAttributes() {
         Map<EntityType<? extends LivingEntity>, AttributeSupplier> map = new HashMap<>();

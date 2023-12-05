@@ -59,7 +59,7 @@ public class SpecialItemEntity extends ItemEntity implements TraceableEntity {
 
     @Override
     public void playerTouch(Player player) {
-        if (player.getUUID() == this.picker) {
+        if (player.getUUID().equals(this.picker)) {
             this.getItem().removeTagKey("PickerUUID");
             super.playerTouch(player);
         }
@@ -68,7 +68,7 @@ public class SpecialItemEntity extends ItemEntity implements TraceableEntity {
 
     @Override
     public boolean broadcastToPlayer(ServerPlayer serverPlayer) {
-        return serverPlayer.getUUID() == this.picker && super.broadcastToPlayer(serverPlayer);
+        return serverPlayer.getUUID().equals(this.picker) && super.broadcastToPlayer(serverPlayer);
     }
 
     public void setPickerUUID(UUID uuid) {

@@ -12,7 +12,7 @@ public class DNLCreativeModeTabs {
 
     public static final RegistryObject<CreativeModeTab> DUNGEONNOWLOADING_TAB = CREATIVE_MODE_TAB.register("dungeonnowloading", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
             .title(Component.translatable("creativemodetab.dungeonnowloading.tab"))
-            .icon(() -> DNLItems.WIND_JADE.get().getDefaultInstance())
+            .icon(() -> DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get().getDefaultInstance())
             .displayItems(((itemDisplayParameters, output) -> {
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());
