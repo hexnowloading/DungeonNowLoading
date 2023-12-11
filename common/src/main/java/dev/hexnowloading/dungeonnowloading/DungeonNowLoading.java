@@ -23,6 +23,7 @@ public class DungeonNowLoading {
         DNLBlocks.init();
         DNLBlockEntityTypes.init();
         DNLItems.init();
+        DNLSounds.init();
         DNLCreativeModeTabs.init();
     }
 

@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:indirect_magic",
+    "minecraft:magic",
+    "minecraft:dragon_breath",
+    "minecraft:lightning_bolt",
+    "minecraft:out_of_world",
+    "minecraft:sonic_boom",
+    "minecraft:wither",
+    "minecraft:wither_skull"
+  ]
+}

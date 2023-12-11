@@ -3,6 +3,7 @@ package dev.hexnowloading.dungeonnowloading.registry;
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
+import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
@@ -23,6 +24,9 @@ public class DNLEntityTypes {
     // Bosses
     public static final RegistryObject<EntityType<ChaosSpawnerEntity>> CHAOS_SPAWNER = ENTITY_TYPE.register("chaos_spawner", () -> EntityType.Builder.<ChaosSpawnerEntity>of(ChaosSpawnerEntity::new, MobCategory.MONSTER).sized(2.0F, 2.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner").toString()));
 
+    // Monsters
+    public static final RegistryObject<EntityType<HollowEntity>> HOLLOW = ENTITY_TYPE.register("hollow", () -> EntityType.Builder.of(HollowEntity::new, MobCategory.MONSTER).sized(0.95F, 0.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "hollow").toString()));
+
     // Projectiles
     public static final RegistryObject<EntityType<ChaosSpawnerProjectileEntity>> CHAOS_SPAWNER_PROJECTILE = ENTITY_TYPE.register("chaos_spawner_projectile", () -> EntityType.Builder.<ChaosSpawnerProjectileEntity>of(ChaosSpawnerProjectileEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner_projectile").toString()));
 
@@ -33,6 +37,7 @@ public class DNLEntityTypes {
         Map<EntityType<? extends LivingEntity>, AttributeSupplier> map = new HashMap<>();
 
         map.put(CHAOS_SPAWNER.get(), ChaosSpawnerEntity.createAttributes().build());
+        map.put(HOLLOW.get(), HollowEntity.createAttributes().build());
 
         return map;
     }

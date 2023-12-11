@@ -2,8 +2,10 @@ package dev.hexnowloading.dungeonnowloading.client;
 
 import dev.hexnowloading.dungeonnowloading.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.ChaosSpawnerProjectileModel;
+import dev.hexnowloading.dungeonnowloading.entity.client.model.HollowModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.ChaosSpawnerProjectileRenderer;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.ChaosSpawnerRenderer;
+import dev.hexnowloading.dungeonnowloading.entity.client.renderer.HollowRenderer;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.SpecialItemEntityRenderer;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -13,12 +15,18 @@ public class DNLForgeClientEvents {
         // Bosses
         event.registerLayerDefinition(ChaosSpawnerModel.LAYER_LOCATION, ChaosSpawnerModel::createBodyLayer);
 
+        // Monsters
+        event.registerLayerDefinition(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);
+
         // Projectiles
         event.registerLayerDefinition(ChaosSpawnerProjectileModel.LAYER_LOCATION, ChaosSpawnerProjectileModel::createBodyLayer);
     }
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         // Bosses
         event.registerEntityRenderer(DNLEntityTypes.CHAOS_SPAWNER.get(), ChaosSpawnerRenderer::new);
+
+        // Monsters
+        event.registerEntityRenderer(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
 
         // Projectiles
         event.registerEntityRenderer(DNLEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);

@@ -14,6 +14,12 @@ public class DNLCreativeModeTabs {
             .title(Component.translatable("creativemodetab.dungeonnowloading.tab"))
             .icon(() -> DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get().getDefaultInstance())
             .displayItems(((itemDisplayParameters, output) -> {
+                // Spawn Eggs
+                output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
+                output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
+                // Materials
+                output.accept(DNLItems.SPAWNER_FRAGMENT.get());
+                // Blocks
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_VERTEX.get());
@@ -23,7 +29,6 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_VERTEX.get());
-                output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
             }))
             .build());
 

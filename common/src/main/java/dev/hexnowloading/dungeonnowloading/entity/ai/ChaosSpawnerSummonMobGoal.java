@@ -3,6 +3,7 @@ package dev.hexnowloading.dungeonnowloading.entity.ai;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
+import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.entity.util.WeightedRandomBag;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -75,10 +76,12 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
                         mobWeightBag.addEntry("Zombie", 3);
                         mobWeightBag.addEntry("Skeleton", 2);
                         mobWeightBag.addEntry("Spider", 2);
+                        mobWeightBag.addEntry("Hollow", 2);
                     } else if (chaosSpawnerEntity.getPhase() == 2) {
                         mobWeightBag.addEntry("Zombie", 9);
                         mobWeightBag.addEntry("Skeleton", 6);
                         mobWeightBag.addEntry("Spider", 6);
+                        mobWeightBag.addEntry("Hollow", 6);
                         mobWeightBag.addEntry("Diamond Zombie", 2);
                         mobWeightBag.addEntry("Diamond Skeleton", 2);
                         mobWeightBag.addEntry("Invisible Spider", 2);
@@ -133,6 +136,14 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
                     spider.moveTo(summonPos, 0.0F, 0.0f);
                     spider.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(summonPos), MobSpawnType.MOB_SUMMONED, null, null);
                     level.addFreshEntity(spider);
+                }
+            }
+            case "Hollow" -> {
+                HollowEntity hollowEntity = DNLEntityTypes.HOLLOW.get().create(level);
+                if (hollowEntity != null) {
+                    hollowEntity.moveTo(summonPos, 0.0F, 0.0F);
+                    hollowEntity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(summonPos), MobSpawnType.MOB_SUMMONED, null, null);
+                    level.addFreshEntity(hollowEntity);
                 }
             }
             case "Diamond Zombie" -> {

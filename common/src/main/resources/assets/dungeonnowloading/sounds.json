@@ -1,0 +1,38 @@
+{
+  "hollow_ambient": {
+    "subtitle": "sounds.dungeonnowloading.hollow_ambient",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:hollow_ambient_0"
+      },
+      {
+        "name": "dungeonnowloading:hollow_ambient_1"
+      },
+      {
+        "name": "dungeonnowloading:hollow_ambient_2"
+      }
+    ]
+  },
+  "hollow_hurt": {
+    "subtitle": "sounds.dungeonnowloading.hollow_hurt",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:hollow_hurt_0"
+      },
+      {
+        "name": "dungeonnowloading:hollow_hurt_1"
+      },
+      {
+        "name": "dungeonnowloading:hollow_hurt_2"
+      }
+    ]
+  },
+  "hollow_death": {
+    "subtitle": "sounds.dungeonnowloading.hollow_death",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:hollow_death"
+      }
+    ]
+  }
+}
