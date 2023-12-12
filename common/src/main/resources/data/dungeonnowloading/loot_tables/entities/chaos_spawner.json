@@ -10,7 +10,17 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 2
+              "count": {
+                "min": 8,
+                "max": 16
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
             }
           ]
         }
@@ -21,11 +31,21 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:nether_star",
+          "name": "dungeonnowloading:spawner_fragment",
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 4
+              "count": {
+                "min": 8,
+                "max": 16
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
             }
           ]
         }
@@ -36,11 +56,80 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:emerald",
+          "name": "dungeonnowloading:spawner_frame",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 4,
+                "max": 8
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeonnowloading:spawner_blade",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 4
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeonnowloading:chaotic_hexahedron",
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": 1
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
+              }
             }
           ]
         }

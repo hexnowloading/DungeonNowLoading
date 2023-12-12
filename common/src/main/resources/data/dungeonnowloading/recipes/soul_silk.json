@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#X#",
+    "X#X",
+    "#X#"
+  ],
+  "key": {
+    "#": {
+      "item": "dungeonnowloading:soul_cloth"
+    },
+    "X": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "dungeonnowloading:soul_silk"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ##",
+    " X#",
+    "X  "
+  ],
+  "key": {
+    "#": {
+      "item": "dungeonnowloading:spawner_frame"
+    },
+    "X": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "dungeonnowloading:spawner_blade"
+  }
+}

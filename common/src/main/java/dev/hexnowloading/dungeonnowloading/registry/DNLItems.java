@@ -1,6 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.registry;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
+import dev.hexnowloading.dungeonnowloading.item.GreatExperienceBottleItem;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
@@ -17,10 +18,19 @@ public class DNLItems {
     public static final RegistrationProvider<Item> ITEMS = RegistrationProvider.get(Registries.ITEM, DungeonNowLoading.MOD_ID);
     private static final HashMap<ResourceKey<CreativeModeTab>, ArrayList<ResourceLocation>> ITEM_TABS = new HashMap<>();
 
-    // ITEMS
+    // ITEMS - INGREDIENTS
     public static final RegistryObject<Item> SPAWNER_FRAGMENT = register("spawner_fragment", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SPAWNER_FRAME = register("spawner_frame", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> SPAWNER_BLADE = register("spawner_blade", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> SOUL_CLOTH = register("soul_cloth", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SOUL_SILK = register("soul_silk", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> CHAOTIC_HEXAHEDRON = register("chaotic_hexahedron", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<Item> WIND_JADE = register("wind_jade", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> EYE_OF_THE_STORM = register("eye_of_the_storm", () -> new Item(new Item.Properties()));
+
+    // ITEMS - FUNCTIONAL
+    public static final RegistryObject<Item> GREAT_EXPERIENCE_BOTTLE = register("great_experience_bottle", () -> new GreatExperienceBottleItem(new Item.Properties().rarity(Rarity.UNCOMMON), 100));
+    public static final RegistryObject<Item> SCEPTER_OF_SEALED_CHAOS = register("scepter_of_sealed_chaos", () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 
     // BLOCKS
     public static final RegistryObject<Item> SKYLIGHT_STONE = register("skylight_stone", () -> new BlockItem(DNLBlocks.SKYLIGHT_STONE.get(), new Item.Properties()));

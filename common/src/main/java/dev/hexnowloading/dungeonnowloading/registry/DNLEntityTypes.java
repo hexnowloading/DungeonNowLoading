@@ -3,6 +3,7 @@ package dev.hexnowloading.dungeonnowloading.registry;
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
+import dev.hexnowloading.dungeonnowloading.entity.misc.GreatExperienceBottleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
@@ -32,6 +33,7 @@ public class DNLEntityTypes {
 
     // Misc
     public static final RegistryObject<EntityType<SpecialItemEntity>> SPECIAL_ITEM_ENTITY = ENTITY_TYPE.register("special_item_entity", () -> EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "special_item_entity").toString()));
+    public static final RegistryObject<EntityType<GreatExperienceBottleEntity>> GREAT_EXPERIENCE_BOTTLE = ENTITY_TYPE.register("great_experience_bottle", () -> EntityType.Builder.<GreatExperienceBottleEntity>of(GreatExperienceBottleEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "great_experience_bottle").toString()));
 
     public static Map<EntityType<? extends LivingEntity>, AttributeSupplier> getAllAttributes() {
         Map<EntityType<? extends LivingEntity>, AttributeSupplier> map = new HashMap<>();

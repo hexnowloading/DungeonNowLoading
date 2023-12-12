@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "dungeonnowloading:item/scepter_of_sealed_chaos"
+  }
+}

@@ -17,8 +17,16 @@ public class DNLCreativeModeTabs {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
-                // Materials
+                // Items - Ingredients
                 output.accept(DNLItems.SPAWNER_FRAGMENT.get());
+                output.accept(DNLItems.SPAWNER_FRAME.get());
+                output.accept(DNLItems.SPAWNER_BLADE.get());
+                output.accept(DNLItems.SOUL_CLOTH.get());
+                output.accept(DNLItems.SOUL_SILK.get());
+                output.accept(DNLItems.CHAOTIC_HEXAHEDRON.get());
+                // Items - Functional
+                output.accept(DNLItems.GREAT_EXPERIENCE_BOTTLE.get());
+                output.accept(DNLItems.SCEPTER_OF_SEALED_CHAOS.get());
                 // Blocks
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());
