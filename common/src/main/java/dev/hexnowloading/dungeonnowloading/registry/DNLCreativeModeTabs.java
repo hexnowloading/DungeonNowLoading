@@ -17,6 +17,7 @@ public class DNLCreativeModeTabs {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
+                output.accept(DNLItems.SEALED_CHAOS_SPAWNEGG.get());
                 // Items - Ingredients
                 output.accept(DNLItems.SPAWNER_FRAGMENT.get());
                 output.accept(DNLItems.SPAWNER_FRAME.get());

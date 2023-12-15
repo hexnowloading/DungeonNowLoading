@@ -4,6 +4,7 @@ import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.ChaosSpawnerProjectileModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.HollowModel;
+import dev.hexnowloading.dungeonnowloading.entity.client.model.SealedChaosModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.*;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
@@ -18,6 +19,9 @@ public class DNLForgeClientEvents {
         // Monsters
         event.registerLayerDefinition(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);
 
+        // Passive
+        event.registerLayerDefinition(SealedChaosModel.LAYER_LOCATION, SealedChaosModel::createBodyLayer);
+
         // Projectiles
         event.registerLayerDefinition(ChaosSpawnerProjectileModel.LAYER_LOCATION, ChaosSpawnerProjectileModel::createBodyLayer);
     }
@@ -27,6 +31,9 @@ public class DNLForgeClientEvents {
 
         // Monsters
         event.registerEntityRenderer(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
+
+        // Passive
+        event.registerEntityRenderer(DNLEntityTypes.SEALED_CHAOS.get(), SealedChaosRenderer::new);
 
         // Projectiles
         event.registerEntityRenderer(DNLEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);

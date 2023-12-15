@@ -4,6 +4,7 @@ import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.ChaosSpawnerModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.ChaosSpawnerProjectileModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.HollowModel;
+import dev.hexnowloading.dungeonnowloading.entity.client.model.SealedChaosModel;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.*;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
@@ -27,6 +28,9 @@ public class DNLFabricClient implements ClientModInitializer {
         // Monsters
         EntityRendererRegistry.register(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
 
+        // Passive
+        EntityRendererRegistry.register(DNLEntityTypes.SEALED_CHAOS.get(), SealedChaosRenderer::new);
+
         // Projectiles
         EntityRendererRegistry.register(DNLEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);
         EntityRendererRegistry.register(DNLEntityTypes.GREAT_EXPERIENCE_BOTTLE.get(), (context) -> {
@@ -42,6 +46,9 @@ public class DNLFabricClient implements ClientModInitializer {
 
         // Monsters
         EntityModelLayerRegistry.registerModelLayer(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);
+
+        // Passive
+        EntityModelLayerRegistry.registerModelLayer(SealedChaosModel.LAYER_LOCATION, SealedChaosModel::createBodyLayer);
 
         //Projectiles
         EntityModelLayerRegistry.registerModelLayer(ChaosSpawnerProjectileModel.LAYER_LOCATION, ChaosSpawnerProjectileModel::createBodyLayer);

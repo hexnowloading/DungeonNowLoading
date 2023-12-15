@@ -8,7 +8,9 @@ public class DNLServerConfig {
     public static void register() {
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
 
+        GeneralConfig.registerGeneralConfig(SERVER_BUILDER);
         BossConfig.registerServerConfig(SERVER_BUILDER);
+        PvpConfig.registerServerConfig(SERVER_BUILDER);
 
         Services.CONFIG.registerConfig(ModConfig.Type.SERVER, SERVER_BUILDER.build());
     }
