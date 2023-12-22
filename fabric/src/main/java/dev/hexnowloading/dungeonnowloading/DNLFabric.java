@@ -1,7 +1,9 @@
 package dev.hexnowloading.dungeonnowloading;
 
+import dev.hexnowloading.dungeonnowloading.entity.DNLEntityEvents;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

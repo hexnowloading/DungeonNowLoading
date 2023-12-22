@@ -2,7 +2,9 @@ package dev.hexnowloading.dungeonnowloading.registry;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.item.GreatExperienceBottleItem;
+import dev.hexnowloading.dungeonnowloading.item.LifeStealerItem;
 import dev.hexnowloading.dungeonnowloading.item.ScepterOfSealedChaosItem;
+import dev.hexnowloading.dungeonnowloading.item.SwordOfSparkingSoul;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
@@ -32,6 +34,8 @@ public class DNLItems {
     // ITEMS - FUNCTIONAL
     public static final RegistryObject<Item> GREAT_EXPERIENCE_BOTTLE = register("great_experience_bottle", () -> new GreatExperienceBottleItem(new Item.Properties().rarity(Rarity.RARE), 100));
     public static final RegistryObject<Item> SCEPTER_OF_SEALED_CHAOS = register("scepter_of_sealed_chaos", () -> new ScepterOfSealedChaosItem(new Item.Properties().rarity(Rarity.RARE).durability(100)));
+    public static final RegistryObject<Item> LIFE_STEALER = register("life_stealer", () -> new LifeStealerItem(Tiers.DIAMOND, 3, -2.8F, new Item.Properties().rarity(Rarity.COMMON).durability(1562)));
+    public static final RegistryObject<Item> SWORD_OF_SPARKING_SOUL = register("sword_of_sparking_soul", () -> new SwordOfSparkingSoul(Tiers.DIAMOND, 6, -2.4F, new Item.Properties().rarity(Rarity.COMMON).durability(1562)));
 
     // BLOCKS
     public static final RegistryObject<Item> SKYLIGHT_STONE = register("skylight_stone", () -> new BlockItem(DNLBlocks.SKYLIGHT_STONE.get(), new Item.Properties()));

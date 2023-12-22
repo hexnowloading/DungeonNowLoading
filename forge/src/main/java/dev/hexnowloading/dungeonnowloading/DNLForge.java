@@ -1,7 +1,8 @@
 package dev.hexnowloading.dungeonnowloading;
 
 import dev.hexnowloading.dungeonnowloading.client.DNLForgeClientEvents;
-import dev.hexnowloading.dungeonnowloading.entity.DNLForgeEntityEvents;
+import dev.hexnowloading.dungeonnowloading.server.DNLForgeEntityEvents;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,6 +25,8 @@ public class DNLForge {
         addModListeners(bus);
         if (FMLEnvironment.dist.isClient()) addModClientListeners(bus);
 
+        addForgeListeners();
+
 
         DungeonNowLoading.LOGGER.info("Hello Forge world!");
     }
@@ -34,5 +37,9 @@ public class DNLForge {
     private void addModClientListeners(IEventBus bus) {
         bus.addListener(DNLForgeClientEvents::onRegisterRenderer);
         bus.addListener(DNLForgeClientEvents::onRegisterLayers);
+    }
+
+    private void addForgeListeners() {
+        MinecraftForge.EVENT_BUS.addListener(DNLForgeEntityEvents::onLivingDamageEvent);
     }
 }

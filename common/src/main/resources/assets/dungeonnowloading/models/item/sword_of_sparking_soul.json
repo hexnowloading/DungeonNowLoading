@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "dungeonnowloading:item/sword_of_sparking_soul"
+  }
+}

@@ -28,6 +28,8 @@ public class DNLCreativeModeTabs {
                 // Items - Functional
                 output.accept(DNLItems.GREAT_EXPERIENCE_BOTTLE.get());
                 output.accept(DNLItems.SCEPTER_OF_SEALED_CHAOS.get());
+                output.accept(DNLItems.LIFE_STEALER.get());
+                output.accept(DNLItems.SWORD_OF_SPARKING_SOUL.get());
                 // Blocks
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());

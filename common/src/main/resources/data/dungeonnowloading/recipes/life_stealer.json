@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##Y",
+    " X#",
+    "X  "
+  ],
+  "key": {
+    "#": {
+      "item": "dungeonnowloading:spawner_blade"
+    },
+    "X": {
+      "item": "minecraft:stick"
+    },
+    "Y": {
+      "item": "dungeonnowloading:soul_silk"
+    }
+  },
+  "result": {
+    "item": "dungeonnowloading:life_stealer"
+  }
+}
