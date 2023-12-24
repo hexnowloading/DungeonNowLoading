@@ -41,5 +41,6 @@ public class DNLForge {
 
     private void addForgeListeners() {
         MinecraftForge.EVENT_BUS.addListener(DNLForgeEntityEvents::onLivingDamageEvent);
+        MinecraftForge.EVENT_BUS.addListener(DNLForgeEntityEvents::onLivingHurtEvent);
     }
 }

@@ -36,6 +36,10 @@ public class SwordOfSparkingSoul extends SwordItem {
         return result;
     }
 
+    public static float soulDispersionEffect(LivingEntity attacker, LivingEntity target, float damage) {
+        return attacker.getHealth() > 1 ? damage + 3.0F : damage;
+    }
+
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(itemStack, level, components, tooltipFlag);

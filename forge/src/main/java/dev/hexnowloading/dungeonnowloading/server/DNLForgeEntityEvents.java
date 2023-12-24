@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class DNLForgeEntityEvents {
 
@@ -21,7 +22,16 @@ public class DNLForgeEntityEvents {
         LivingEntity hurtedEntity = event.getEntity();
         float damage = event.getAmount();
         if (attackingEntity instanceof LivingEntity livingEntity) {
-            DNLEntityEvents.onLivingDamageEvent(livingEntity, hurtedEntity, damage);
+            event.setAmount(DNLEntityEvents.onLivingDamageEvent(livingEntity, hurtedEntity, damage));
+        }
+    }
+
+    public static void onLivingHurtEvent(LivingHurtEvent event) {
+        Entity attacker = event.getSource().getEntity();
+        LivingEntity target = event.getEntity();
+        float damage = event.getAmount();
+        if (attacker instanceof LivingEntity attackerEntity) {
+            event.setAmount(DNLEntityEvents.onLivingHurtEvent(attackerEntity, target, damage));
         }
     }
 }

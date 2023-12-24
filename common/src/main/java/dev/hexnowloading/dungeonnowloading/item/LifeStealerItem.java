@@ -47,7 +47,7 @@ public class LifeStealerItem extends SwordItem {
         }
     }*/
 
-    public static void healthDrain(ItemStack itemStack, LivingEntity hurtingEntity, LivingEntity hurtedEntity, float damage) {
+    public static void healthDrain(LivingEntity hurtingEntity, float damage) {
         int healAmount = (int) Math.floor(damage * 0.2F);
         if (healAmount > 0) {
             hurtingEntity.heal(healAmount);
