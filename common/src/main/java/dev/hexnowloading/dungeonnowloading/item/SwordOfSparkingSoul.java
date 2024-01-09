@@ -21,8 +21,6 @@ public class SwordOfSparkingSoul extends SwordItem {
         super($$0, $$1, $$2, $$3);
     }
 
-
-
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
         boolean result  = super.hurtEnemy(itemStack, target, attacker);

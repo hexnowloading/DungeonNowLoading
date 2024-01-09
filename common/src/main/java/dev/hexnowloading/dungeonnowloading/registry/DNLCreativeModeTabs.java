@@ -30,6 +30,11 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SCEPTER_OF_SEALED_CHAOS.get());
                 output.accept(DNLItems.LIFE_STEALER.get());
                 output.accept(DNLItems.SWORD_OF_SPARKING_SOUL.get());
+                // Items - Armors
+                output.accept(DNLItems.SPAWNER_HELMET.get());
+                output.accept(DNLItems.SPAWNER_CHESTPLATE.get());
+                output.accept(DNLItems.SPAWNER_LEGGINGS.get());
+                output.accept(DNLItems.SPAWNER_BOOTS.get());
                 // Blocks
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());
