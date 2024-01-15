@@ -77,6 +77,11 @@ public class HollowEntity extends Monster {
     @Override
     public boolean hurt(DamageSource damageSource, float v) {
         if (!this.level().isClientSide && !this.isNoAi()) {
+            if (damageSource.getEntity() instanceof Player player) {
+                if (player.getAbilities().instabuild) {
+                    return super.hurt(damageSource, v);
+                }
+            }
             if (!damageSource.is(DNLTags.HOLLOW_HURTABLE)) {
                 return false;
             }

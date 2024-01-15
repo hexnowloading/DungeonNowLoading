@@ -12,12 +12,13 @@ public class DNLCreativeModeTabs {
 
     public static final RegistryObject<CreativeModeTab> DUNGEONNOWLOADING_TAB = CREATIVE_MODE_TAB.register("dungeonnowloading", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
             .title(Component.translatable("creativemodetab.dungeonnowloading.tab"))
-            .icon(() -> DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get().getDefaultInstance())
+            .icon(() -> DNLItems.SPAWNER_SWORD.get().getDefaultInstance())
             .displayItems(((itemDisplayParameters, output) -> {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
                 output.accept(DNLItems.SEALED_CHAOS_SPAWNEGG.get());
+                output.accept(DNLItems.WHIMPER_SPAWNEGG.get());
                 // Items - Ingredients
                 output.accept(DNLItems.SPAWNER_FRAGMENT.get());
                 output.accept(DNLItems.SPAWNER_FRAME.get());
@@ -29,7 +30,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.GREAT_EXPERIENCE_BOTTLE.get());
                 output.accept(DNLItems.SCEPTER_OF_SEALED_CHAOS.get());
                 output.accept(DNLItems.LIFE_STEALER.get());
-                output.accept(DNLItems.SWORD_OF_SPARKING_SOUL.get());
+                output.accept(DNLItems.SPAWNER_SWORD.get());
                 // Items - Armors
                 output.accept(DNLItems.SPAWNER_HELMET.get());
                 output.accept(DNLItems.SPAWNER_CHESTPLATE.get());

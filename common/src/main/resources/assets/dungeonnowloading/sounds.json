@@ -34,5 +34,35 @@
         "name": "dungeonnowloading:hollow_death"
       }
     ]
+  },
+  "whimper_ambient": {
+    "subtitle": "sounds.dungeonnowloading.whimper_ambient",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:whimper_ambient_0"
+      },
+      {
+        "name": "dungeonnowloading:whimper_ambient_1"
+      },
+      {
+        "name": "dungeonnowloading:whimper_ambient_2"
+      }
+    ]
+  },
+  "whimper_hurt": {
+    "subtitle": "sounds.dungeonnowloading.whimper_hurt",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:whimper_hurt"
+      }
+    ]
+  },
+  "whimper_death": {
+    "subtitle": "sounds.dungeonnowloading.whimper_death",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:whimper_death"
+      }
+    ]
   }
 }

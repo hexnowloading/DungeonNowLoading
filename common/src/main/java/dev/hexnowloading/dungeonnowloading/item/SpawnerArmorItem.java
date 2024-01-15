@@ -1,8 +1,15 @@
 package dev.hexnowloading.dungeonnowloading.item;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
+import dev.hexnowloading.dungeonnowloading.config.GeneralConfig;
+import dev.hexnowloading.dungeonnowloading.entity.passive.WhimperEntity;
+import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,16 +22,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class SpawnerArmorItem extends ArmorItem {
 
-    private int summonTick = 100;
+    private int summonTick = 200;
     private final int spawnRange = 4;
 
     public SpawnerArmorItem(ArmorMaterial armorMaterial, Type slot) {
@@ -43,7 +52,7 @@ public class SpawnerArmorItem extends ArmorItem {
                         if (hasCorrectArmorOn(player)) {
                             summonMob(level, entityPos);
                         }
-                        summonTick = 100;
+                        summonTick = 200;
                     } else {
                         summonTick = 40;
                     }
@@ -113,11 +122,13 @@ public class SpawnerArmorItem extends ArmorItem {
         double y = entityPos.getY() + randomSource.nextInt(3) - 1;
         double z = entityPos.getZ() + (randomSource.nextDouble() - randomSource.nextDouble()) * (double)this.spawnRange + 0.5;
         if (level.noCollision(spawningEntity.getAABB(x, y, z))) {
-            Zombie zombie = EntityType.ZOMBIE.create(level);
-            if (zombie != null) {
-                zombie.moveTo(x, y, z, 0.0F, 0.0F);
+            ((ServerLevel) level).sendParticles(ParticleTypes.POOF, x + 0.5F, y + 0.5F, z + 0.5F, 20, 0.3D, 0.3D, 0.3D, 0.0D);
+            ((ServerLevel) level).sendParticles(ParticleTypes.FLAME, x + 0.5F, y + 0.5F, z + 0.5F, 10, 0.3D, 0.3D, 0.3D, 0.0D);
+            WhimperEntity whimper = DNLEntityTypes.WHIMPER.get().create(level);
+            if (whimper != null) {
+                whimper.moveTo(x, y, z, 0.0F, 0.0F);
                 //setOwner
-                level.addFreshEntity(zombie);
+                level.addFreshEntity(whimper);
             }
         }
     }
@@ -144,5 +155,14 @@ public class SpawnerArmorItem extends ArmorItem {
         ArmorItem helmet = (ArmorItem) player.getInventory().getArmor(3).getItem();
 
         return helmet.getMaterial() == material && chestplate.getMaterial() == material && leggings.getMaterial() == material && boots.getMaterial() == material;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, level, components, tooltipFlag);
+        if (GeneralConfig.TOGGLE_HELPFUL_ITEM_TOOLTIP.get()) {
+            components.add(Component.translatable("item.dungeonnowloading.spawner_armor.tooltip.ability_name").withStyle(ChatFormatting.GRAY));
+            components.add(Component.translatable("item.dungeonnowloading.spawner_armor.tooltip.ability_description").withStyle(ChatFormatting.DARK_GRAY));
+        }
     }
 }

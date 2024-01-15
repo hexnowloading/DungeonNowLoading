@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum DNLArmorMaterial implements ArmorMaterial {
-    SPAWNER("spawner", 26, new int[]{5, 7 , 5, 4}, 25, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0f, () -> Ingredient.of(DNLItems.SPAWNER_FRAME.get()));
+    SPAWNER("spawner", 26, new int[]{3, 8, 6, 3}, 10, SoundEvents.ARMOR_EQUIP_IRON, 2f, 0f, () -> Ingredient.of(DNLItems.SPAWNER_FRAME.get()));
 
     private String name;
     private int durability;

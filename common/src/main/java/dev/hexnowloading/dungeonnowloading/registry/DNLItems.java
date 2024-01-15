@@ -9,7 +9,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.*;
 
 import java.util.*;
@@ -33,7 +32,7 @@ public class DNLItems {
     public static final RegistryObject<Item> GREAT_EXPERIENCE_BOTTLE = register("great_experience_bottle", () -> new GreatExperienceBottleItem(new Item.Properties().rarity(Rarity.RARE), 100));
     public static final RegistryObject<Item> SCEPTER_OF_SEALED_CHAOS = register("scepter_of_sealed_chaos", () -> new ScepterOfSealedChaosItem(new Item.Properties().rarity(Rarity.RARE).durability(100)));
     public static final RegistryObject<Item> LIFE_STEALER = register("life_stealer", () -> new LifeStealerItem(Tiers.DIAMOND, 3, -2.8F, new Item.Properties().rarity(Rarity.COMMON).durability(1562)));
-    public static final RegistryObject<Item> SWORD_OF_SPARKING_SOUL = register("sword_of_sparking_soul", () -> new SwordOfSparkingSoul(Tiers.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Rarity.COMMON).durability(1562)));
+    public static final RegistryObject<Item> SPAWNER_SWORD = register("spawner_sword", () -> new SpawnerSword(Tiers.DIAMOND, 3, -2.4F, new Item.Properties().rarity(Rarity.COMMON).durability(1562)));
     public static final RegistryObject<Item> SPAWNER_HELMET = register("spawner_helmet", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.HELMET));
     public static final RegistryObject<Item> SPAWNER_CHESTPLATE = register("spawner_chestplate", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.CHESTPLATE));
     public static final RegistryObject<Item> SPAWNER_LEGGINGS = register("spawner_leggings", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.LEGGINGS));
@@ -58,9 +57,10 @@ public class DNLItems {
 
     // SPAWN EGG
     //public static final RegistryObject<Item> WINDSTONE_SPAWNEGG = ITEMS.register("windstone_spawn_egg", () -> new SpawnEggItem(SkyislandEntityTypes.WINDSTONE.get(), 0xF6B201, 0xA80E0E, new Item.Properties()));
-    public static final RegistryObject<Item> CHAOS_SPAWNER_SPAWNEGG = register("spawn_egg_chaos_spawner", Services.ITEM.makeSpawnEgg(DNLEntityTypes.CHAOS_SPAWNER::get, 0xF6B201, 0xA80E0E, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryObject<Item> HOLLOW_SPAWNEGG = register("spawn_egg_hollow", Services.ITEM.makeSpawnEgg(DNLEntityTypes.HOLLOW::get, 0xF6B201, 0xA80E0E, new Item.Properties().rarity(Rarity.COMMON)));
-    public static final RegistryObject<Item> SEALED_CHAOS_SPAWNEGG = register("spawn_egg_sealed_chaos", Services.ITEM.makeSpawnEgg(DNLEntityTypes.SEALED_CHAOS::get, 0xF6B201, 0xA80E0E, new Item.Properties().rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> CHAOS_SPAWNER_SPAWNEGG = register("spawn_egg_chaos_spawner", Services.ITEM.makeSpawnEgg(DNLEntityTypes.CHAOS_SPAWNER::get, 0x182c39, 0x9abdd6, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> HOLLOW_SPAWNEGG = register("spawn_egg_hollow", Services.ITEM.makeSpawnEgg(DNLEntityTypes.HOLLOW::get, 0x53455a, 0xf5d5e0, new Item.Properties().rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> SEALED_CHAOS_SPAWNEGG = register("spawn_egg_sealed_chaos", Services.ITEM.makeSpawnEgg(DNLEntityTypes.SEALED_CHAOS::get, 0x5f0d80, 0xd5bcd7, new Item.Properties().rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> WHIMPER_SPAWNEGG = register("spawn_egg_whimper", Services.ITEM.makeSpawnEgg(DNLEntityTypes.WHIMPER::get, 0x60f5fa, 0xbef5fa, new Item.Properties().rarity(Rarity.COMMON)));
 
     @SafeVarargs
     private static RegistryObject<Item> register(String name, Supplier<? extends Item> supplier, ResourceKey<CreativeModeTab>... tabs)
