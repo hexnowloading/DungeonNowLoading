@@ -37,6 +37,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SPAWNER_LEGGINGS.get());
                 output.accept(DNLItems.SPAWNER_BOOTS.get());
                 // Blocks
+                output.accept(DNLItems.BOOK_PILE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_VERTEX.get());

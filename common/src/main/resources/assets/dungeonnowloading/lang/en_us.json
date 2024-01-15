@@ -42,6 +42,7 @@
   "block.dungeonnowloading.chaos_spawner_broken_edge": "Broken Chaos Spawner Frame Edge",
   "block.dungeonnowloading.chaos_spawner_broken_diamond_edge": "Broken Diamond Chaos Spawner Frame Edge",
   "block.dungeonnowloading.chaos_spawner_broken_diamond_vertex": "Broken Diamond Chaos Spawner Frame Vertex",
+  "block.dungeonnowloading.book_pile": "Book Pile",
   "entity.dungeonnowloading.chaos_spawner": "Chaos Spawner",
   "entity.dungeonnowloading.hollow": "Hollow",
   "entity.dungeonnowloading.sealed_chaos": "Sealed Chaos",
