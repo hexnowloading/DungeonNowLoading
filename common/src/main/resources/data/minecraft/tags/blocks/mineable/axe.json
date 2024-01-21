@@ -1,5 +1,7 @@
 {
   "replace": false,
   "values": [
+    "dungeonnowloading:wooden_wall_rack",
+    "dungeonnowloading:wooden_wall_platform"
   ]
 }

@@ -24,6 +24,7 @@ public class DNLFabricClient implements ClientModInitializer {
 
         // Monsters
         EntityRendererRegistry.register(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
+        EntityRendererRegistry.register(DNLEntityTypes.SPAWNER_CARRIER.get(), SpawnerCarrierRenderer::new);
 
         // Passive
         EntityRendererRegistry.register(DNLEntityTypes.SEALED_CHAOS.get(), SealedChaosRenderer::new);
@@ -45,6 +46,7 @@ public class DNLFabricClient implements ClientModInitializer {
 
         // Monsters
         EntityModelLayerRegistry.registerModelLayer(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(SpawnerCarrierModel.LAYER_LOCATION, SpawnerCarrierModel::createBodyLayer);
 
         // Passive
         EntityModelLayerRegistry.registerModelLayer(SealedChaosModel.LAYER_LOCATION, SealedChaosModel::createBodyLayer);

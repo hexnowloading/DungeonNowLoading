@@ -15,6 +15,7 @@ public class DNLForgeClientEvents {
 
         // Monsters
         event.registerLayerDefinition(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);
+        event.registerLayerDefinition(SpawnerCarrierModel.LAYER_LOCATION, SpawnerCarrierModel::createBodyLayer);
 
         // Passive
         event.registerLayerDefinition(SealedChaosModel.LAYER_LOCATION, SealedChaosModel::createBodyLayer);
@@ -29,6 +30,7 @@ public class DNLForgeClientEvents {
 
         // Monsters
         event.registerEntityRenderer(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
+        event.registerEntityRenderer(DNLEntityTypes.SPAWNER_CARRIER.get(), SpawnerCarrierRenderer::new);
 
         // Passive
         event.registerEntityRenderer(DNLEntityTypes.SEALED_CHAOS.get(), SealedChaosRenderer::new);

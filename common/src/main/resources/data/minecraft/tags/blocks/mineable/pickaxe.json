@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
+    "dungeonnowloading:ruined_stone_bricks",
+    "dungeonnowloading:cobblestone_pebbles",
+    "dungeonnowloading:mossy_cobblestone_pebbles",
+    "dungeonnowloading:iron_ingot_pile",
+    "dungeonnowloading:gold_ingot_pile",
     "dungeonnowloading:chaos_spawner_edge",
     "dungeonnowloading:chaos_spawner_diamond_edge",
     "dungeonnowloading:chaos_spawner_diamond_vertex"

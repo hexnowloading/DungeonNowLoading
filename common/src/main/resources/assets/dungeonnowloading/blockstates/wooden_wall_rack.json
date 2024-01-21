@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "dungeonnowloading:block/wooden_wall_rack",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "dungeonnowloading:block/wooden_wall_rack"
+    },
+    "facing=south": {
+      "model": "dungeonnowloading:block/wooden_wall_rack",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "dungeonnowloading:block/wooden_wall_rack",
+      "y": 270
+    }
+  }
+}

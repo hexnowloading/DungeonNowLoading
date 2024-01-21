@@ -17,6 +17,7 @@ public class DNLCreativeModeTabs {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
+                output.accept(DNLItems.SPAWNER_CARRIER_SPAWNEGG.get());
                 output.accept(DNLItems.SEALED_CHAOS_SPAWNEGG.get());
                 output.accept(DNLItems.WHIMPER_SPAWNEGG.get());
                 // Items - Ingredients
@@ -37,7 +38,18 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SPAWNER_LEGGINGS.get());
                 output.accept(DNLItems.SPAWNER_BOOTS.get());
                 // Blocks
+
+                // Blocks - Mechanical
+                output.accept(DNLItems.DUNGEON_WALL_TORCH.get());
                 output.accept(DNLItems.BOOK_PILE.get());
+                output.accept(DNLItems.EXPLOSIVE_BARREL.get());
+                output.accept(DNLItems.COBBLESTONE_PEBBLE.get());
+                output.accept(DNLItems.MOSSY_COBBLESTONE_PEBBLE.get());
+                output.accept(DNLItems.IRON_INGOT_PILE.get());
+                output.accept(DNLItems.GOLD_INGOT_PILE.get());
+                output.accept(DNLItems.WOODEN_WALL_RACK.get());
+                output.accept(DNLItems.WOODEN_WALL_PLATFORM.get());
+                output.accept(DNLItems.SPIKES.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_DIAMOND_VERTEX.get());

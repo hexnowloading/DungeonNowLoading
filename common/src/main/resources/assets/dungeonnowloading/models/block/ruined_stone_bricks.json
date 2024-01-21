@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "dungeonnowloading:block/ruined_stone_bricks"
+  }
+}

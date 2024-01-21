@@ -5,6 +5,7 @@ import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.GreatExperienceBottleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
+import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
 import dev.hexnowloading.dungeonnowloading.entity.passive.SealedChaosEntity;
 import dev.hexnowloading.dungeonnowloading.entity.passive.WhimperEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
@@ -29,6 +30,7 @@ public class DNLEntityTypes {
 
     // Monsters
     public static final RegistryObject<EntityType<HollowEntity>> HOLLOW = ENTITY_TYPE.register("hollow", () -> EntityType.Builder.of(HollowEntity::new, MobCategory.MONSTER).sized(0.95F, 0.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "hollow").toString()));
+    public static final RegistryObject<EntityType<SpawnerCarrierEntity>> SPAWNER_CARRIER = ENTITY_TYPE.register("spawner_carrier", () -> EntityType.Builder.of(SpawnerCarrierEntity::new, MobCategory.MONSTER).sized(1.95F, 1.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "spawner_carrier").toString()));
 
     // Passive
     public static final RegistryObject<EntityType<SealedChaosEntity>> SEALED_CHAOS = ENTITY_TYPE.register("sealed_chaos", () -> EntityType.Builder.of(SealedChaosEntity::new, MobCategory.CREATURE).sized(1F, 1F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "sealed_chaos").toString()));
@@ -46,6 +48,7 @@ public class DNLEntityTypes {
 
         map.put(CHAOS_SPAWNER.get(), ChaosSpawnerEntity.createAttributes().build());
         map.put(HOLLOW.get(), HollowEntity.createAttributes().build());
+        map.put(SPAWNER_CARRIER.get(), SpawnerCarrierEntity.createAttributes().build());
         map.put(SEALED_CHAOS.get(), SealedChaosEntity.createAttributes().build());
         map.put(WHIMPER.get(), WhimperEntity.createAttributes().build());
 
