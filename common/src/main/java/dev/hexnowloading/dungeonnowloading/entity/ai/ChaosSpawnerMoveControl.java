@@ -17,6 +17,7 @@ public class ChaosSpawnerMoveControl extends MoveControl {
         super(mob);
     }
 
+
     @Override
     public void tick() {
         if (this.operation == Operation.MOVE_TO) {

@@ -1,8 +1,5 @@
 package dev.hexnowloading.dungeonnowloading.entity.ai;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.sun.jna.WString;
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
 import dev.hexnowloading.dungeonnowloading.entity.util.WeightedRandomBag;
@@ -22,7 +19,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET) && chaosSpawnerEntity.getTarget() != null;
+        return (chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET_SINGLE) || chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET_BURST)) && chaosSpawnerEntity.getTarget() != null;
     }
 
     @Override
@@ -30,14 +27,20 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         super.start();
         chaosSpawnerEntity.setAttackTick(100);
         WeightedRandomBag<String> bulletPatterns = new WeightedRandomBag<>();
-        if (chaosSpawnerEntity.getPhase() == 1) {
-            bulletPatterns.addEntry("Single", 1);
-            bulletPatterns.addEntry("Arc", 1);
-            bulletPatterns.addEntry("Burst", 1);
-        } else if (chaosSpawnerEntity.getPhase() == 2) {
-            bulletPatterns.addEntry("Rapid", 1);
-            bulletPatterns.addEntry("Strong Arc", 1);
-            bulletPatterns.addEntry("Strong Burst", 1);
+        if (chaosSpawnerEntity.getState() == ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET_SINGLE) {
+            if (chaosSpawnerEntity.getPhase() == 1) {
+                bulletPatterns.addEntry("Single", 1);
+                bulletPatterns.addEntry("Arc", 1);
+            } else if (chaosSpawnerEntity.getPhase() == 2) {
+                bulletPatterns.addEntry("Rapid", 1);
+                bulletPatterns.addEntry("Strong Arc", 1);
+            }
+        } else {
+            if (chaosSpawnerEntity.getPhase() == 1) {
+                bulletPatterns.addEntry("Burst", 1);
+            } else if (chaosSpawnerEntity.getPhase() == 2) {
+                bulletPatterns.addEntry("Strong Burst", 1);
+            }
         }
         type = bulletPatterns.getRandom();
     }
@@ -79,7 +82,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
             }
         }
         if (chaosSpawnerEntity.getAttackTick() == 0) {
-            chaosSpawnerEntity.stopAttacking();
+            chaosSpawnerEntity.stopAttacking(60);
         }
     }
 

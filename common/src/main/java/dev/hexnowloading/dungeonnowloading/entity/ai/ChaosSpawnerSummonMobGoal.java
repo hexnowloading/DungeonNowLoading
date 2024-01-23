@@ -52,7 +52,15 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SUMMON_MOB) && chaosSpawnerEntity.getTarget() != null; //&& withinSummonLimit();
+        if (chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SUMMON_MOB) && chaosSpawnerEntity.getTarget() != null) {
+            if (withinSummonLimit()) {
+                return true;
+            } else {
+                chaosSpawnerEntity.stopAttacking(0);
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -64,38 +72,32 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
     @Override
     public void tick() {
         if (chaosSpawnerEntity.getAttackTick() == 100) {
-            if (withinSummonLimit()) {
-                summonCount = Math.max(0, maxSummonLimit);
-                double d = chaosSpawnerEntity.getX();
-                double e = chaosSpawnerEntity.getY();
-                double f = chaosSpawnerEntity.getZ();
-                ((ServerLevel) chaosSpawnerEntity.level()).sendParticles(ParticleTypes.FLAME, d, e, f, 20, 3.0D, 3.0D, 3.0D, 0.0D);
-                for (int i = 0; i < summonCount; i++) {
-                    WeightedRandomBag<String> mobWeightBag = new WeightedRandomBag<>();
-                    if (chaosSpawnerEntity.getPhase() == 1) {
-                        mobWeightBag.addEntry("Zombie", 3);
-                        mobWeightBag.addEntry("Skeleton", 2);
-                        mobWeightBag.addEntry("Spider", 2);
-                        mobWeightBag.addEntry("Hollow", 2);
-                    } else if (chaosSpawnerEntity.getPhase() == 2) {
-                        mobWeightBag.addEntry("Zombie", 9);
-                        mobWeightBag.addEntry("Skeleton", 6);
-                        mobWeightBag.addEntry("Spider", 6);
-                        mobWeightBag.addEntry("Hollow", 6);
-                        mobWeightBag.addEntry("Diamond Zombie", 2);
-                        mobWeightBag.addEntry("Diamond Skeleton", 2);
-                        mobWeightBag.addEntry("Invisible Spider", 2);
-                        mobWeightBag.addEntry("Spider Jokey", 1);
-                        mobWeightBag.addEntry("Baby Zombie", 1);
-                    }
-                    summonMob(mobWeightBag.getRandom(), chaosSpawnerEntity.blockPosition().offset(MOB_SUMMON_POS.get(Math.min(i, MOB_SUMMON_POS.size() - 1))));
+            summonCount = Math.max(0, maxSummonLimit);
+            double d = chaosSpawnerEntity.getX();
+            double e = chaosSpawnerEntity.getY();
+            double f = chaosSpawnerEntity.getZ();
+            ((ServerLevel) chaosSpawnerEntity.level()).sendParticles(ParticleTypes.FLAME, d, e, f, 20, 3.0D, 3.0D, 3.0D, 0.0D);
+            for (int i = 0; i < summonCount; i++) {
+                WeightedRandomBag<String> mobWeightBag = new WeightedRandomBag<>();
+                if (chaosSpawnerEntity.getPhase() == 1) {
+                    mobWeightBag.addEntry("Zombie", 3);
+                    mobWeightBag.addEntry("Skeleton", 2);
+                    mobWeightBag.addEntry("Spider", 2);
+                } else if (chaosSpawnerEntity.getPhase() == 2) {
+                    mobWeightBag.addEntry("Zombie", 9);
+                    mobWeightBag.addEntry("Skeleton", 6);
+                    mobWeightBag.addEntry("Spider", 6);
+                    mobWeightBag.addEntry("Diamond Zombie", 2);
+                    mobWeightBag.addEntry("Diamond Skeleton", 2);
+                    mobWeightBag.addEntry("Invisible Spider", 2);
+                    mobWeightBag.addEntry("Spider Jokey", 1);
+                    mobWeightBag.addEntry("Baby Zombie", 1);
                 }
-            } else {
-                chaosSpawnerEntity.stopAttacking();
+                summonMob(mobWeightBag.getRandom(), chaosSpawnerEntity.blockPosition().offset(MOB_SUMMON_POS.get(Math.min(i, MOB_SUMMON_POS.size() - 1))));
             }
         }
         if (chaosSpawnerEntity.getAttackTick() == 0) {
-            chaosSpawnerEntity.stopAttacking();
+            chaosSpawnerEntity.stopAttacking(60);
         }
     }
 
@@ -136,14 +138,6 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
                     spider.moveTo(summonPos, 0.0F, 0.0f);
                     spider.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(summonPos), MobSpawnType.MOB_SUMMONED, null, null);
                     level.addFreshEntity(spider);
-                }
-            }
-            case "Hollow" -> {
-                HollowEntity hollowEntity = DNLEntityTypes.HOLLOW.get().create(level);
-                if (hollowEntity != null) {
-                    hollowEntity.moveTo(summonPos, 0.0F, 0.0F);
-                    hollowEntity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(summonPos), MobSpawnType.MOB_SUMMONED, null, null);
-                    level.addFreshEntity(hollowEntity);
                 }
             }
             case "Diamond Zombie" -> {

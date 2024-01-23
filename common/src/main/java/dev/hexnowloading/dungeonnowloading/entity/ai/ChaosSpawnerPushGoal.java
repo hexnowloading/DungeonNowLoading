@@ -15,7 +15,6 @@ public class ChaosSpawnerPushGoal extends Goal {
 
     public ChaosSpawnerPushGoal(ChaosSpawnerEntity chaosSpawnerEntity) {
         this.chaosSpawnerEntity = chaosSpawnerEntity;
-        this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
     @Override
@@ -31,17 +30,13 @@ public class ChaosSpawnerPushGoal extends Goal {
 
     @Override
     public void tick() {
-        if (chaosSpawnerEntity.getAttackTick() == 85) {
-        }
-        if (chaosSpawnerEntity.getAttackTick() == 80) {
+        if (chaosSpawnerEntity.getAttackTick() == 65) {
             for (Player player : chaosSpawnerEntity.getPushTargets()) {
                 pushNearbyPlayers(player);
             }
         }
-        if (chaosSpawnerEntity.getAttackTick() == 65) {
-        }
         if (chaosSpawnerEntity.getAttackTick() == 0) {
-            chaosSpawnerEntity.stopAttacking();
+            chaosSpawnerEntity.stopAttacking(60);
         }
     }
 

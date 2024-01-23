@@ -33,7 +33,7 @@ public class SpawnerCarrierEntity extends Monster {
     private static final EntityDataAccessor<String> SUMMON_MOB_TYPE = SynchedEntityData.defineId(SpawnerCarrierEntity.class, EntityDataSerializers.STRING);
     private int summonTick = 200;
     private final float SPAWN_RANGE = 5;
-    private final String[] SUMMON_MOB_TYPE_LIST = {"Zombie", "Skeleton", "Spider", "Hollow"};
+    private final String[] SUMMON_MOB_TYPE_LIST = {"Zombie", "Skeleton", "Spider"};
 
     public SpawnerCarrierEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -103,7 +103,9 @@ public class SpawnerCarrierEntity extends Monster {
                         ((ServerLevel) this.level()).sendParticles(ParticleTypes.FLAME, x + 0.5F, y + 0.5F, z + 0.5F, 10, 0.3D, 0.3D, 0.3D, 0.0D);
                         Entity livingEntity = spawningEntity.create(this.level());
                         if (livingEntity != null) {
+                            BlockPos summonPos = new BlockPos((int) x, (int) y, (int) z);
                             livingEntity.moveTo(x, y, z, 0.0F, 0.0F);
+                            ((Monster) livingEntity).finalizeSpawn((ServerLevel) this.level(), this.level().getCurrentDifficultyAt(summonPos), MobSpawnType.MOB_SUMMONED, null, null);
                             this.level().addFreshEntity(livingEntity);
                         }
                     }
@@ -128,10 +130,6 @@ public class SpawnerCarrierEntity extends Monster {
             case "Spider" -> {
                 EntityType<Spider> spider = EntityType.SPIDER;
                 return spider;
-            }
-            case "Hollow" -> {
-                EntityType<HollowEntity> hollow = DNLEntityTypes.HOLLOW.get();
-                return hollow;
             }
         }
         return null;

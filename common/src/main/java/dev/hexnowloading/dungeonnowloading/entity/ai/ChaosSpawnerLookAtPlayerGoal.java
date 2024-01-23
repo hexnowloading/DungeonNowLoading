@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 
 public class ChaosSpawnerLookAtPlayerGoal extends Goal {
@@ -21,6 +22,11 @@ public class ChaosSpawnerLookAtPlayerGoal extends Goal {
     private final boolean onlyHorizontal;
     private final Class<? extends LivingEntity> lookAtType;
     private final TargetingConditions lookAtContext;
+
+    private final ChaosSpawnerEntity.State[] lookAroundOn = {
+            ChaosSpawnerEntity.State.IDLE,
+            ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET_SINGLE
+    };
 
     public ChaosSpawnerLookAtPlayerGoal(ChaosSpawnerEntity chaosSpawnerEntity, Class<? extends LivingEntity> lookAtType, float lookDistance, float probability, boolean onlyHorizontal) {
         this.chaosSpawnerEntity = chaosSpawnerEntity;
@@ -47,9 +53,7 @@ public class ChaosSpawnerLookAtPlayerGoal extends Goal {
             if (lookAtType == Player.class) {
                 lookAt = chaosSpawnerEntity.level().getNearestPlayer(lookAtContext, chaosSpawnerEntity, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getEyeY(), chaosSpawnerEntity.getZ());
             } else {
-                lookAt = chaosSpawnerEntity.level().getNearestEntity(chaosSpawnerEntity.level().getEntitiesOfClass(lookAtType, chaosSpawnerEntity.getBoundingBox().inflate(lookDistance, 3.0, lookDistance), (lookTarget) -> {
-                    return true;
-                }), lookAtContext, chaosSpawnerEntity, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getEyeY(), chaosSpawnerEntity.getZ());
+                lookAt = chaosSpawnerEntity.level().getNearestEntity(chaosSpawnerEntity.level().getEntitiesOfClass(lookAtType, chaosSpawnerEntity.getBoundingBox().inflate(lookDistance, 3.0, lookDistance), (lookTarget) -> true), lookAtContext, chaosSpawnerEntity, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getEyeY(), chaosSpawnerEntity.getZ());
             }
             return lookAt != null;
         }
@@ -78,18 +82,11 @@ public class ChaosSpawnerLookAtPlayerGoal extends Goal {
 
     @Override
     public void tick() {
-        if (lookAt.isAlive()) {
-            if (chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.PUSH)) {
-                double viewDistance = 2.0F;
-                Vec3 viewVector = chaosSpawnerEntity.getViewVector(1.0F);
-                double d0 = viewVector.x * viewDistance;
-                double d1 = viewVector.y * viewDistance;
-                double d2 = viewVector.z * viewDistance;
-                chaosSpawnerEntity.getLookControl().setLookAt(chaosSpawnerEntity.getX() + d0, chaosSpawnerEntity.getY(0.5) + d1, chaosSpawnerEntity.getZ() + d2);
-                --lookTime;
-            } else {
+        if (Arrays.stream(lookAroundOn).anyMatch(state -> state == chaosSpawnerEntity.getState())) {
+            if (lookAt.isAlive()) {
                 double b = onlyHorizontal ? chaosSpawnerEntity.getEyeY() : lookAt.getEyeY();
                 chaosSpawnerEntity.getLookControl().setLookAt(lookAt.getX(), b, lookAt.getZ());
+                chaosSpawnerEntity.setYBodyRot(this.chaosSpawnerEntity.yHeadRot);
                 --lookTime;
             }
         }

@@ -12,7 +12,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
 public class ChaosSpawnerProjectileModel<T extends ChaosSpawnerProjectileEntity> extends HierarchicalModel<T> {
-// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner_projectile"), "main");
     private final ModelPart root;
     private final ModelPart head;
