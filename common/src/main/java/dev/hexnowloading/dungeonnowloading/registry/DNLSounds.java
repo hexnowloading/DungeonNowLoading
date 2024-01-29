@@ -11,6 +11,10 @@ import net.minecraft.sounds.SoundEvents;
 public class DNLSounds {
     public static final RegistrationProvider<SoundEvent> SOUND_EVENTS = RegistrationProvider.get(Registries.SOUND_EVENT, DungeonNowLoading.MOD_ID);
 
+    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_LAUGHTER = registerSoundEvent("chaos_spawner_laughter");
+    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_CHAIN_BREAK = registerSoundEvent("chaos_spawner_chain_break");
+    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_HURT = registerSoundEvent("chaos_spawner_hurt");
+    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_DEATH = registerSoundEvent("chaos_spawner_death");
     public static final RegistryObject<SoundEvent> HOLLOW_AMBIENT = registerSoundEvent("hollow_ambient");
     public static final RegistryObject<SoundEvent> HOLLOW_HURT = registerSoundEvent("hollow_hurt");
     public static final RegistryObject<SoundEvent> HOLLOW_DEATH = registerSoundEvent("hollow_death");

@@ -1,0 +1,27 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "position_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:cobblestone"
+          },
+          "output_state": {
+            "Name": "minecraft:mossy_cobblestone"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:waterlogging_fix_processor"
+    }
+  ]
+}

@@ -5,11 +5,14 @@ import dev.hexnowloading.dungeonnowloading.entity.ai.HollowMoveControl;
 import dev.hexnowloading.dungeonnowloading.entity.ai.HollowRandomMoveGoal;
 import dev.hexnowloading.dungeonnowloading.registry.DNLSounds;
 import dev.hexnowloading.dungeonnowloading.registry.DNLTags;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -24,7 +27,9 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 public class HollowEntity extends Monster {
 

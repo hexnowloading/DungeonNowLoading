@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "dungeonnowloading:labyrinth",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 269766545,
+    "spacing": 40,
+    "separation": 10
+  }
+}

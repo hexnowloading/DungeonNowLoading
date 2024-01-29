@@ -1,4 +1,42 @@
 {
+  "chaos_spawner_laughter": {
+    "subtitle": "sounds.dungeonnowloading.chaos_spawner_laughter",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:chaos_spawner_laughter"
+      }
+    ]
+  },
+  "chaos_spawner_chain_break": {
+    "subtitle": "sounds.dungeonnowloading.chaos_spawner_chain_break",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:chaos_spawner_chain_break"
+      }
+    ]
+  },
+  "chaos_spawner_hurt": {
+    "subtitle": "sounds.dungeonnowloading.chaos_spawner_hurt",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:chaos_spawner_hurt_0"
+      },
+      {
+        "name": "dungeonnowloading:chaos_spawner_hurt_1"
+      },
+      {
+        "name": "dungeonnowloading:chaos_spawner_hurt_2"
+      }
+    ]
+  },
+  "chaos_spawner_death": {
+    "subtitle": "sounds.dungeonnowloading.chaos_spawner_death",
+    "sounds": [
+      {
+        "name": "dungeonnowloading:chaos_spawner_death"
+      }
+    ]
+  },
   "hollow_ambient": {
     "subtitle": "sounds.dungeonnowloading.hollow_ambient",
     "sounds": [

@@ -28,6 +28,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         chaosSpawnerEntity.setAttackTick(100);
         WeightedRandomBag<String> bulletPatterns = new WeightedRandomBag<>();
         if (chaosSpawnerEntity.getState() == ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET_SINGLE) {
+            chaosSpawnerEntity.triggerRangeAttackAnimation();
             if (chaosSpawnerEntity.getPhase() == 1) {
                 bulletPatterns.addEntry("Single", 1);
                 bulletPatterns.addEntry("Arc", 1);
@@ -36,6 +37,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
                 bulletPatterns.addEntry("Strong Arc", 1);
             }
         } else {
+            chaosSpawnerEntity.triggerRangeBurstAttackAnimation();
             if (chaosSpawnerEntity.getPhase() == 1) {
                 bulletPatterns.addEntry("Burst", 1);
             } else if (chaosSpawnerEntity.getPhase() == 2) {
@@ -89,7 +91,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
     private void performSingleShot() {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
-            if (targetEntity.distanceTo(chaosSpawnerEntity) < 30.0D) {
+            if (targetEntity.distanceTo(chaosSpawnerEntity) < this.chaosSpawnerEntity.getFollowDistance()) {
                 chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
                 vecFromCenterToFrontOfFace(0.0F);
             }
@@ -99,7 +101,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
     private void performArcShot() {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
-            if (targetEntity.distanceTo(chaosSpawnerEntity) < 30.0D) {
+            if (targetEntity.distanceTo(chaosSpawnerEntity) < this.chaosSpawnerEntity.getFollowDistance()) {
                 chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
                 vecFromCenterToFrontOfFace(0.0F);
                 vecFromCenterToFrontOfFace(-10.0F);
@@ -111,7 +113,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
     private void performStrongArcShot() {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
-            if (targetEntity.distanceTo(chaosSpawnerEntity) < 30.0D) {
+            if (targetEntity.distanceTo(chaosSpawnerEntity) < this.chaosSpawnerEntity.getFollowDistance()) {
                 chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
                 vecFromCenterToFrontOfFace(0.0F);
                 vecFromCenterToFrontOfFace(-10.0F);
@@ -124,26 +126,26 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
 
     private void performBurstShot(float angle) {
         float offset = (float) Math.toRadians(angle);
-        Vec3 vec3 = new Vec3(1, 0, 0);
+        Vec3 vec3 = chaosSpawnerEntity.getViewVector(1.0F);
         vec3 = vec3.yRot(offset);
         chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
         for (int i = 0; i < 8; i++) {
-            vec3 = vec3.yRot(0.78539816339F * i);
+            vec3 = vec3.yRot((float) Math.toRadians(45)* i);
             ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, vec3.x, vec3.y,vec3.z);
-            chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + vec3.x, chaosSpawnerProjectileEntity.getY(-0.5) + vec3.y, chaosSpawnerProjectileEntity.getZ() + vec3.z);
+            chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + vec3.x, chaosSpawnerProjectileEntity.getY(0.5) + vec3.y, chaosSpawnerProjectileEntity.getZ() + vec3.z);
             chaosSpawnerEntity.level().addFreshEntity(chaosSpawnerProjectileEntity);
         }
     }
 
     private void performStrongBurstShot(float angle) {
         float offset = (float) Math.toRadians(angle);
-        Vec3 vec3 = new Vec3(1, 0, 0);
+        Vec3 vec3 = chaosSpawnerEntity.getViewVector(1.0F);
         vec3 = vec3.yRot(offset);
         chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
         for (int i = 0; i < 16; i++) {
-            vec3 = vec3.yRot(0.39269908169F * i);
+            vec3 = vec3.yRot((float) Math.toRadians(22.5) * i);
             ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, vec3.x, vec3.y,vec3.z);
-            chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + vec3.x, chaosSpawnerProjectileEntity.getY(-0.5) + vec3.y, chaosSpawnerProjectileEntity.getZ() + vec3.z);
+            chaosSpawnerProjectileEntity.setPos(chaosSpawnerProjectileEntity.getX() + vec3.x, chaosSpawnerProjectileEntity.getY(0.5) + vec3.y, chaosSpawnerProjectileEntity.getZ() + vec3.z);
             chaosSpawnerEntity.level().addFreshEntity(chaosSpawnerProjectileEntity);
         }
     }

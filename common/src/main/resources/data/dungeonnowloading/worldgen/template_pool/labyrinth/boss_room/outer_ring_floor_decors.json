@@ -1,0 +1,57 @@
+{
+  "name": "dungeonnowloading:labyrinth/boss_room/outer_ring_floor_decors",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/boss_room/outer_ring/spike",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/boss_room/outer_ring/wall",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/boss_room/outer_ring/spawner",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/boss_room/outer_ring/lantern",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/boss_room/outer_ring/bridge",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    }
+  ]
+}

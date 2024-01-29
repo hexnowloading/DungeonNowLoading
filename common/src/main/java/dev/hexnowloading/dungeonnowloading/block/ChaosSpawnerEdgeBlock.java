@@ -39,7 +39,7 @@ import java.util.List;
 import static net.minecraft.sounds.SoundEvents.RESPAWN_ANCHOR_DEPLETE;
 
 public class ChaosSpawnerEdgeBlock extends Block implements SimpleWaterloggedBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     //public static final EnumProperty<Half> HALF = BlockStateProperties.HALF;
     public static final EnumProperty<AllSides> ALL_SIDES = DNLProperties.ALL_SIDES;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

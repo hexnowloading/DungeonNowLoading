@@ -1,0 +1,15 @@
+{
+  "name": "dungeonnowloading:labyrinth/starts",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/boss_room",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    }
+  ]
+}

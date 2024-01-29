@@ -6,6 +6,7 @@ import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.entity.util.WeightedRandomBag;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
+import dev.hexnowloading.dungeonnowloading.registry.DNLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -64,14 +65,21 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
     }
 
     @Override
+    public boolean canContinueToUse() {
+        return chaosSpawnerEntity.isAttacking(ChaosSpawnerEntity.State.SUMMON_MOB) && chaosSpawnerEntity.getTarget() != null;
+    }
+
+    @Override
     public void start() {
         super.start();
+        chaosSpawnerEntity.triggerSummonAnimation();
         chaosSpawnerEntity.setAttackTick(100);
     }
 
     @Override
     public void tick() {
         if (chaosSpawnerEntity.getAttackTick() == 100) {
+            chaosSpawnerEntity.playSound(chaosSpawnerEntity.getScreechSound(), 2.0F, 1.0F);
             summonCount = Math.max(0, maxSummonLimit);
             double d = chaosSpawnerEntity.getX();
             double e = chaosSpawnerEntity.getY();
@@ -102,7 +110,7 @@ public class ChaosSpawnerSummonMobGoal extends Goal {
     }
 
     private boolean withinSummonLimit() {
-        List<Monster> mobList = chaosSpawnerEntity.level().getEntitiesOfClass(Monster.class, chaosSpawnerEntity.getBoundingBox().inflate(10));
+        List<Monster> mobList = chaosSpawnerEntity.level().getEntitiesOfClass(Monster.class, chaosSpawnerEntity.getBoundingBox().inflate(this.chaosSpawnerEntity.getFollowDistance() / 2));
         maxSummonLimit = Math.min(2 + chaosSpawnerEntity.getParticipatingPlayerCount() * 2, 12);
         return mobList.size() < maxSummonLimit;
     }

@@ -83,7 +83,7 @@ public class ChaosSpawnerModel<T extends ChaosSpawnerEntity> extends Hierarchica
 		this.animate(entity.summonAnimationState, ChaosSpawnerAnimation.CHAOS_SPAWNER_SUMMON, ageInTicks, 1.0F);
 		this.animate(entity.deathAnimationState, ChaosSpawnerAnimation.CHAOS_SPAWNER_DEATH, ageInTicks, 1.0F);
 		this.animateHeadLookTarget(netHeadYaw, headPitch);
-		if (entity.getState() != ChaosSpawnerEntity.State.SLEEPING) {
+		if (entity.getState() != ChaosSpawnerEntity.State.SLEEPING && entity.getState() != ChaosSpawnerEntity.State.DEATH) {
 			this.animateIdlePose(ageInTicks);
 		}
 	}

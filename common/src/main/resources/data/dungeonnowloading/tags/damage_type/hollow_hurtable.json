@@ -1,5 +1,7 @@
 {
   "values": [
+    "minecraft:outside_border",
+    "minecraft:generic_kill",
     "minecraft:arrow",
     "minecraft:indirect_magic",
     "minecraft:magic",

@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.AnimationState;
 
 public class ChaosSpawnerLayer<T extends ChaosSpawnerEntity, M extends ChaosSpawnerModel<T>> extends RenderLayer<T, M> {
 
@@ -24,23 +25,18 @@ public class ChaosSpawnerLayer<T extends ChaosSpawnerEntity, M extends ChaosSpaw
     }
 
     public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, ChaosSpawnerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        switch (entitylivingbaseIn.getState()) {
-            default -> {
-                VertexConsumer eyesVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_EYES, true));
-                this.getParentModel().renderToBuffer(matrixStackIn, eyesVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 1.0F);
-            }
-            case SLEEPING -> {
-                VertexConsumer chainVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_CHAINED, true));
-                this.getParentModel().renderToBuffer(matrixStackIn, chainVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
-            }
-            case PUSH -> {
-                VertexConsumer shockwaveVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_SHOCKWAVE, true));
-                this.getParentModel().renderToBuffer(matrixStackIn, shockwaveVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 1.0F);
-            }
-            case SHOOT_GHOST_BULLET_SINGLE -> {
-                VertexConsumer chaosHexahedronVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_CHAOS_HEXAHEDRON, true));
-                this.getParentModel().renderToBuffer(matrixStackIn, chaosHexahedronVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
-            }
+        if (entitylivingbaseIn.smashAttackAnimationState.isStarted()) {
+            VertexConsumer shockwaveVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_SHOCKWAVE, true));
+            this.getParentModel().renderToBuffer(matrixStackIn, shockwaveVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 1.0F);
+        } else if (entitylivingbaseIn.rangeAttackAnimationState.isStarted() || entitylivingbaseIn.rangeBurstAttackAnimationState.isStarted()) {
+            VertexConsumer chaosHexahedronVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_CHAOS_HEXAHEDRON, true));
+            this.getParentModel().renderToBuffer(matrixStackIn, chaosHexahedronVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
+        } else if (entitylivingbaseIn.getState() == ChaosSpawnerEntity.State.SLEEPING) {
+            VertexConsumer chainVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_CHAINED, true));
+            this.getParentModel().renderToBuffer(matrixStackIn, chainVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
+        } else {
+            VertexConsumer eyesVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_EYES, true));
+            this.getParentModel().renderToBuffer(matrixStackIn, eyesVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 }

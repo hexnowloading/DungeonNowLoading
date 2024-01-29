@@ -13,11 +13,13 @@ import java.util.stream.Collectors;
 public class ChaosSpawnerPlayerTargetGoal extends Goal {
 
     private final ChaosSpawnerEntity chaosSpawnerEntity;
-    private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(64.0D).ignoreLineOfSight().ignoreInvisibilityTesting();
     private int nextScanTick = reducedTickDelay(20);
+    private double range;
+    private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(range).ignoreLineOfSight().ignoreInvisibilityTesting();
 
-    public ChaosSpawnerPlayerTargetGoal(ChaosSpawnerEntity chaosSpawnerEntity) {
+    public ChaosSpawnerPlayerTargetGoal(ChaosSpawnerEntity chaosSpawnerEntity, double range) {
         this.chaosSpawnerEntity = chaosSpawnerEntity;
+        this.range = range;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class ChaosSpawnerPlayerTargetGoal extends Goal {
         } else {
             if (chaosSpawnerEntity.getPhase() != 0) {
                 nextScanTick = reducedTickDelay(60);
-                List<Player> list = chaosSpawnerEntity.level().getNearbyPlayers(attackTargeting, chaosSpawnerEntity, chaosSpawnerEntity.getBoundingBox().inflate(16.0D, 64.0D, 16.0D));
+                List<Player> list = chaosSpawnerEntity.level().getNearbyPlayers(attackTargeting, chaosSpawnerEntity, chaosSpawnerEntity.getBoundingBox().inflate(range));
                 list = list.stream().filter(player -> !player.getAbilities().instabuild).collect(Collectors.toList());
                 if (!list.isEmpty()) {
                     chaosSpawnerEntity.setTarget(list.get(chaosSpawnerEntity.getRandom().nextInt(list.size())));

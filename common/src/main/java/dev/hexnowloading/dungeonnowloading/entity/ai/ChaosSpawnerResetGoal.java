@@ -47,7 +47,10 @@ public class ChaosSpawnerResetGoal extends Goal {
         chaosSpawnerEntity.setBarrierWestTick(-1);
         chaosSpawnerEntity.setBarrierUpTick(-1);
         chaosSpawnerEntity.setBarrierDownTick(-1);
+        chaosSpawnerEntity.setTarget(null);
         chaosSpawnerEntity.setHealth(chaosSpawnerEntity.getMaxHealth());
         chaosSpawnerEntity.setPos(chaosSpawnerEntity.getSpawnPointPos().getX() + 0.5, chaosSpawnerEntity.getSpawnPointPos().getY(), chaosSpawnerEntity.getSpawnPointPos().getZ() + 0.5);
+        chaosSpawnerEntity.clearParticipatingPlayers();
+        chaosSpawnerEntity.triggerSleepAnimation();
     }
 }

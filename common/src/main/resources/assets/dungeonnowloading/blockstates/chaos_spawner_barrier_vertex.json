@@ -1,155 +1,109 @@
 {
   "variants": {
-    "facing=up,block_face=up": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 270
-    },
-    "facing=up,block_face=down": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 270
-    },
-    "facing=up,block_face=north": {
+    "facing=north,barrier_vertex=top": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
       "x": 270,
       "y": 180
     },
-    "facing=up,block_face=east": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 270,
-      "y": 270
-    },
-    "facing=up,block_face=south": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 270
-    },
-    "facing=up,block_face=west": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 270,
-      "y": 90
-    },
-    "facing=down,block_face=up": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 90
-    },
-    "facing=down,block_face=down": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 90
-    },
-    "facing=down,block_face=north": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 90
-    },
-    "facing=down,block_face=east": {
+    "facing=north,barrier_vertex=bottom": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
       "x": 90,
       "y": 90
     },
-    "facing=down,block_face=south": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 90,
-      "y": 180
-    },
-    "facing=down,block_face=west": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 90,
-      "y": 270
-    },
-    "facing=north,block_face=up": {
+    "facing=north,barrier_vertex=top_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex"
     },
-    "facing=north,block_face=down": {
+    "facing=north,barrier_vertex=bottom_right": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
+      "x": 180,
+      "y": 180
+    },
+    "facing=north,barrier_vertex=bottom_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
       "x": 180,
       "y": 180
     },
-    "facing=north,block_face=north": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex"
-    },
-    "facing=north,block_face=east": {
+    "facing=north,barrier_vertex=top_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side"
     },
-    "facing=north,block_face=south": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex"
+    "facing=east,barrier_vertex=top": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
+      "x": 270,
+      "y": 270
     },
-    "facing=north,block_face=west": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
-      "x": 180,
+    "facing=east,barrier_vertex=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
+      "x": 90,
       "y": 180
     },
-    "facing=east,block_face=up": {
+    "facing=east,barrier_vertex=top_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
       "y": 90
     },
-    "facing=east,block_face=down": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 180,
-      "y": 270
-    },
-    "facing=east,block_face=north": {
+    "facing=east,barrier_vertex=bottom_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
       "x": 180,
       "y": 270
     },
-    "facing=east,block_face=east": {
+    "facing=east,barrier_vertex=bottom_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "y": 90
+      "x": 180,
+      "y": 270
     },
-    "facing=east,block_face=south": {
+    "facing=east,barrier_vertex=top_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
       "y": 90
     },
-    "facing=east,block_face=west": {
+    "facing=south,barrier_vertex=top": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "y": 90
+      "x": 270
     },
-    "facing=south,block_face=up": {
+    "facing=south,barrier_vertex=bottom": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "y": 180
+      "x": 90,
+      "y": 270
     },
-    "facing=south,block_face=down": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 180
-    },
-    "facing=south,block_face=north": {
+    "facing=south,barrier_vertex=top_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
       "y": 180
     },
-    "facing=south,block_face=east": {
+    "facing=south,barrier_vertex=bottom_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
       "x": 180
     },
-    "facing=south,block_face=south": {
+    "facing=south,barrier_vertex=bottom_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "y": 180
+      "x": 180
     },
-    "facing=south,block_face=west": {
+    "facing=south,barrier_vertex=top_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
       "y": 180
     },
-    "facing=west,block_face=up": {
+    "facing=west,barrier_vertex=top": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "y": 270
-    },
-    "facing=west,block_face=down": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
-      "x": 180,
+      "x": 270,
       "y": 90
     },
-    "facing=west,block_face=north": {
-      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
-      "y": 270
+    "facing=west,barrier_vertex=bottom": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
+      "x": 90
     },
-    "facing=west,block_face=east": {
+    "facing=west,barrier_vertex=top_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
       "y": 270
     },
-    "facing=west,block_face=south": {
+    "facing=west,barrier_vertex=bottom_right": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
       "x": 180,
       "y": 90
     },
-    "facing=west,block_face=west": {
+    "facing=west,barrier_vertex=bottom_left": {
       "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex",
+      "x": 180,
+      "y": 90
+    },
+    "facing=west,barrier_vertex=top_left": {
+      "model": "dungeonnowloading:block/chaos_spawner_barrier_vertex_side",
       "y": 270
     }
   }

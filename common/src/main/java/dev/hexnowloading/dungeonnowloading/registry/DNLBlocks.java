@@ -5,21 +5,14 @@ import dev.hexnowloading.dungeonnowloading.block.*;
 import dev.hexnowloading.dungeonnowloading.registration.BlockRegistryObject;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import java.util.function.Supplier;
-import java.util.function.ToIntFunction;
 
 public class DNLBlocks {
     public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, DungeonNowLoading.MOD_ID);
