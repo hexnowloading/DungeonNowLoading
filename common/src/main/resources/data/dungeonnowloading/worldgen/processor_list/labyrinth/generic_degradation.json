@@ -11,12 +11,146 @@
             "predicate_type": "minecraft:always_true"
           },
           "input_predicate": {
-            "predicate_type": "minecraft:block_match",
-            "block": "minecraft:cobblestone"
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone",
+            "probability": 0.5
           },
           "output_state": {
             "Name": "minecraft:mossy_cobblestone"
           }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:stone_bricks",
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "minecraft:mossy_stone_bricks"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:smooth_stone",
+            "probability": 0.1
+          },
+          "output_state": {
+            "Name": "minecraft:smooth_stone_slab",
+            "Properties": {
+              "type": "double",
+              "waterlogged": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "dungeonnowloading:cobblestone_pebbles",
+              "Properties": {
+                "pile": "1"
+              }
+            },
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "1"
+            }
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "dungeonnowloading:cobblestone_pebbles",
+              "Properties": {
+                "pile": "2"
+              }
+            },
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "2"
+            }
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "dungeonnowloading:cobblestone_pebbles",
+              "Properties": {
+                "pile": "3"
+              }
+            },
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "3"
+            }
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_blockstate_match",
+            "block_state": {
+              "Name": "dungeonnowloading:cobblestone_pebbles",
+              "Properties": {
+                "pile": "4"
+              }
+            },
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "4"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "white_wool",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "block" : "dungeonnowloading:iron_ingot_pile",
+          "weight": 1
+        },
+        {
+          "block" : "dungeonnowloading:gold_ingot_pile",
+          "weight": 1
         }
       ]
     },

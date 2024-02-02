@@ -1,0 +1,7 @@
+{
+  "config": {
+    "type": "minecraft:lingering_potion",
+    "potion": "minecraft:harming"
+  },
+  "type": "dungeonnowloading:brewing_stand"
+}

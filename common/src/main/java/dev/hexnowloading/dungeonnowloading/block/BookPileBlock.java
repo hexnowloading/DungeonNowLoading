@@ -1,6 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -9,8 +10,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.List;
 
 public class BookPileBlock extends PileBlock{
     protected static final VoxelShape ONE_AABB = Block.box(0, 0, 0, 16, 3,16);
@@ -66,5 +70,10 @@ public class BookPileBlock extends PileBlock{
     @Override
     public boolean isPathfindable(BlockState p_154341_, BlockGetter p_154342_, BlockPos p_154343_, PathComputationType p_154344_) {
         return false;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState $$0, LootParams.Builder $$1) {
+        return super.getDrops($$0, $$1);
     }
 }

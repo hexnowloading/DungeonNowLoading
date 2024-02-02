@@ -1,0 +1,21 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/mobs/spider_jockeys",
+  "elements": [
+    {
+      "weight": 9,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton_spider_jockey"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton_cave_spider_jockey"
+      }
+    }
+  ]
+}

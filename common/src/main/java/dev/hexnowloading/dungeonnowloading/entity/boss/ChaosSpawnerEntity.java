@@ -7,9 +7,9 @@ import dev.hexnowloading.dungeonnowloading.block.*;
 import dev.hexnowloading.dungeonnowloading.config.BossConfig;
 import dev.hexnowloading.dungeonnowloading.entity.ai.*;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
-import dev.hexnowloading.dungeonnowloading.entity.util.*;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
 import dev.hexnowloading.dungeonnowloading.registry.DNLSounds;
+import dev.hexnowloading.dungeonnowloading.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -274,8 +274,8 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
                 playerUUIDs.add(p.getUUID());
             }
             int playerCount = players.size();
-            EntityScale.scaleHealth(this, playerCount);
-            EntityScale.scaleAttack(this, playerCount);
+            EntityScale.scaleBossHealth(this, playerCount);
+            EntityScale.scaleBossAttack(this, playerCount);
             this.entityData.set(PLAYER_COUNT, playerCount);
             this.entityData.set(AWAKENING_TICKS, 100);
             this.entityData.set(DATA_STATE, State.AWAKENING);

@@ -1,4 +1,4 @@
-package dev.hexnowloading.dungeonnowloading.entity.util;
+package dev.hexnowloading.dungeonnowloading.util;
 
 import java.util.ArrayList;
 import java.util.List;

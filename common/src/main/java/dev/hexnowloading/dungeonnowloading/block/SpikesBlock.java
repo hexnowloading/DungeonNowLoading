@@ -64,4 +64,9 @@ public class SpikesBlock extends Block implements SimpleWaterloggedBlock {
             }
         }
     }
+
+    @Override
+    public boolean isPathfindable(BlockState $$0, BlockGetter $$1, BlockPos $$2, PathComputationType $$3) {
+        return super.isPathfindable($$0, $$1, $$2, $$3);
+    }
 }

@@ -1,0 +1,101 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/decors/brewing_stands",
+  "elements": [
+    {
+      "weight": 16,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/harming"
+      }
+    },
+    {
+      "weight": 16,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/healing"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/strong_harming"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/strong_healing"
+      }
+    },
+    {
+      "weight": 16,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/splash_harming"
+      }
+    },
+    {
+      "weight": 16,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/splash_healing"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/splash_strong_harming"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/splash_strong_healing"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/lingering_harming"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/lingering_healing"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/lingering_strong_harming"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:decors/brewing_stands/lingering_strong_healing"
+      }
+    }
+  ]
+}

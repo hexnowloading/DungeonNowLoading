@@ -1,0 +1,29 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/mobs/spawner_carriers",
+  "elements": [
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/spawner_carriers/zombie_spawner"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/spawner_carriers/skeleton_spawner"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/spawner_carriers/spider_spawner"
+      }
+    }
+  ]
+}

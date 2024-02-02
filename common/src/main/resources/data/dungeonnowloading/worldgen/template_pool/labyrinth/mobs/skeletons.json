@@ -1,0 +1,45 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/mobs/skeletons",
+  "elements": [
+    {
+      "weight": 50,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/weak_flame_bow"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/weak_punch_bow"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/strong_flame_bow"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/strong_punch_bow"
+      }
+    }
+  ]
+}

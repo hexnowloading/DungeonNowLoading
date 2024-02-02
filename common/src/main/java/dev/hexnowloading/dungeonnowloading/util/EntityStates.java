@@ -1,4 +1,4 @@
-package dev.hexnowloading.dungeonnowloading.entity.util;
+package dev.hexnowloading.dungeonnowloading.util;
 
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import net.minecraft.network.syncher.EntityDataSerializer;
