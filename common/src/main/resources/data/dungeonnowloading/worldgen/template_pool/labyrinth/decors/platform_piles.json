@@ -1,0 +1,320 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/iron_1",
+        "processors": "dungeonnowloading:labyrinth/ores/iron_ingot_pile"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/iron_2",
+        "processors": "dungeonnowloading:labyrinth/ores/iron_ingot_pile"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/iron_3",
+        "processors": "dungeonnowloading:labyrinth/ores/iron_ingot_pile"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/iron_4",
+        "processors": "dungeonnowloading:labyrinth/ores/iron_ingot_pile"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/iron_5",
+        "processors": "dungeonnowloading:labyrinth/ores/iron_ingot_pile"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/gold_1",
+        "processors": "dungeonnowloading:labyrinth/ores/gold_ingot_pile"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/gold_2",
+        "processors": "dungeonnowloading:labyrinth/ores/gold_ingot_pile"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/gold_3",
+        "processors": "dungeonnowloading:labyrinth/ores/gold_ingot_pile"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/gold_4",
+        "processors": "dungeonnowloading:labyrinth/ores/gold_ingot_pile"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/gold_5",
+        "processors": "dungeonnowloading:labyrinth/ores/gold_ingot_pile"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/diamond_1",
+        "processors": "dungeonnowloading:labyrinth/ores/diamond_pile"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/diamond_2",
+        "processors": "dungeonnowloading:labyrinth/ores/diamond_pile"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/diamond_3",
+        "processors": "dungeonnowloading:labyrinth/ores/diamond_pile"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/diamond_4",
+        "processors": "dungeonnowloading:labyrinth/ores/diamond_pile"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/ore_piles/diamond_5",
+        "processors": "dungeonnowloading:labyrinth/ores/diamond_pile"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/woods_1",
+        "processors": "dungeonnowloading:labyrinth/barrels/woods"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/woods_2",
+        "processors": "dungeonnowloading:labyrinth/barrels/woods"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/woods_3",
+        "processors": "dungeonnowloading:labyrinth/barrels/woods"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/woods_4",
+        "processors": "dungeonnowloading:labyrinth/barrels/woods"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/woods_5",
+        "processors": "dungeonnowloading:labyrinth/barrels/woods"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/arrows_1",
+        "processors": "dungeonnowloading:labyrinth/barrels/arrows"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/arrows_2",
+        "processors": "dungeonnowloading:labyrinth/barrels/arrows"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/arrows_3",
+        "processors": "dungeonnowloading:labyrinth/barrels/arrows"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/arrows_4",
+        "processors": "dungeonnowloading:labyrinth/barrels/arrows"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/arrows_5",
+        "processors": "dungeonnowloading:labyrinth/barrels/arrows"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/foods_1",
+        "processors": "dungeonnowloading:labyrinth/barrels/foods"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/foods_2",
+        "processors": "dungeonnowloading:labyrinth/barrels/foods"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/foods_3",
+        "processors": "dungeonnowloading:labyrinth/barrels/foods"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/foods_4",
+        "processors": "dungeonnowloading:labyrinth/barrels/foods"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/foods_5",
+        "processors": "dungeonnowloading:labyrinth/barrels/foods"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/horse_gears_1",
+        "processors": "dungeonnowloading:labyrinth/barrels/horse_gears"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/horse_gears_2",
+        "processors": "dungeonnowloading:labyrinth/barrels/horse_gears"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/horse_gears_3",
+        "processors": "dungeonnowloading:labyrinth/barrels/horse_gears"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/horse_gears_4",
+        "processors": "dungeonnowloading:labyrinth/barrels/horse_gears"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/barrels/horse_gears_5",
+        "processors": "dungeonnowloading:labyrinth/barrels/horse_gears"
+      }
+    }
+  ]
+}

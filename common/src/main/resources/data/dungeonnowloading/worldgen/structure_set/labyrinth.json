@@ -8,6 +8,10 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 269766545,
+    "exclusion_zone": {
+      "other_set": "minecraft:mineshafts",
+      "chunk_count": 5
+    },
     "spacing": 40,
     "separation": 10
   }

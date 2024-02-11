@@ -1,12 +1,14 @@
 {
-  "fallback": "dungeonnowloading:labyrinth/decors/armor_stands",
+  "name": "dungeonnowloading:labyrinth/decors/armor_stands",
+  "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "element_type": "minecraft:feature_pool_element",
+        "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "feature": "dungeonnowloading:decors/armor_stands/random_equipments"
+        "location": "dungeonnowloading:labyrinth/decors/armor_stand",
+        "processors": "dungeonnowloading:waterlogging_fix"
       }
     }
   ]

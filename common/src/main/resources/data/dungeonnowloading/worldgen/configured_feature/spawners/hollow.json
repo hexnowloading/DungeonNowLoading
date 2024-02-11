@@ -1,0 +1,6 @@
+{
+  "config": {
+    "entity_type": "dungeonnowloading:hollow"
+  },
+  "type": "dungeonnowloading:spawner"
+}

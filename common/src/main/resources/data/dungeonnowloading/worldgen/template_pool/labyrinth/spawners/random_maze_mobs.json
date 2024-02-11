@@ -1,0 +1,52 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/spawners/random_maze_mobs",
+  "elements": [
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:spawners/skeleton"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:spawners/zombie"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:spawners/cave_spider"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:spawners/hollow"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/hanging_lantern",
+        "processors": "dungeonnowloading:waterlogging_fix"
+      }
+    }
+  ]
+}

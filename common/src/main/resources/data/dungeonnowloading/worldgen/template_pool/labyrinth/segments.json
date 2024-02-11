@@ -1,13 +1,139 @@
 {
   "name": "dungeonnowloading:labyrinth/segments",
-  "fallback": "minecraft:empty",
+  "fallback": "dungeonnowloading:labyrinth/segment_fallbacks",
   "elements": [
     {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:labyrinth/room/snake",
+        "location": "dungeonnowloading:labyrinth/rooms/snake",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/checker",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/skeleton_bridge",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/skeleton_platform",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/grand_hall",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/prison_cell",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/zigzag",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/ore_deposit",
+        "processors": "dungeonnowloading:labyrinth/ores/deposit"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/suspicious",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/stable",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/cross",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/maze",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/vertical",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/vertical_t",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/vertical_u",
         "processors": "dungeonnowloading:labyrinth/generic_degradation"
       }
     }

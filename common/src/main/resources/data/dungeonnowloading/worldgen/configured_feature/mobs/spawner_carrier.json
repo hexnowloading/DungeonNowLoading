@@ -1,6 +1,0 @@
-{
-  "config": {
-    "entity_type": "minecraft:zombie"
-  },
-  "type": "dungeonnowloading:spawner_carrier"
-}

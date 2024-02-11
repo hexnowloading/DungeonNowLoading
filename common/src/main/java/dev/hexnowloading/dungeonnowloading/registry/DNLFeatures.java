@@ -29,6 +29,9 @@ public class DNLFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ZOMBIE_WITH_DIAMOND_AXE = FEATURE.register("zombie_with_diamond_axe", ZombieWithDiamondAxeFeature::new);
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ZOMBIE_WITH_GOLD_SWORD = FEATURE.register("zombie_with_gold_sword", ZombieWithGoldSwordFeature::new);
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ZOMBIE_WITH_GOLD_AXE = FEATURE.register("zombie_with_gold_axe", ZombieWithGoldAxeFeature::new);
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> SKELETON_HORSE = FEATURE.register("skeleton_horse", SkeletonHorseFeature::new);
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> ZOMBIE_HORSE = FEATURE.register("zombie_horse", ZombieHorseFeature::new);
+
     public static final RegistryObject<Feature<EntityTypeConfig>> SPAWNER_CARRIER = FEATURE.register("spawner_carrier", () -> new SpawnerCarrierFeature(EntityTypeConfig.CODEC));
 
     public static final RegistryObject<Feature<EntityTypeConfig>> SPAWNER = FEATURE.register("spawner", () -> new SpawnerFeature(EntityTypeConfig.CODEC));

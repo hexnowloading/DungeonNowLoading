@@ -2,9 +2,13 @@ package dev.hexnowloading.dungeonnowloading.block;
 
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -63,5 +67,18 @@ public class PebbleBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public boolean isPathfindable(BlockState p_154341_, BlockGetter p_154342_, BlockPos p_154343_, PathComputationType p_154344_) {
         return false;
+    }
+
+    @Override
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
+        if (!blockState.canSurvive(levelAccessor, blockPos)) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
+        return !levelReader.isEmptyBlock(blockPos.below());
     }
 }

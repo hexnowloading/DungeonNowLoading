@@ -1,0 +1,21 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/mobs/undead_horses",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton_horse"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/zombie_horse"
+      }
+    }
+  ]
+}

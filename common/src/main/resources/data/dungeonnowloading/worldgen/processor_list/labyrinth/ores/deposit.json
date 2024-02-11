@@ -1,0 +1,504 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:red_wool"
+          },
+          "output_state": {
+            "Name": "minecraft:stone"
+          }
+        },
+        {
+          "position_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:cobblestone",
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "minecraft:mossy_cobblestone"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:stone_bricks",
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "minecraft:mossy_stone_bricks"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:smooth_stone",
+            "probability": 0.1
+          },
+          "output_state": {
+            "Name": "minecraft:smooth_stone_slab",
+            "Properties": {
+              "type": "double",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:grass_block",
+            "probability": 0.6
+          },
+          "output_state": {
+            "Name": "minecraft:moss_block"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:dirt",
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "minecraft:packed_mud"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "dungeonnowloading:cobblestone_pebbles",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:gray_stained_glass",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:cobweb"
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:air"
+          },
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:light_gray_stained_glass",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:air"
+          },
+          "weight": 66
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:decorated_pot"
+          },
+          "weight": 5
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:flower_pot"
+          },
+          "weight": 8
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:explosive_barrel"
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "1"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "2"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "4"
+            }
+          },
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:white_stained_glass",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:air"
+          },
+          "weight": 78
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:decorated_pot"
+          },
+          "weight": 5
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:flower_pot"
+          },
+          "weight": 8
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:explosive_barrel"
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "1"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "2"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "4"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:red_carpet",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:air"
+          },
+          "weight": 200
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:cobweb"
+          },
+          "weight": 8
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:flower_pot"
+          },
+          "weight": 8
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "1"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "2"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:candle",
+            "Properties": {
+              "candles": "4"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:book_pile",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:light_gray_carpet",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:cobweb"
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:air"
+          },
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:black_stained_glass",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:stone"
+          },
+          "weight": 10
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:iron_ore"
+          },
+          "weight": 10
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:gold_ore"
+          },
+          "weight": 5
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:diamond_ore"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:waterlogging_fix_processor"
+    }
+  ]
+}

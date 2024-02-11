@@ -74,10 +74,10 @@ public class ArmorStandWithRandomEquipmentsFeature extends Feature<NoneFeatureCo
     }
 
     private void equipDiamondEquipments(ArmorStand armorStand, FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET)); }
-        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE)); }
-        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS)); }
-        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS)); }
+        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET)); }
+        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE)); }
+        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS)); }
+        if (context.random().nextFloat() < 0.5F) { armorStand.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.DIAMOND_BOOTS)); }
         if (context.random().nextFloat() < 0.5F) {
             armorStand.setShowArms(true);
             armorStand.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(DIAMOND_EQUIPMENTS[context.random().nextInt(DIAMOND_EQUIPMENTS.length)]));

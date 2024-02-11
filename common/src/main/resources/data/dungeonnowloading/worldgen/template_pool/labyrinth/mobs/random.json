@@ -1,0 +1,125 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/mobs/random",
+  "elements": [
+    {
+      "weight": 50,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/zombie"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/zombies/iron_axe"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/zombies/gold_sword"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/zombies/gold_axe"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/zombies/diamond_axe"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/weak_flame_bow"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/weak_punch_bow"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/strong_flame_bow"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeletons/strong_punch_bow"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/spawner_carriers/zombie_spawner"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/spawner_carriers/skeleton_spawner"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/spawner_carriers/spider_spawner"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton_spider_jockey"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:mobs/skeleton_cave_spider_jockey"
+      }
+    }
+  ]
+}

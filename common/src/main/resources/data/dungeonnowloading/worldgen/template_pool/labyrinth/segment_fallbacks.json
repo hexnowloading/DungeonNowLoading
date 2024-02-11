@@ -1,0 +1,15 @@
+{
+  "name": "dungeonnowloading:labyrinth/segment_fallbacks",
+  "fallback": "dungeonnowloading:labyrinth/segment_fallbacks",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/fallbacks/corridor_end",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    }
+  ]
+}

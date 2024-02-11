@@ -1,0 +1,28 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/decors/vertical_room_chains",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:feature_pool_element",
+        "projection": "rigid",
+        "feature": "dungeonnowloading:spawners/hollow"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/hanging_lantern",
+        "processors": "dungeonnowloading:waterlogging_fix"
+      }
+    }
+  ]
+}

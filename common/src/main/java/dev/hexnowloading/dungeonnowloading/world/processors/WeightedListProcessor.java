@@ -10,6 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.Weight;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -23,15 +24,15 @@ public class WeightedListProcessor extends StructureProcessor {
 
     public static final Codec<WeightedListProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.input_block),
-            Codec.mapPair(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("block"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight"))
+            Codec.mapPair(BlockState.CODEC.fieldOf("blockstate"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight"))
                     .codec().listOf().fieldOf("weighted_list_of_replacement_blocks")
                     .forGetter(processor -> processor.weightedReplacementBlocks))
             .apply(instance, instance.stable(WeightedListProcessor::new)));
 
-    private final List<Pair<Block, Integer>> weightedReplacementBlocks;
+    private final List<Pair<BlockState, Integer>> weightedReplacementBlocks;
     private final Block input_block;
 
-    public WeightedListProcessor(Block input_block, List<Pair<Block, Integer>> weightedReplacementBlocks) {
+    public WeightedListProcessor(Block input_block, List<Pair<BlockState, Integer>> weightedReplacementBlocks) {
         this.input_block = input_block;
         this.weightedReplacementBlocks = weightedReplacementBlocks;
     }
@@ -42,11 +43,11 @@ public class WeightedListProcessor extends StructureProcessor {
         if (blockInfoGlobal.state().getBlock() == input_block) {
             double totalWeight = 0.0D;
             RandomSource randomSource = settings.getRandom(blockInfoGlobal.pos());
-            Block replacementBlock;
+            BlockState replacementBlock;
             if (weightedReplacementBlocks.size() == 1) {
                 replacementBlock = weightedReplacementBlocks.get(0).getFirst();
             } else {
-                for (Pair<Block, Integer> pair : weightedReplacementBlocks) {
+                for (Pair<BlockState, Integer> pair : weightedReplacementBlocks) {
                     totalWeight += pair.getSecond();
                 }
                 int index = 0;
@@ -56,7 +57,10 @@ public class WeightedListProcessor extends StructureProcessor {
                 }
                 replacementBlock = weightedReplacementBlocks.get(index).getFirst();
             }
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), replacementBlock.defaultBlockState(), blockInfoGlobal.nbt());
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), replacementBlock, blockInfoGlobal.nbt());
+            //BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+            //mutable.set(blockInfoGlobal.pos());
+            //levelReader.getChunk(mutable).setBlockState(mutable, replacementBlock, false);
         }
         return blockInfoGlobal;
     }

@@ -2,7 +2,6 @@ package dev.hexnowloading.dungeonnowloading;
 
 import dev.hexnowloading.dungeonnowloading.client.DNLForgeClientEvents;
 import dev.hexnowloading.dungeonnowloading.server.DNLForgeEntityEvents;
-import dev.hexnowloading.dungeonnowloading.server.entity.DNLForgeEntities;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

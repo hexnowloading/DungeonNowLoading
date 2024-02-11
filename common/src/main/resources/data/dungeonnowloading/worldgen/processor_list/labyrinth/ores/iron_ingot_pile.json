@@ -1,0 +1,133 @@
+{
+  "processors": [
+    {
+      "processor_type": "dungeonnowloading:weighted_list_processor",
+      "input_block": "minecraft:red_carpet",
+      "weighted_list_of_replacement_blocks": [
+        {
+          "blockstate" : {
+            "Name": "minecraft:air"
+          },
+          "weight": 40
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:iron_ingot_pile",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 8
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:iron_ingot_pile",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 6
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:iron_ingot_pile",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:iron_ingot_pile",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:cobblestone_pebbles",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "1"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "2"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "3"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "blockstate" : {
+            "Name": "dungeonnowloading:mossy_cobblestone_pebbles",
+            "Properties": {
+              "pile": "4"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "blockstate" : {
+            "Name": "minecraft:lantern"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "processor_type": "dungeonnowloading:waterlogging_fix_processor"
+    }
+  ]
+}
