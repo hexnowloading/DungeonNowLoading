@@ -13,6 +13,7 @@
     }
   },
   "result": {
-    "item": "dungeonnowloading:wooden_wall_rack"
+    "item": "dungeonnowloading:wooden_wall_rack",
+    "count": 6
   }
 }

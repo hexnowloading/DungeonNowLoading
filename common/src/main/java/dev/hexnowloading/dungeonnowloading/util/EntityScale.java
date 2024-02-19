@@ -13,8 +13,8 @@ public class EntityScale {
 
     private static final UUID SCALED_HEALTH_MODIFIER_UUID = UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
     private static final UUID SCALED_ATTACK_MODIFIER_UUID = UUID.fromString("3a284fc3-6c5a-43d7-93ec-d96423e0f34f");
-    private static final double bossHealthScale = BossConfig.BOSS_HEALTH_SCALE.get();
-    private static final double bossAttackDamageScale = BossConfig.BOSS_DAMAGE_SCALE.get();
+    private static final double bossHealthScale = BossConfig.BOSS_HEALTH_MODIFIER.get();
+    private static final double bossAttackDamageScale = BossConfig.BOSS_DAMAGE_MODIFIER.get();
     private static final double multiplayerBossHealthScale = BossConfig.TOGGLE_MULTIPLAYER_SCALING.get() ? BossConfig.MULTIPLAYER_BOSS_HEALTH_SCALE.get() : 0;
     private static final double multiplayerBossAttackScale = BossConfig.TOGGLE_MULTIPLAYER_SCALING.get() ? BossConfig.MULTIPLAYER_BOSS_ATTACK_SCALE.get() : 0;
 
@@ -34,8 +34,8 @@ public class EntityScale {
     }
 
     public static void scaleMobAttributes(LivingEntity entity) {
-        int health = (int) (entity.getMaxHealth() * MobConfig.DUNGEON_MOB_HEALTH_SCALE.get());
-        int attackDamage = (int) (entity.getAttribute(Attributes.ATTACK_DAMAGE).getValue() * MobConfig.DUNGEON_MOB_ATTACK_SCALE.get());
+        int health = (int) (entity.getMaxHealth() * MobConfig.DUNGEON_MOB_HEALTH_MODIFIER.get());
+        int attackDamage = (int) (entity.getAttribute(Attributes.ATTACK_DAMAGE).getValue() * MobConfig.DUNGEON_MOB_ATTACK_MODIFIER.get());
         entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health);
         entity.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(attackDamage);
         entity.setHealth(health);

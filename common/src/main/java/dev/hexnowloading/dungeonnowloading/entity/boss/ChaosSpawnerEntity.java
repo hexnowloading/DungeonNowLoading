@@ -113,7 +113,7 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 100.0D)
+                .add(Attributes.MAX_HEALTH, 300.0D)
                 .add(Attributes.FOLLOW_RANGE, 30.0D)
                 .add(Attributes.FLYING_SPEED)
                 .add(Attributes.MOVEMENT_SPEED, 0.23F)
@@ -321,7 +321,7 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
                 this.die(this.damageSources().generic());
             }
         }
-        // Temporary fix to boss reset (boss does not reset when player dies is a middle of an attack)
+        // Temporary fix to boss reset (boss does not reset when player dies in a middle of an attack)
         if (this.getPhase() == 0 && this.getState().equals(State.IDLE)) {
             this.setDataState(State.SLEEPING);
         }

@@ -9,6 +9,13 @@
           "name": "dungeonnowloading:spawner_fragment",
           "functions": [
             {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3,
+                "max": 6
+              }
+            },
+            {
               "function": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
               "formula": "minecraft:ore_drops"
