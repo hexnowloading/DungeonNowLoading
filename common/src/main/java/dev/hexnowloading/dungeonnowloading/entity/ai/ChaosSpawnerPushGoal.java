@@ -37,7 +37,7 @@ public class ChaosSpawnerPushGoal extends Goal {
     @Override
     public void tick() {
         if (chaosSpawnerEntity.getAttackTick() == 66) { // Only even number tick works for some reason
-            chaosSpawnerEntity.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 1.0F);
+            chaosSpawnerEntity.playSound(SoundEvents.GENERIC_EXPLODE, 3.0F, 1.0F);
             ((ServerLevel) chaosSpawnerEntity.level()).sendParticles(ParticleTypes.POOF, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), 50, 3.0D, 0.0D, 3.0D, 0.0D);
             AABB aabb = (new AABB(this.chaosSpawnerEntity.blockPosition())).inflate(8);
             List<LivingEntity> targets = this.chaosSpawnerEntity.level().getEntitiesOfClass(LivingEntity.class, aabb);

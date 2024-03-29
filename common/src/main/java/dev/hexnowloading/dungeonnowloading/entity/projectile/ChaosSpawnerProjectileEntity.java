@@ -99,9 +99,9 @@ public class ChaosSpawnerProjectileEntity extends Entity {
                 this.setPos(d0, d1, d2);
                 ProjectileUtil.rotateTowardsMovement(this, 1F);
                 if (this.tickCount == 3) {
-                    if (!(this.getOwner() instanceof ChaosSpawnerEntity)) { // to avoid playing the sound multiple times when Chaos Spawner shoots multiple projectiles.
+                    /*if (!(this.getOwner() instanceof ChaosSpawnerEntity)) { // to avoid playing the sound multiple times when Chaos Spawner shoots multiple projectiles.
                         this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITHER_SHOOT, this.getSoundSource(), 10.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
-                    }
+                    }*/
                     for(int i = 0; i < 5; ++i) {
                         this.level().addParticle(this.SPAWN_PARTICLE, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0.0D, 0.0D, 0.0D);
                     }

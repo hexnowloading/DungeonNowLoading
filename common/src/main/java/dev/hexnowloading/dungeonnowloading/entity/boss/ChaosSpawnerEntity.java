@@ -50,6 +50,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -85,6 +86,7 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
     private static final byte TRIGGER_ANIMATION_STOP_BYTE = 77;
 
     protected int attackTickCount;
+    private int contactAttackTickCount;
     private int deathAnimationTickCount;
     private int barrierCheckTickCount;
     private Set<UUID> playerUUIDs;
@@ -114,7 +116,7 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 300.0D)
-                .add(Attributes.FOLLOW_RANGE, 30.0D)
+                .add(Attributes.FOLLOW_RANGE, 35.0D)
                 .add(Attributes.FLYING_SPEED)
                 .add(Attributes.MOVEMENT_SPEED, 0.23F)
                 .add(Attributes.ATTACK_DAMAGE, 20.0D)
@@ -201,11 +203,11 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
         this.entityData.set(AWAKENING_TICKS, compoundTag.getInt("AwakeningTicks"));
         this.entityData.set(PLAYER_COUNT, compoundTag.getInt("PlayerCount"));
         this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierNorthTicks"));
-        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierEastTicks"));
-        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierSouthTicks"));
-        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierWestTicks"));
-        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierUpTicks"));
-        this.entityData.set(BARRIER_NORTH_TICK, compoundTag.getInt("BarrierDownTicks"));
+        this.entityData.set(BARRIER_EAST_TICK, compoundTag.getInt("BarrierEastTicks"));
+        this.entityData.set(BARRIER_SOUTH_TICK, compoundTag.getInt("BarrierSouthTicks"));
+        this.entityData.set(BARRIER_WEST_TICK, compoundTag.getInt("BarrierWestTicks"));
+        this.entityData.set(BARRIER_UP_TICK, compoundTag.getInt("BarrierUpTicks"));
+        this.entityData.set(BARRIER_DOWN_TICK, compoundTag.getInt("BarrierDownTicks"));
         this.attackTickCount = compoundTag.getInt("AttackTicks");
         int phase = compoundTag.getInt("Phase");
         if (phase < 1) {
@@ -249,6 +251,11 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
     }
 
     @Override
+    public Vec3 getDeltaMovement() {
+        return Vec3.ZERO;
+    }
+
+    @Override
     // Called when entity starts rendering
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
@@ -265,9 +272,8 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
         this.bossEvent.removePlayer(player);
     }
 
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
-        if (this.isAlive() && this.entityData.get(PHASE) < 1) {
+    public void startBossFight() {
+        if (this.isAlive() && this.entityData.get(PHASE) < 1 && this.getState() != State.AWAKENING) {
             AABB bossArena = new AABB(this.blockPosition()).inflate(getFollowDistance());
             List<ServerPlayer> players = this.level().getEntitiesOfClass(ServerPlayer.class, bossArena);
             for (ServerPlayer p : players) {
@@ -277,9 +283,15 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
             EntityScale.scaleBossHealth(this, playerCount);
             EntityScale.scaleBossAttack(this, playerCount);
             this.entityData.set(PLAYER_COUNT, playerCount);
-            this.entityData.set(AWAKENING_TICKS, 100);
+            this.entityData.set(AWAKENING_TICKS, 160);
             this.entityData.set(DATA_STATE, State.AWAKENING);
-            this.triggerWakeUpAnimation();
+        }
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+        if (this.isAlive() && this.entityData.get(PHASE) < 1 && this.getState() != State.AWAKENING) {
+            player.displayClientMessage(Component.translatable("entity.dungeonnowloading.chaos_spawner.right_click"), true);
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else {
             return super.mobInteract(player, interactionHand);
@@ -291,10 +303,11 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
         if (this.getAwakeningTick() > 0) {
             int k1 = this.getAwakeningTick() - 1;
             if (k1 == 99) {
-                this.playSound(DNLSounds.CHAOS_SPAWNER_CHAIN_BREAK.get(), 1.0F, 1.0F);
+                this.triggerWakeUpAnimation();
+                this.playSound(DNLSounds.CHAOS_SPAWNER_CHAIN_BREAK.get(), 3.0F, 1.0F);
             }
             if (k1 == 60) {
-                this.playSound(DNLSounds.CHAOS_SPAWNER_LAUGHTER.get(), 1.0F, 1.0F);
+                this.playSound(DNLSounds.CHAOS_SPAWNER_LAUGHTER.get(), 3.0F, 1.0F);
             }
             if (k1 <= 0) {
                 this.setPhase(1);
@@ -312,6 +325,7 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
         }
         if (this.getPhase() > 0 && !this.getState().equals(State.DEATH)) {
             this.abilitySelectionTick();
+            this.damageContactPlayer();
             this.checkBarrierTick();
             this.phaseUpdateTick();
         }
@@ -335,6 +349,19 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
         }
     }
 
+    private void damageContactPlayer() {
+        if (contactAttackTickCount > 0) {
+            this.contactAttackTickCount--;
+        } else {
+            this.contactAttackTickCount = 20;
+            AABB aabb = (new AABB(this.blockPosition())).inflate(2);
+            List<Player> targets = this.level().getEntitiesOfClass(Player.class, aabb);
+            for (Player player : targets) {
+                this.doHurtTarget(player);
+            }
+        }
+    }
+
     private void abilitySelectionTick() {
         if (this.getTarget() != null) {
             if (attackTickCount > 0) {
@@ -345,13 +372,13 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
                     AABB aabb = (new AABB(this.blockPosition())).inflate(10);
                     pushTargets = this.level().getEntitiesOfClass(Player.class, aabb);
                     if (!pushTargets.isEmpty()) {
-                        attackPool.addEntry(State.PUSH, 2);
-                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_SINGLE, 1);
-                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_BURST, 1);
+                        attackPool.addEntry(State.PUSH, 3);
+                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_SINGLE, 3);
+                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_BURST, 2);
                         attackPool.addEntry(State.SUMMON_MOB, 1);
                     } else {
-                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_SINGLE, 1);
-                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_BURST, 1);
+                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_SINGLE, 3);
+                        attackPool.addEntry(State.SHOOT_GHOST_BULLET_BURST, 2);
                         attackPool.addEntry(State.SUMMON_MOB, 1);
                     }
                     this.entityData.set(DATA_STATE, attackPool.getRandom());
@@ -402,10 +429,10 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
                     fixedFrame++;
                 } else {
                     if (frameState.getBlock() instanceof ChaosSpawnerEdgeBlock) {
-                        this.level().playSound(null, framePos, SoundEvents.END_PORTAL_FRAME_FILL, this.getSoundSource(), 10.0F, 1.0F);
+                        this.level().playSound(null, framePos, SoundEvents.END_PORTAL_FRAME_FILL, this.getSoundSource(), 3.0F, 1.0F);
                         ChaosSpawnerEdgeBlock.fixFrame(this.level(), framePos, frameState);
                     } else if (frameState.getBlock() instanceof  ChaosSpawnerVertexBlock) {
-                        this.level().playSound(null, framePos, SoundEvents.END_PORTAL_FRAME_FILL, this.getSoundSource(), 10.0F, 1.0F);
+                        this.level().playSound(null, framePos, SoundEvents.END_PORTAL_FRAME_FILL, this.getSoundSource(), 3.0F, 1.0F);
                         ChaosSpawnerVertexBlock.fixFrame(this.level(), framePos, frameState);
                     }
                     this.entityData.set(entityDataAccessor, 20);
@@ -420,7 +447,7 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
     }
 
     private void placeFullBarrier(BlockPos barrierCenterPos, int barrierDirection) {
-        this.level().playSound(null, barrierCenterPos, SoundEvents.END_PORTAL_SPAWN, this.getSoundSource(), 10.0F, 2.0F);
+        this.level().playSound(null, barrierCenterPos, SoundEvents.END_PORTAL_SPAWN, this.getSoundSource(), 1.0F, 2.0F);
         ChaosSpawnerBarrierCenterBlock.placeBarrier(this.level(), barrierCenterPos, barrierDirection);
         ChaosSpawnerBarrierEdgeBlock.placeBarrier(this.level(), barrierCenterPos, barrierDirection);
         ChaosSpawnerBarrierVertexBlock.placeBarrier(this.level(), barrierCenterPos, barrierDirection);

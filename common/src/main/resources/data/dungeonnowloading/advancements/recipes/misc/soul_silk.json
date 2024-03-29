@@ -1,0 +1,34 @@
+{
+  "parent": "dungeonnowloading:recipes/root",
+  "criteria": {
+    "has_soul_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "dungeonnowloading:soul_cloth"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "dungeonnowloading:soul_silk"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_soul_cloth"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dungeonnowloading:soul_silk"
+    ]
+  }
+}

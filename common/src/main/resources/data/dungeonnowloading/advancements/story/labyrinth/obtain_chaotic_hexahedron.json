@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "dungeonnowloading:chaotic_hexahedron"
+    },
+    "title": {
+      "translate": "advancements.dungeonnowloading.obtain_chaotic_hexahedron.title"
+    },
+    "description": {
+      "translate": "advancements.dungeonnowloading.obtain_chaotic_hexahedron.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "dungeonnowloading:story/labyrinth/awaken_chaos_spawner",
+  "criteria": {
+    "obtain_chaotic_hexahedron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "dungeonnowloading:chaotic_hexahedron"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_chaotic_hexahedron"
+    ]
+  ]
+}

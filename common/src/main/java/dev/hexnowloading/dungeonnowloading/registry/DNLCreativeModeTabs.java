@@ -12,7 +12,7 @@ public class DNLCreativeModeTabs {
 
     public static final RegistryObject<CreativeModeTab> DUNGEONNOWLOADING_TAB = CREATIVE_MODE_TAB.register("dungeonnowloading", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
             .title(Component.translatable("creativemodetab.dungeonnowloading.tab"))
-            .icon(() -> DNLItems.SPAWNER_SWORD.get().getDefaultInstance())
+            .icon(() -> DNLItems.DNL_LOGO.get().getDefaultInstance())
             .displayItems(((itemDisplayParameters, output) -> {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
@@ -32,6 +32,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SCEPTER_OF_SEALED_CHAOS.get());
                 output.accept(DNLItems.LIFE_STEALER.get());
                 output.accept(DNLItems.SPAWNER_SWORD.get());
+                output.accept(DNLItems.SKULL_OF_CHAOS.get());
                 // Items - Armors
                 output.accept(DNLItems.SPAWNER_HELMET.get());
                 output.accept(DNLItems.SPAWNER_CHESTPLATE.get());
@@ -59,6 +60,9 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_VERTEX.get());
+                // Blocks - Trophies
+                output.accept(DNLItems.DNL_LOGO.get());
+                output.accept(DNLItems.LABYRINTH_TROPHY.get());
             }))
             .build());
 

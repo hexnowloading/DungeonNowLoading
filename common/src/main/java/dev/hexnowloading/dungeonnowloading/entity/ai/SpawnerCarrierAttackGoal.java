@@ -15,7 +15,7 @@ public class SpawnerCarrierAttackGoal extends MeleeAttackGoal {
 
     @Override
     protected double getAttackReachSqr(LivingEntity livingEntity) {
-        float RANGE = 1.6F;
+        float RANGE = 1.3F;
         float Bb = spawnerCarrierEntity.getBbWidth() - 0.1F;
         return (double)(Bb * RANGE *Bb * RANGE + livingEntity.getBbWidth());
     }

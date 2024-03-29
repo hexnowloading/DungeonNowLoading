@@ -127,35 +127,35 @@ public class ChaosSpawnerBarrierEdgeBlock extends Block implements SimpleWaterlo
 
     public static void placeBarrier(Level level, BlockPos blockPos, int direction) {
         if (direction == 0) {
-            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 2);
+            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 3);
         } else if (direction == 1) {
-            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 2);
+            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 3);
         } else if (direction == 2) {
-            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 2);
+            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 3);
         } else if (direction == 3) {
-            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 2);
+            level.setBlock(blockPos.offset(0, 1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.UP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.RIGHT).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, -1, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.DOWN).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.LEFT).setValue(WATERLOGGED, false), 3);
         } else if (direction == 4) {
-            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 2);
+            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.TOP).setValue(WATERLOGGED, false), 3);
         } else if (direction == 5) {
-            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 2);
-            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 2);
+            level.setBlock(blockPos.offset(0, 0, -1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.NORTH).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.EAST).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(0, 0, 1), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.SOUTH).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 3);
+            level.setBlock(blockPos.offset(-1, 0, 0), DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get().defaultBlockState().setValue(FACING, Direction.WEST).setValue(BARRIER_EDGE, BarrierEdges.BOTTOM).setValue(WATERLOGGED, false), 3);
         }
     }
 }

@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "dungeonnowloading:skull_of_chaos"
+    },
+    "title": {
+      "translate": "advancements.dungeonnowloading.awaken_chaos_spawner.title"
+    },
+    "description": {
+      "translate": "advancements.dungeonnowloading.awaken_chaos_spawner.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "dungeonnowloading:story/labyrinth/find_labyrinth",
+  "criteria": {
+    "awaken_chaos_spawner": {
+      "trigger": "minecraft:item_durability_changed",
+      "conditions": {
+        "item": {
+          "items": [
+            "dungeonnowloading:skull_of_chaos"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "awaken_chaos_spawner"
+    ]
+  ]
+}

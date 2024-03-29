@@ -61,7 +61,7 @@ public class LifeStealerItem extends SwordItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack itemStack, ItemStack repairItem) {
-        return repairItem.is(DNLItems.SPAWNER_BLADE.get());
+        return repairItem.is(DNLItems.SPAWNER_BLADE.get()) || super.isValidRepairItem(itemStack, repairItem);
     }
 
     @Override

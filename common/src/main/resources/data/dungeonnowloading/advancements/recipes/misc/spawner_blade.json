@@ -1,0 +1,34 @@
+{
+  "parent": "dungeonnowloading:recipes/root",
+  "criteria": {
+    "has_spawner_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "dungeonnowloading:spawner_frame"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "dungeonnowloading:spawner_blade"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_spawner_frame"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dungeonnowloading:spawner_blade"
+    ]
+  }
+}

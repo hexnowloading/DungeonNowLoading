@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Y ",
+    "###",
+    "#X#"
+  ],
+  "key": {
+    "#": {
+      "item": "dungeonnowloading:spawner_frame"
+    },
+    "X": {
+      "item": "dungeonnowloading:spawner_blade"
+    },
+    "Y": {
+      "item": "minecraft:chain"
+    }
+  },
+  "result": {
+    "item": "dungeonnowloading:skull_of_chaos"
+  }
+}

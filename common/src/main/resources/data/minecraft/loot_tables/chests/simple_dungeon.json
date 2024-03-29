@@ -300,7 +300,7 @@
               "function": "minecraft:exploration_map",
               "destination": "dungeonnowloading:labyrinth",
               "decoration": "red_x",
-              "zoom": 1,
+              "zoom": 4,
               "skip_existing_chunks": false
             },
             {

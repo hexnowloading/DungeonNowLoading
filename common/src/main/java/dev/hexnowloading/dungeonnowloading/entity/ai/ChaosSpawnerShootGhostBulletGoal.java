@@ -11,6 +11,7 @@ import net.minecraft.world.phys.Vec3;
 public class ChaosSpawnerShootGhostBulletGoal extends Goal {
 
     private final ChaosSpawnerEntity chaosSpawnerEntity;
+    private final int DURATION = 126; // Must be even duration since bullet are shot at even ticks
     private String type;
 
     public ChaosSpawnerShootGhostBulletGoal(ChaosSpawnerEntity chaosSpawnerEntity) {
@@ -25,7 +26,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
     @Override
     public void start() {
         super.start();
-        chaosSpawnerEntity.setAttackTick(100);
+        chaosSpawnerEntity.setAttackTick(DURATION);
         WeightedRandomBag<String> bulletPatterns = new WeightedRandomBag<>();
         if (chaosSpawnerEntity.getState() == ChaosSpawnerEntity.State.SHOOT_GHOST_BULLET_SINGLE) {
             chaosSpawnerEntity.triggerRangeAttackAnimation();
@@ -92,7 +93,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
             if (targetEntity.distanceTo(chaosSpawnerEntity) < this.chaosSpawnerEntity.getFollowDistance()) {
-                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 3.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
                 vecFromCenterToFrontOfFace(0.0F);
             }
         }
@@ -102,7 +103,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
             if (targetEntity.distanceTo(chaosSpawnerEntity) < this.chaosSpawnerEntity.getFollowDistance()) {
-                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 3.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
                 vecFromCenterToFrontOfFace(0.0F);
                 vecFromCenterToFrontOfFace(-10.0F);
                 vecFromCenterToFrontOfFace(10.0F);
@@ -114,7 +115,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         LivingEntity targetEntity = chaosSpawnerEntity.getTarget();
         if (targetEntity != null) {
             if (targetEntity.distanceTo(chaosSpawnerEntity) < this.chaosSpawnerEntity.getFollowDistance()) {
-                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+                chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 3.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
                 vecFromCenterToFrontOfFace(0.0F);
                 vecFromCenterToFrontOfFace(-10.0F);
                 vecFromCenterToFrontOfFace(10.0F);
@@ -128,7 +129,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         float offset = (float) Math.toRadians(angle);
         Vec3 vec3 = chaosSpawnerEntity.getViewVector(1.0F);
         vec3 = vec3.yRot(offset);
-        chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+        chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 3.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
         for (int i = 0; i < 8; i++) {
             vec3 = vec3.yRot((float) Math.toRadians(45)* i);
             ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, vec3.x, vec3.y,vec3.z);
@@ -141,7 +142,7 @@ public class ChaosSpawnerShootGhostBulletGoal extends Goal {
         float offset = (float) Math.toRadians(angle);
         Vec3 vec3 = chaosSpawnerEntity.getViewVector(1.0F);
         vec3 = vec3.yRot(offset);
-        chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 10.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
+        chaosSpawnerEntity.level().playSound(null, chaosSpawnerEntity.getX(), chaosSpawnerEntity.getY(), chaosSpawnerEntity.getZ(), SoundEvents.WITHER_SHOOT, chaosSpawnerEntity.getSoundSource(), 3.0F, 1.0F + (chaosSpawnerEntity.getRandom().nextFloat() - chaosSpawnerEntity.getRandom().nextFloat()) * 0.2F);
         for (int i = 0; i < 16; i++) {
             vec3 = vec3.yRot((float) Math.toRadians(22.5) * i);
             ChaosSpawnerProjectileEntity chaosSpawnerProjectileEntity = new ChaosSpawnerProjectileEntity(chaosSpawnerEntity, vec3.x, vec3.y,vec3.z);

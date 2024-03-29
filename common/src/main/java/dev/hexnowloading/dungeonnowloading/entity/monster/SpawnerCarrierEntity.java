@@ -21,10 +21,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Spider;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +33,7 @@ public class SpawnerCarrierEntity extends Monster {
     private static final EntityDataAccessor<String> SUMMON_MOB_TYPE = SynchedEntityData.defineId(SpawnerCarrierEntity.class, EntityDataSerializers.STRING);
     private int summonTick = 200;
     private final float SPAWN_RANGE = 5;
-    private final String[] SUMMON_MOB_TYPE_LIST = {"Zombie", "Skeleton", "Spider"};
+    private final String[] SUMMON_MOB_TYPE_LIST = {"Zombie", "Skeleton", "Spider", "Creeper", "Cave Spider"};
 
     public SpawnerCarrierEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -56,7 +53,6 @@ public class SpawnerCarrierEntity extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new SpawnerCarrierAttackGoal(this, 1.0F, true));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0F));
@@ -133,6 +129,14 @@ public class SpawnerCarrierEntity extends Monster {
             case "Spider" -> {
                 EntityType<Spider> spider = EntityType.SPIDER;
                 return spider;
+            }
+            case "Cave Spider" -> {
+                EntityType<CaveSpider> caveSpider = EntityType.CAVE_SPIDER;
+                return caveSpider;
+            }
+            case "Creeper" -> {
+                EntityType<Creeper> creeper = EntityType.CREEPER;
+                return creeper;
             }
         }
         return null;

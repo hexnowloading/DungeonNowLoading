@@ -37,6 +37,7 @@ public class DNLItems {
     public static final RegistryObject<Item> SPAWNER_CHESTPLATE = register("spawner_chestplate", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.CHESTPLATE));
     public static final RegistryObject<Item> SPAWNER_LEGGINGS = register("spawner_leggings", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.LEGGINGS));
     public static final RegistryObject<Item> SPAWNER_BOOTS = register("spawner_boots", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.BOOTS));
+    public static final RegistryObject<Item> SKULL_OF_CHAOS = register("skull_of_chaos", () -> new SkullOfChaosItem(new Item.Properties().rarity(Rarity.EPIC).durability(10)));
 
     // BLOCKS
     public static final RegistryObject<Item> SKYLIGHT_STONE = register("skylight_stone", () -> new BlockItem(DNLBlocks.SKYLIGHT_STONE.get(), new Item.Properties()));
@@ -66,6 +67,8 @@ public class DNLItems {
     public static final RegistryObject<Item> CHAOS_SPAWNER_BARRIER_EDGE = register("chaos_spawner_barrier_edge", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get(), new Item.Properties()));
     public static final RegistryObject<Item> CHAOS_SPAWNER_BARRIER_VERTEX = register("chaos_spawner_barrier_vertex", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_VERTEX.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> DNL_LOGO = register("dnl_logo", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> LABYRINTH_TROPHY = register("labyrinth_trophy", () -> new BlockItem(DNLBlocks.LABYRINTH_TROPHY.get(), new Item.Properties().rarity(Rarity.RARE)));
 
     //public static final RegistryObject<Item> WIND_ALTER = register("wind_alter", () -> new BlockItem(SkyislandBlocks.WIND_ALTER.get(), new Item.Properties()));
 

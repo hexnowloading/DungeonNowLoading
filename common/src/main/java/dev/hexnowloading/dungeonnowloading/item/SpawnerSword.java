@@ -1,6 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.item;
 
 import dev.hexnowloading.dungeonnowloading.config.GeneralConfig;
+import dev.hexnowloading.dungeonnowloading.registry.DNLItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,6 +35,11 @@ public class SpawnerSword extends SwordItem {
 
     public static float soulDispersionEffect(LivingEntity attacker, LivingEntity target, float damage) {
         return attacker.getHealth() > 1 ? damage + 3.0F : damage;
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack itemStack, ItemStack repairItemStack) {
+        return repairItemStack.is(DNLItems.SPAWNER_BLADE.get()) || super.isValidRepairItem(itemStack, repairItemStack);
     }
 
     @Override

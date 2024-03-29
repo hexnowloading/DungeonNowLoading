@@ -27,7 +27,7 @@ public class DNLEntityTypes {
 
     //public static final RegistryObject<EntityType<Entity>> WINDSTONE = ENTITY_TYPE.register("windstone", () -> EntityType.Builder.of(WindstoneEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build(new ResourceLocation(Skyisland.MOD_ID, "windstone").toString()));
     // Bosses
-    public static final RegistryObject<EntityType<ChaosSpawnerEntity>> CHAOS_SPAWNER = ENTITY_TYPE.register("chaos_spawner", () -> EntityType.Builder.<ChaosSpawnerEntity>of(ChaosSpawnerEntity::new, MobCategory.MONSTER).sized(3.0F, 3.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner").toString()));
+    public static final RegistryObject<EntityType<ChaosSpawnerEntity>> CHAOS_SPAWNER = ENTITY_TYPE.register("chaos_spawner", () -> EntityType.Builder.<ChaosSpawnerEntity>of(ChaosSpawnerEntity::new, MobCategory.MONSTER).fireImmune().sized(3.0F, 3.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner").toString()));
 
     // Monsters
     public static final RegistryObject<EntityType<HollowEntity>> HOLLOW = ENTITY_TYPE.register("hollow", () -> EntityType.Builder.of(HollowEntity::new, MobCategory.MONSTER).sized(0.95F, 0.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "hollow").toString()));
@@ -38,7 +38,7 @@ public class DNLEntityTypes {
     public static final RegistryObject<EntityType<WhimperEntity>> WHIMPER = ENTITY_TYPE.register("whimper", () -> EntityType.Builder.of(WhimperEntity::new, MobCategory.CREATURE).sized(0.75F, 0.75F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "whimper").toString()));
 
     // Projectiles
-    public static final RegistryObject<EntityType<ChaosSpawnerProjectileEntity>> CHAOS_SPAWNER_PROJECTILE = ENTITY_TYPE.register("chaos_spawner_projectile", () -> EntityType.Builder.<ChaosSpawnerProjectileEntity>of(ChaosSpawnerProjectileEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner_projectile").toString()));
+    public static final RegistryObject<EntityType<ChaosSpawnerProjectileEntity>> CHAOS_SPAWNER_PROJECTILE = ENTITY_TYPE.register("chaos_spawner_projectile", () -> EntityType.Builder.<ChaosSpawnerProjectileEntity>of(ChaosSpawnerProjectileEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(4).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner_projectile").toString()));
 
     // Misc
     public static final RegistryObject<EntityType<SpecialItemEntity>> SPECIAL_ITEM_ENTITY = ENTITY_TYPE.register("special_item_entity", () -> EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "special_item_entity").toString()));

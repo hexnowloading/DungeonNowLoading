@@ -31,7 +31,7 @@ public class ChaosSpawnerLayer<T extends ChaosSpawnerEntity, M extends ChaosSpaw
         } else if (entitylivingbaseIn.rangeAttackAnimationState.isStarted() || entitylivingbaseIn.rangeBurstAttackAnimationState.isStarted()) {
             VertexConsumer chaosHexahedronVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_CHAOS_HEXAHEDRON, true));
             this.getParentModel().renderToBuffer(matrixStackIn, chaosHexahedronVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
-        } else if (entitylivingbaseIn.getState() == ChaosSpawnerEntity.State.SLEEPING) {
+        } else if (entitylivingbaseIn.getState() == ChaosSpawnerEntity.State.SLEEPING || entitylivingbaseIn.getAwakeningTick() > 100) {
             VertexConsumer chainVertexConsumer = bufferIn.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE_CHAINED, true));
             this.getParentModel().renderToBuffer(matrixStackIn, chainVertexConsumer, packedLightIn, LivingEntityRenderer.getOverlayCoords(entitylivingbaseIn, 0), 1.0F, 1.0F, 1.0F, 0.8F);
         } else {

@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "dungeonnowloading:dnl_logo"
+    },
+    "title": {
+      "translate": "advancements.dungeonnowloading.root.title"
+    },
+    "description": {
+      "translate": "advancements.dungeonnowloading.root.description"
+    },
+    "background": "minecraft:textures/block/mossy_cobblestone.png",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_crafting_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:crafting_table"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_crafting_table"
+    ]
+  ]
+}

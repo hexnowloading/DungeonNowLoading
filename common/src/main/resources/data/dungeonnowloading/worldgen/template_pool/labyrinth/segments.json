@@ -136,6 +136,24 @@
         "location": "dungeonnowloading:labyrinth/rooms/vertical_u",
         "processors": "dungeonnowloading:labyrinth/generic_degradation"
       }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/explosive_barrel",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/rooms/hollow_chamber",
+        "processors": "dungeonnowloading:labyrinth/generic_degradation"
+      }
     }
   ]
 }

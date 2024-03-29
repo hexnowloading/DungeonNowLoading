@@ -1,0 +1,34 @@
+{
+  "parent": "dungeonnowloading:recipes/root",
+  "criteria": {
+    "has_spawner_blade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "dungeonnowloading:spawner_blade"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "dungeonnowloading:skull_of_chaos"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_spawner_blade"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dungeonnowloading:skull_of_chaos"
+    ]
+  }
+}

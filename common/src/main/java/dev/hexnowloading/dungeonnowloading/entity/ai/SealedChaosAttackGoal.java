@@ -2,6 +2,7 @@ package dev.hexnowloading.dungeonnowloading.entity.ai;
 
 import dev.hexnowloading.dungeonnowloading.entity.passive.SealedChaosEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -57,6 +58,7 @@ public class SealedChaosAttackGoal extends Goal {
     }
 
     private void vecFromCenterToFrontOfFace(float angle) {
+        this.sealedChaosEntity.level().playSound(null, this.sealedChaosEntity.getX(), this.sealedChaosEntity.getY(), this.sealedChaosEntity.getZ(), SoundEvents.WITHER_SHOOT, this.sealedChaosEntity.getSoundSource(), 3.0F, 1.0F + (this.sealedChaosEntity.getRandom().nextFloat() - this.sealedChaosEntity.getRandom().nextFloat()) * 0.2F);
         double viewDistance = 0.1F;
         Vec3 viewVector = this.sealedChaosEntity.getViewVector(1.0F);
         if (angle != 0.0F) {
