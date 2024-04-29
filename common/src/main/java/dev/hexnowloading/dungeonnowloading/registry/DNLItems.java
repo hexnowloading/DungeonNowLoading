@@ -40,9 +40,9 @@ public class DNLItems {
     public static final RegistryObject<Item> SKULL_OF_CHAOS = register("skull_of_chaos", () -> new SkullOfChaosItem(new Item.Properties().rarity(Rarity.EPIC).durability(10)));
 
     // BLOCKS
-    public static final RegistryObject<Item> SKYLIGHT_STONE = register("skylight_stone", () -> new BlockItem(DNLBlocks.SKYLIGHT_STONE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> SKYLIGHT_GRASS_BLOCK = register("skylight_grass_block", () -> new BlockItem(DNLBlocks.SKYLIGHT_GRASS_BLOCK.get(), new Item.Properties()));
-    public static final RegistryObject<Item> RUINED_STONE_BRICKS = register("ruined_stone_bricks", () -> new BlockItem(DNLBlocks.RUINED_STONE_BRICKS.get(), new Item.Properties()));
+    //public static final RegistryObject<Item> SKYLIGHT_STONE = register("skylight_stone", () -> new BlockItem(DNLBlocks.SKYLIGHT_STONE.get(), new Item.Properties()));
+    //public static final RegistryObject<Item> SKYLIGHT_GRASS_BLOCK = register("skylight_grass_block", () -> new BlockItem(DNLBlocks.SKYLIGHT_GRASS_BLOCK.get(), new Item.Properties()));
+    //public static final RegistryObject<Item> RUINED_STONE_BRICKS = register("ruined_stone_bricks", () -> new BlockItem(DNLBlocks.RUINED_STONE_BRICKS.get(), new Item.Properties()));
 
     // MECHANICAL BLOCKS
     public static final RegistryObject<Item> DUNGEON_WALL_TORCH = register("dungeon_wall_torch", () -> new BlockItem(DNLBlocks.DUNGEON_WALL_TORCH.get(), new Item.Properties()));
@@ -104,5 +104,6 @@ public class DNLItems {
         return items;
     }
 
-    public static void init() {}
+    public static void init() {
+    }
 }

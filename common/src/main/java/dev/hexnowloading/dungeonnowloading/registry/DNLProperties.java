@@ -15,4 +15,6 @@ public class DNLProperties {
     public static final EnumProperty<BarrierEdges> BARRIER_EDGES = EnumProperty.create("barrier_edge", BarrierEdges.class);
     public static final IntegerProperty PILE = IntegerProperty.create("pile", 1, 4);
     public static final BooleanProperty BARRIER_ACTIVE = BooleanProperty.create("barrier_active");
+
+    public static void init() {}
 }

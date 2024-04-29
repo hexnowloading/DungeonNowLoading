@@ -9,7 +9,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -21,7 +20,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class PebbleBlock extends Block implements SimpleWaterloggedBlock {
+public class PebbleBlock extends WaterBlock {
 
     public static final int MAX_PILE = 4;
     protected static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
@@ -30,12 +29,12 @@ public class PebbleBlock extends Block implements SimpleWaterloggedBlock {
 
     public PebbleBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(PILE, Integer.valueOf(1)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(PILE, Integer.valueOf(1)).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(WATERLOGGED, PILE);
+        stateBuilder.add(PILE, WATERLOGGED);
     }
 
     @Override
@@ -73,6 +72,9 @@ public class PebbleBlock extends Block implements SimpleWaterloggedBlock {
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
         if (!blockState.canSurvive(levelAccessor, blockPos)) {
             return Blocks.AIR.defaultBlockState();
+        }
+        if (blockState.getValue(WATERLOGGED)) {
+            levelAccessor.scheduleTick(blockPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
         }
         return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
     }
