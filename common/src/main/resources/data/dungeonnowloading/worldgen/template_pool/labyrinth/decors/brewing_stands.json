@@ -2,15 +2,7 @@
   "fallback": "dungeonnowloading:labyrinth/decors/brewing_stands",
   "elements": [
     {
-      "weight": 16,
-      "element": {
-        "element_type": "minecraft:feature_pool_element",
-        "projection": "rigid",
-        "feature": "dungeonnowloading:decors/brewing_stands/harming"
-      }
-    },
-    {
-      "weight": 16,
+      "weight": 8,
       "element": {
         "element_type": "minecraft:feature_pool_element",
         "projection": "rigid",
@@ -18,15 +10,7 @@
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "element_type": "minecraft:feature_pool_element",
-        "projection": "rigid",
-        "feature": "dungeonnowloading:decors/brewing_stands/strong_harming"
-      }
-    },
-    {
-      "weight": 4,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:feature_pool_element",
         "projection": "rigid",
@@ -34,15 +18,7 @@
       }
     },
     {
-      "weight": 16,
-      "element": {
-        "element_type": "minecraft:feature_pool_element",
-        "projection": "rigid",
-        "feature": "dungeonnowloading:decors/brewing_stands/splash_harming"
-      }
-    },
-    {
-      "weight": 16,
+      "weight": 8,
       "element": {
         "element_type": "minecraft:feature_pool_element",
         "projection": "rigid",
@@ -50,15 +26,7 @@
       }
     },
     {
-      "weight": 4,
-      "element": {
-        "element_type": "minecraft:feature_pool_element",
-        "projection": "rigid",
-        "feature": "dungeonnowloading:decors/brewing_stands/splash_strong_harming"
-      }
-    },
-    {
-      "weight": 4,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:feature_pool_element",
         "projection": "rigid",
@@ -66,15 +34,7 @@
       }
     },
     {
-      "weight": 8,
-      "element": {
-        "element_type": "minecraft:feature_pool_element",
-        "projection": "rigid",
-        "feature": "dungeonnowloading:decors/brewing_stands/lingering_harming"
-      }
-    },
-    {
-      "weight": 8,
+      "weight": 4,
       "element": {
         "element_type": "minecraft:feature_pool_element",
         "projection": "rigid",
@@ -82,15 +42,7 @@
       }
     },
     {
-      "weight": 2,
-      "element": {
-        "element_type": "minecraft:feature_pool_element",
-        "projection": "rigid",
-        "feature": "dungeonnowloading:decors/brewing_stands/lingering_strong_harming"
-      }
-    },
-    {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:feature_pool_element",
         "projection": "rigid",

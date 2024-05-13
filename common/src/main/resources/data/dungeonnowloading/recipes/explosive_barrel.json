@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#Y#",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gunpowder"
+    },
+    "X": {
+      "item": "minecraft:barrel"
+    },
+    "Y": {
+      "item": "minecraft:potion"
+    }
+  },
+  "result": {
+    "item": "dungeonnowloading:explosive_barrel"
+  }
+}
