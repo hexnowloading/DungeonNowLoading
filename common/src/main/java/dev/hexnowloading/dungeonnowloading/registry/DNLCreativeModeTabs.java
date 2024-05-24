@@ -40,6 +40,23 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SPAWNER_BOOTS.get());
                 // Blocks
 
+                // Blocks - Design
+                output.accept(DNLItems.COILING_STONE_PILLAR.get());
+                output.accept(DNLItems.COILING_STONE_PILLAR_STAIRS.get());
+                output.accept(DNLItems.COILING_STONE_PILLAR_SLAB.get());
+                output.accept(DNLItems.COILING_STONE_PILLAR_WALL.get());
+                output.accept(DNLItems.CHISELED_COILING_STONE_PILLAR.get());
+                output.accept(DNLItems.COILING_STONE_PILLAR_CAPITAL.get());
+                output.accept(DNLItems.STONE_TILES.get());
+                output.accept(DNLItems.CRACKED_STONE_TILES.get());
+                output.accept(DNLItems.STONE_TILE_STAIRS.get());
+                output.accept(DNLItems.STONE_TILE_SLAB.get());
+                output.accept(DNLItems.STONE_TILE_WALL.get());
+                output.accept(DNLItems.SIGNALING_STONE_EMBLEM.get());
+                output.accept(DNLItems.DUELING_STONE_EMBLEM.get());
+                output.accept(DNLItems.PUZZLING_STONE_EMBLEM.get());
+                //output.accept(DNLItems.MOSS.get());
+
                 // Blocks - Mechanical
                 output.accept(DNLItems.DUNGEON_WALL_TORCH.get());
                 output.accept(DNLItems.BOOK_PILE.get());
@@ -60,6 +77,9 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_CENTER.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_VERTEX.get());
+                output.accept(DNLItems.FAIRKEEPER_CHEST.get());
+                output.accept(DNLItems.REDSTONE_LANE_I.get());
+
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());
                 output.accept(DNLItems.LABYRINTH_TROPHY.get());

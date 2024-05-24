@@ -1,6 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.platform;
 
 import dev.hexnowloading.dungeonnowloading.Constants;
+import dev.hexnowloading.dungeonnowloading.platform.services.DataHelper;
 import dev.hexnowloading.dungeonnowloading.platform.services.PlatformHelper;
 import dev.hexnowloading.dungeonnowloading.platform.services.ConfigHelper;
 import dev.hexnowloading.dungeonnowloading.platform.services.ItemHelper;
@@ -18,6 +19,7 @@ public class Services {
     public static final PlatformHelper PLATFORM = load(PlatformHelper.class);
     public static final ConfigHelper CONFIG = load(ConfigHelper.class);
     public static final ItemHelper ITEM = load(ItemHelper.class);
+    public static final DataHelper DATA = load(DataHelper.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

@@ -44,6 +44,23 @@ public class DNLItems {
     //public static final RegistryObject<Item> SKYLIGHT_GRASS_BLOCK = register("skylight_grass_block", () -> new BlockItem(DNLBlocks.SKYLIGHT_GRASS_BLOCK.get(), new Item.Properties()));
     //public static final RegistryObject<Item> RUINED_STONE_BRICKS = register("ruined_stone_bricks", () -> new BlockItem(DNLBlocks.RUINED_STONE_BRICKS.get(), new Item.Properties()));
 
+    // DESIGN BLOCKS
+    public static final RegistryObject<Item> COILING_STONE_PILLAR = register("coiling_stone_pillar", () -> new BlockItem(DNLBlocks.COILING_STONE_PILLAR.get(), new Item.Properties()));
+    public static final RegistryObject<Item> COILING_STONE_PILLAR_CAPITAL = register("coiling_stone_pillar_capital", () -> new BlockItem(DNLBlocks.COILING_STONE_PILLAR_CAPITAL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> COILING_STONE_PILLAR_STAIRS = register("coiling_stone_pillar_stairs", () -> new BlockItem(DNLBlocks.COILING_STONE_PILLAR_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> COILING_STONE_PILLAR_SLAB = register("coiling_stone_pillar_slab", () -> new BlockItem(DNLBlocks.COILING_STONE_PILLAR_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> COILING_STONE_PILLAR_WALL = register("coiling_stone_pillar_wall", () -> new BlockItem(DNLBlocks.COILING_STONE_PILLAR_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CHISELED_COILING_STONE_PILLAR = register("chiseled_coiling_stone_pillar", () -> new BlockItem(DNLBlocks.CHISELED_COILING_STONE_PILLAR.get(), new Item.Properties()));
+    public static final RegistryObject<Item> MOSS = register("moss", () -> new BlockItem(DNLBlocks.MOSS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STONE_TILES = register("stone_tiles", () -> new BlockItem(DNLBlocks.STONE_TILES.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CRACKED_STONE_TILES = register("cracked_stone_tiles", () -> new BlockItem(DNLBlocks.CRACKED_STONE_TILES.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STONE_TILE_STAIRS = register("stone_tile_stairs", () -> new BlockItem(DNLBlocks.STONE_TILE_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STONE_TILE_SLAB = register("stone_tile_slab", () -> new BlockItem(DNLBlocks.STONE_TILE_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STONE_TILE_WALL = register("stone_tile_wall", () -> new BlockItem(DNLBlocks.STONE_TILE_WALL.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SIGNALING_STONE_EMBLEM = register("signaling_stone_emblem", () -> new BlockItem(DNLBlocks.SIGNALING_STONE_EMBLEM.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DUELING_STONE_EMBLEM = register("dueling_stone_emblem", () -> new BlockItem(DNLBlocks.DUELING_STONE_EMBLEM.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PUZZLING_STONE_EMBLEM = register("puzzling_stone_emblem", () -> new BlockItem(DNLBlocks.PUZZLING_STONE_EMBLEM.get(), new Item.Properties()));
+
     // MECHANICAL BLOCKS
     public static final RegistryObject<Item> DUNGEON_WALL_TORCH = register("dungeon_wall_torch", () -> new BlockItem(DNLBlocks.DUNGEON_WALL_TORCH.get(), new Item.Properties()));
     public static final RegistryObject<Item> BOOK_PILE = register("book_pile", () -> new BlockItem(DNLBlocks.BOOK_PILE.get(), new Item.Properties()));
@@ -66,6 +83,9 @@ public class DNLItems {
     public static final RegistryObject<Item> CHAOS_SPAWNER_BARRIER_CENTER = register("chaos_spawner_barrier_center", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_CENTER.get(), new Item.Properties()));
     public static final RegistryObject<Item> CHAOS_SPAWNER_BARRIER_EDGE = register("chaos_spawner_barrier_edge", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get(), new Item.Properties()));
     public static final RegistryObject<Item> CHAOS_SPAWNER_BARRIER_VERTEX = register("chaos_spawner_barrier_vertex", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_VERTEX.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> FAIRKEEPER_CHEST = register("fairkeeper_chest", () -> new BlockItem(DNLBlocks.FAIRKEEPER_CHEST.get(), new Item.Properties()));
+    public static final RegistryObject<Item> REDSTONE_LANE_I = register("redstone_lane_i", () -> new BlockItem(DNLBlocks.REDSTONE_LANE_I.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> DNL_LOGO = register("dnl_logo", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> LABYRINTH_TROPHY = register("labyrinth_trophy", () -> new BlockItem(DNLBlocks.LABYRINTH_TROPHY.get(), new Item.Properties().rarity(Rarity.RARE)));

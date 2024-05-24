@@ -1,21 +1,31 @@
 package dev.hexnowloading.dungeonnowloading.server;
 
+import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
+import dev.hexnowloading.dungeonnowloading.capability.DNLForgePlayerPoint;
+import dev.hexnowloading.dungeonnowloading.capability.DNLForgePlayerPointProvider;
 import dev.hexnowloading.dungeonnowloading.entity.DNLEntityEvents;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = DungeonNowLoading.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DNLForgeEntityEvents {
 
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
@@ -45,5 +55,30 @@ public class DNLForgeEntityEvents {
         if (attacker instanceof LivingEntity attackerEntity) {
             event.setAmount(DNLEntityEvents.onLivingHurtEvent(attackerEntity, target, damage));
         }
+    }
+
+    @SubscribeEvent
+    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+        if(event.getObject() instanceof Player) {
+            if(!event.getObject().getCapability(DNLForgePlayerPointProvider.PLAYER_TEST_POINT).isPresent()) {
+                event.addCapability(new ResourceLocation(DungeonNowLoading.MOD_ID, "properties"), new DNLForgePlayerPointProvider());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerCloned(PlayerEvent.Clone event) {
+        if(event.isWasDeath()) {
+            event.getOriginal().getCapability(DNLForgePlayerPointProvider.PLAYER_TEST_POINT).ifPresent(oldStore -> {
+                event.getOriginal().getCapability(DNLForgePlayerPointProvider.PLAYER_TEST_POINT).ifPresent(newStore -> {
+                    newStore.copyFrom(oldStore);
+                });
+            });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.register(DNLForgePlayerPoint.class);
     }
 }

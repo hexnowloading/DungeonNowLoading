@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "dungeonnowloading:block/fairkeeper_chest" },
+    "facing=east":  { "model": "dungeonnowloading:block/fairkeeper_chest", "y":  90},
+    "facing=south": { "model": "dungeonnowloading:block/fairkeeper_chest", "y": 180 },
+    "facing=west":  { "model": "dungeonnowloading:block/fairkeeper_chest", "y": 270 }
+  }
+}

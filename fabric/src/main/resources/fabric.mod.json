@@ -20,6 +20,9 @@
         ],
         "client": [
             "dev.hexnowloading.dungeonnowloading.client.DNLFabricClient"
+        ],
+        "cardinal-component": [
+            "dev.hexnowloading.dungeonnowloading.capabilities.CapabilityList"
         ]
     },
     "mixins": [
@@ -33,6 +36,11 @@
     },
     "suggests": {
         "another-mod": "*"
+    },
+    "custom": {
+        "cardinal-components": [
+            "dungeonnowloading:test_point"
+        ]
     },
     "accessWidener" : "dungeonnowloading.accesswidener"
 }

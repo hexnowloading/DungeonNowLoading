@@ -65,6 +65,11 @@ subprojects {
                 includeGroupAndSubgroups 'fuzs.forgeconfigapiport'
             }
         }
+        maven {
+            name = "Ladysnake Mods"
+            url = 'https://maven.ladysnake.org/releases'
+        }
+        maven { url = "https://mvn.devos.one/releases/" }
     }
 
     tasks.withType(JavaCompile).configureEach {

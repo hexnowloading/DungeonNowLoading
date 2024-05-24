@@ -3,8 +3,12 @@ package dev.hexnowloading.dungeonnowloading;
 import dev.hexnowloading.dungeonnowloading.config.DNLClientConfig;
 import dev.hexnowloading.dungeonnowloading.config.DNLServerConfig;
 import dev.hexnowloading.dungeonnowloading.registry.*;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.IDN;
+import java.util.Locale;
 
 public class DungeonNowLoading {
 
@@ -34,5 +38,9 @@ public class DungeonNowLoading {
     private static void registerConfigs() {
         DNLServerConfig.register();
         DNLClientConfig.register();
+    }
+
+    public static ResourceLocation prefix(String name) {
+        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
     }
 }

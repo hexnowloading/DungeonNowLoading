@@ -16,6 +16,10 @@ dependencies {
     implementation project(":common")
 
     include modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forgeconfigapiport_version}")
+    include modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cca_version}")
+    include modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cca_version}")
+    include modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cca_version}")
+    modImplementation(include("io.github.fabricators_of_create.Porting-Lib:entity:${port_lib_version}+${minecraft_version}"))
 }
 
 loom {
