@@ -83,6 +83,7 @@
   "block.dungeonnowloading.chaos_spawner_broken_diamond_edge": "Broken Diamond Chaos Spawner Frame Edge",
   "block.dungeonnowloading.chaos_spawner_broken_diamond_vertex": "Broken Diamond Chaos Spawner Frame Vertex",
   "block.dungeonnowloading.fairkeeper_chest": "Fairkeeper Chest",
+  "block.dungeonnowloading.fairkeeper_spawner": "Fairkeeper Spawner",
   "block.dungeonnowloading.redstone_lane_i": "Redstone Lane I",
   "block.dungeonnowloading.labyrinth_trophy": "Labyrinth Trophy",
   "death.attack.dungeonnowloading.spike": "%1$s was spiked to death",

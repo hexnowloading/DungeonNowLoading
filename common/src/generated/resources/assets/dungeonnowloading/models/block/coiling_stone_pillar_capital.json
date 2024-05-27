@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "dungeonnowloading:block/coiling_stone_pillar_capital_bottom",
+    "side": "dungeonnowloading:block/coiling_stone_pillar_capital",
+    "top": "dungeonnowloading:block/coiling_stone_pillar_capital_top"
+  }
+}

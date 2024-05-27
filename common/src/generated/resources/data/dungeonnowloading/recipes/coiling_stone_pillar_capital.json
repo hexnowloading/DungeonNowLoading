@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "p": {
+      "item": "dungeonnowloading:coiling_stone_pillar"
+    }
+  },
+  "pattern": [
+    "ppp",
+    "p p"
+  ],
+  "result": {
+    "count": 5,
+    "item": "dungeonnowloading:coiling_stone_pillar_capital"
+  },
+  "show_notification": true
+}

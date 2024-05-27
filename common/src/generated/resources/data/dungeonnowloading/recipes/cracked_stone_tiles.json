@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "dungeonnowloading:stone_tiles"
+  },
+  "result": "dungeonnowloading:cracked_stone_tiles"
+}

@@ -1,0 +1,27 @@
+{
+  "values": [
+    "dungeonnowloading:coiling_stone_pillar",
+    "dungeonnowloading:chiseled_coiling_stone_pillar",
+    "dungeonnowloading:coiling_stone_pillar_capital",
+    "dungeonnowloading:coiling_stone_pillar_stairs",
+    "dungeonnowloading:coiling_stone_pillar_slab",
+    "dungeonnowloading:coiling_stone_pillar_wall",
+    "dungeonnowloading:stone_tiles",
+    "dungeonnowloading:cracked_stone_tiles",
+    "dungeonnowloading:stone_tile_stairs",
+    "dungeonnowloading:stone_tile_slab",
+    "dungeonnowloading:stone_tile_wall",
+    "dungeonnowloading:signaling_stone_emblem",
+    "dungeonnowloading:dueling_stone_emblem",
+    "dungeonnowloading:puzzling_stone_emblem",
+    "dungeonnowloading:cobblestone_pebbles",
+    "dungeonnowloading:mossy_cobblestone_pebbles",
+    "dungeonnowloading:iron_ingot_pile",
+    "dungeonnowloading:gold_ingot_pile",
+    "dungeonnowloading:chaos_spawner_edge",
+    "dungeonnowloading:chaos_spawner_diamond_edge",
+    "dungeonnowloading:chaos_spawner_diamond_vertex",
+    "dungeonnowloading:spikes",
+    "dungeonnowloading:fairkeeper_spawner"
+  ]
+}

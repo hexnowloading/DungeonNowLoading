@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": {
+      "item": "minecraft:chiseled_stone_bricks"
+    },
+    "r": {
+      "item": "minecraft:dried_kelp"
+    }
+  },
+  "pattern": [
+    "ccc",
+    "crc",
+    "ccc"
+  ],
+  "result": {
+    "count": 8,
+    "item": "dungeonnowloading:puzzling_stone_emblem"
+  },
+  "show_notification": true
+}

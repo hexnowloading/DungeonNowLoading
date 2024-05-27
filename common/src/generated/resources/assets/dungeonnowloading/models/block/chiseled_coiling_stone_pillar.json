@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "dungeonnowloading:block/chiseled_coiling_stone_pillar_top",
+    "side": "dungeonnowloading:block/chiseled_coiling_stone_pillar"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "s": {
+      "item": "dungeonnowloading:coiling_stone_pillar_slab"
+    }
+  },
+  "pattern": [
+    "s",
+    "s"
+  ],
+  "result": {
+    "item": "dungeonnowloading:chiseled_coiling_stone_pillar"
+  },
+  "show_notification": true
+}

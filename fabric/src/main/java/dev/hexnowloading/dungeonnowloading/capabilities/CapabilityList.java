@@ -1,5 +1,6 @@
 package dev.hexnowloading.dungeonnowloading.capabilities;
 
+import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.capabilities.player.IPlayerCapability;
 import dev.hexnowloading.dungeonnowloading.capabilities.player.PlayerCapabilityHandler;
 import dev.onyxstudios.cca.api.v3.component.Component;
@@ -16,7 +17,7 @@ import org.intellij.lang.annotations.Identifier;
 
 public class CapabilityList implements EntityComponentInitializer {
 
-    public static final ComponentKey<IPlayerCapability> PLAYER_CAP = ComponentRegistryV3.INSTANCE.getOrCreate(new ResourceLocation("dungeonnowloading", "test_point"), IPlayerCapability.class);
+    public static final ComponentKey<IPlayerCapability> PLAYER_CAP = ComponentRegistryV3.INSTANCE.getOrCreate(new ResourceLocation(DungeonNowLoading.MOD_ID, "test_point"), IPlayerCapability.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

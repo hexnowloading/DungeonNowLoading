@@ -42,7 +42,8 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
                 DNLBlocks.CHAOS_SPAWNER_EDGE.get(),
                 DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.get(),
                 DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.get(),
-                DNLBlocks.SPIKES.get()
+                DNLBlocks.SPIKES.get(),
+                DNLBlocks.FAIRKEEEPER_SPAWNER.get()
         );
 
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(

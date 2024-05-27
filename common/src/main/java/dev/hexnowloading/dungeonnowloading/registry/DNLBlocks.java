@@ -62,6 +62,7 @@ public class DNLBlocks {
     //public static final BlockRegistryObject<Block> WIND_ALTER = registerBlock("wind_alter", () -> new WindAlterBlock(BlockBehaviour.Properties.copy(Blocks.CHISELED_STONE_BRICKS).strength(4.0f).requiresCorrectToolForDrops()));
 
     public static BlockRegistryObject<Block> FAIRKEEPER_CHEST;
+    public static BlockRegistryObject<Block> FAIRKEEEPER_SPAWNER;
     public static BlockRegistryObject<Block> REDSTONE_LANE_I;
 
     // Trophies
@@ -116,6 +117,7 @@ public class DNLBlocks {
         //public static final BlockRegistryObject<Block> WIND_ALTER = registerBlock("wind_alter", () -> new WindAlterBlock(BlockBehaviour.Properties.copy(Blocks.CHISELED_STONE_BRICKS).strength(4.0f).requiresCorrectToolForDrops()));
 
         FAIRKEEPER_CHEST = registerBlock("fairkeeper_chest", () -> new FairkeeperChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
+        FAIRKEEEPER_SPAWNER = registerBlock("fairkeeper_spawner", () -> new FairkeeperSpawnerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
         REDSTONE_LANE_I = registerBlock("redstone_lane_i", () -> new RedstoneLaneIBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).noLootTable()));
 
         // Trophies

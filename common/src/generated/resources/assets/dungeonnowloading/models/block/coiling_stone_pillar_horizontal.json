@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "dungeonnowloading:block/coiling_stone_pillar_top",
+    "side": "dungeonnowloading:block/coiling_stone_pillar"
+  }
+}

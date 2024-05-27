@@ -1,0 +1,79 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "dungeonnowloading:mossy_cobblestone_pebbles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "pile": "1"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "dungeonnowloading:mossy_cobblestone_pebbles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "pile": "2"
+                  }
+                }
+              ],
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "dungeonnowloading:mossy_cobblestone_pebbles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "pile": "3"
+                  }
+                }
+              ],
+              "count": 3.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "dungeonnowloading:mossy_cobblestone_pebbles",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "pile": "4"
+                  }
+                }
+              ],
+              "count": 4.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "dungeonnowloading:mossy_cobblestone_pebble"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "dungeonnowloading:blocks/mossy_cobblestone_pebbles"
+}

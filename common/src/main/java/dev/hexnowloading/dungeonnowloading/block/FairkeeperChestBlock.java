@@ -2,6 +2,7 @@ package dev.hexnowloading.dungeonnowloading.block;
 
 import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperChestBlockEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
+import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -39,13 +40,14 @@ import java.util.function.Supplier;
 
 public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty FAIRKEEPER_ALERT = DNLProperties.FAIRKEEPER_ALERT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE_X = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
     private static final VoxelShape SHAPE_Z = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public FairkeeperChestBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FAIRKEEPER_ALERT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override
@@ -61,14 +63,14 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(FACING, WATERLOGGED);
+        stateBuilder.add(FACING, FAIRKEEPER_ALERT, WATERLOGGED);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Direction direction = ctx.getHorizontalDirection().getOpposite();
         FluidState fluidstate = ctx.getLevel().getFluidState(ctx.getClickedPos());
-        return this.defaultBlockState().setValue(FACING, direction).setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
+        return this.defaultBlockState().setValue(FACING, direction).setValue(FAIRKEEPER_ALERT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
     }
 
     // Makes the block waterlogged when placed in water.
@@ -130,7 +132,7 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, DNLBlockEntityTypes.FAIRKEEPER_CHEST.get(), FairkeeperChestBlockEntity::tick);
+        return createTickerHelper(type, DNLBlockEntityTypes.FAIRKEEPER_CHEST.get(), FairkeeperChestBlockEntity::serverTick);
     }
 
     @Override

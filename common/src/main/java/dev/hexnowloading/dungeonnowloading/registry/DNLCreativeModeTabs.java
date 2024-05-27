@@ -78,6 +78,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_EDGE.get());
                 output.accept(DNLItems.CHAOS_SPAWNER_BARRIER_VERTEX.get());
                 output.accept(DNLItems.FAIRKEEPER_CHEST.get());
+                output.accept(DNLItems.FAIRKEEPER_SPAWNER.get());
                 output.accept(DNLItems.REDSTONE_LANE_I.get());
 
                 // Blocks - Trophies

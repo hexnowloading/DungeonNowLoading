@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "t": {
+      "item": "dungeonnowloading:stone_tiles"
+    }
+  },
+  "pattern": [
+    "t  ",
+    "tt ",
+    "ttt"
+  ],
+  "result": {
+    "count": 4,
+    "item": "dungeonnowloading:stone_tile_stairs"
+  },
+  "show_notification": true
+}

@@ -85,6 +85,7 @@ public class DNLItems {
     public static final RegistryObject<Item> CHAOS_SPAWNER_BARRIER_VERTEX = register("chaos_spawner_barrier_vertex", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_VERTEX.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> FAIRKEEPER_CHEST = register("fairkeeper_chest", () -> new BlockItem(DNLBlocks.FAIRKEEPER_CHEST.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FAIRKEEPER_SPAWNER = register("fairkeeper_spawner", () -> new BlockItem(DNLBlocks.FAIRKEEEPER_SPAWNER.get(), new Item.Properties()));
     public static final RegistryObject<Item> REDSTONE_LANE_I = register("redstone_lane_i", () -> new BlockItem(DNLBlocks.REDSTONE_LANE_I.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> DNL_LOGO = register("dnl_logo", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));

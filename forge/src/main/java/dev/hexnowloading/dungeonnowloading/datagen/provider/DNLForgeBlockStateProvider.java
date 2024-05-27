@@ -1,8 +1,11 @@
 package dev.hexnowloading.dungeonnowloading.datagen.provider;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
+import dev.hexnowloading.dungeonnowloading.block.FairkeeperChestBlock;
+import dev.hexnowloading.dungeonnowloading.block.FairkeeperSpawnerBlock;
 import dev.hexnowloading.dungeonnowloading.block.PillarCapBlock;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
+import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -35,6 +38,8 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
         slabBlockWithItems((SlabBlock) DNLBlocks.COILING_STONE_PILLAR_SLAB.get());
         stairsBlockWithItem((StairBlock) DNLBlocks.COILING_STONE_PILLAR_STAIRS.get());
         wallBlockWithItem((WallBlock) DNLBlocks.COILING_STONE_PILLAR_WALL.get());
+
+        fairkeeperSpawnerWithItem((FairkeeperSpawnerBlock) DNLBlocks.FAIRKEEEPER_SPAWNER.get());
         //simpleRandomBlockWithItem(DNLBlocks.MOSS.get(), 5);
     }
 
@@ -133,6 +138,21 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
         //simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
         itemModels().withExistingParent(ForgeRegistries.BLOCKS.getKey(block).getPath(), mcLoc("block/wall_inventory"))
                 .texture("wall",  new ResourceLocation(DungeonNowLoading.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(block).getPath()));
+    }
+
+    private void fairkeeperSpawnerWithItem(FairkeeperSpawnerBlock block) {
+        ResourceLocation side_on = extend(blockTexture(block), "_on");
+        ResourceLocation side_off = extend(blockTexture(block), "_off");
+        ResourceLocation top = extend(blockTexture(block), "_top");
+
+        ModelFile on = models().cubeBottomTop(name(block) + "_on", side_on, top, top).renderType("cutout");
+        ModelFile off = models().cubeBottomTop(name(block) + "_off", side_off, top, top).renderType("cutout");
+
+        getVariantBuilder(block)
+                .partialState().with(DNLProperties.FAIRKEEPER_ALERT, Boolean.TRUE).modelForState().modelFile(on).addModel()
+                .partialState().with(DNLProperties.FAIRKEEPER_ALERT, Boolean.FALSE).modelForState().modelFile(off).addModel();
+
+        simpleBlockItem(block, models().getExistingFile(extend(blockTexture(block), "_off")));
     }
 
     private ResourceLocation key(Block block) {

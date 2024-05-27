@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "dungeonnowloading:block/coiling_stone_pillar_stairs_top",
+    "side": "dungeonnowloading:block/coiling_stone_pillar_stairs",
+    "top": "dungeonnowloading:block/coiling_stone_pillar_stairs_top"
+  }
+}

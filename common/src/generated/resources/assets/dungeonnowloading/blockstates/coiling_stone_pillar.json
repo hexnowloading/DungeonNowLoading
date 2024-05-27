@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "dungeonnowloading:block/coiling_stone_pillar_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "dungeonnowloading:block/coiling_stone_pillar"
+    },
+    "axis=z": {
+      "model": "dungeonnowloading:block/coiling_stone_pillar_horizontal",
+      "x": 90
+    }
+  }
+}
