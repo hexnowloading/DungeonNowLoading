@@ -2,6 +2,7 @@ package dev.hexnowloading.dungeonnowloading.block;
 
 import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperChestBlockEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
+import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -129,10 +130,15 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
+    public static void setFairkeeperAlert(Level level, BlockPos blockPos, Boolean b) {
+        Direction direction = level.getBlockState(blockPos).getValue(FACING);
+        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, b).setValue(FACING, direction), 2);
+    }
+
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, DNLBlockEntityTypes.FAIRKEEPER_CHEST.get(), FairkeeperChestBlockEntity::serverTick);
+        return createTickerHelper(type, DNLBlockEntityTypes.FAIRKEEPER_CHEST.get(), level.isClientSide ? FairkeeperChestBlockEntity::clientTick : FairkeeperChestBlockEntity::serverTick);
     }
 
     @Override

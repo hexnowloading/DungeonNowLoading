@@ -5,16 +5,19 @@ import dev.hexnowloading.dungeonnowloading.block.FairkeeperSpawnerBlock;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
+import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import dev.hexnowloading.dungeonnowloading.util.DNLMath;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -40,6 +43,7 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
     protected long lootTableSeed;
     private List<BlockPos> spawnerLocationList;
     private BlockPos oldBlockPos;
+    private int startUpTick;
     private int actualRegion1X;
     private int actualRegion1Y;
     private int actualRegion1Z;
@@ -48,6 +52,7 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
     private int actualRegion2Z;
     private BlockPos maxRegion;
     private BlockPos minRegion;
+    private int playerCount;
     private static final double PLAYER_RANGE = 32.0D;
 
     public FairkeeperChestBlockEntity(BlockPos pos, BlockState state) {
@@ -66,6 +71,8 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
             nbt.put("SpawnerLocations", listTag);
         }
         nbt.put("OldBlockPos", this.newIntList(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()));
+        nbt.putInt("StartUpTick", this.startUpTick);
+        nbt.putInt("PlayerCount", this.playerCount);
         nbt.putInt("Region1X", this.maxRegion.getX());
         nbt.putInt("Region1Y", this.maxRegion.getY());
         nbt.putInt("Region1Z", this.maxRegion.getZ());
@@ -96,6 +103,8 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
                 this.spawnerLocationList.add(new BlockPos(listTag.getInt(0), listTag.getInt(1), listTag.getInt(2)));
             }
         }
+        this.startUpTick = nbt.getInt("StartUpTick");
+        this.playerCount = nbt.getInt("PlayerCount");
         this.oldBlockPos = new BlockPos(nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(0), nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(1), nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(2));
         this.maxRegion = new BlockPos(nbt.getInt("Region1X"), nbt.getInt("Region1Y"), nbt.getInt("Region1Z"));
         this.minRegion = new BlockPos(nbt.getInt("Region2X"), nbt.getInt("Region2Y"), nbt.getInt("Region2Z"));
@@ -185,56 +194,116 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
         }
     }
 
-    private static void trigger(Level level, FairkeeperChestBlockEntity blockEntity) {
+    private static void trigger(Level level, BlockPos fairkeeperChestPos, FairkeeperChestBlockEntity blockEntity) {
 
         //if (blockEntity.actualRegion1X > brokenBlockPos.getX() && blockEntity.actualRegion1Y > brokenBlockPos.getY() && blockEntity.actualRegion1Z > brokenBlockPos.getZ() && blockEntity.actualRegion2X <= brokenBlockPos.getX() && blockEntity.actualRegion2Y <= brokenBlockPos.getY() && blockEntity.actualRegion2Z <= brokenBlockPos.getZ()) {
 
-            AABB aabb = new AABB(blockEntity.actualRegion1X, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z);
-            List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, aabb);
+        FairkeeperChestBlock.setFairkeeperAlert(level, fairkeeperChestPos, Boolean.TRUE);
+        AABB aabb = new AABB(blockEntity.actualRegion1X, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z);
+        List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, aabb);
+        blockEntity.playerCount = nearbyPlayers.size();
 
-            Map<BlockPos, BlockEntity> map = new HashMap<>();
-            int chunkMinX = SectionPos.blockToSectionCoord(blockEntity.actualRegion2X);
-            int chunkMinZ = SectionPos.blockToSectionCoord(blockEntity.actualRegion2Z);
-            int chunkMaxX = SectionPos.blockToSectionCoord(blockEntity.actualRegion1X);
-            int chunkMaxZ = SectionPos.blockToSectionCoord(blockEntity.actualRegion1Z);
-            for (int x = 0; chunkMinX + x <= chunkMaxX; x++) {
-                for (int z = 0; chunkMinZ + z <= chunkMaxZ; z++) {
-                    map.putAll(level.getChunk(chunkMinX + x, chunkMinZ + z).getBlockEntities());
-                }
+        Map<BlockPos, BlockEntity> map = new HashMap<>();
+        int chunkMinX = SectionPos.blockToSectionCoord(blockEntity.actualRegion2X);
+        int chunkMinZ = SectionPos.blockToSectionCoord(blockEntity.actualRegion2Z);
+        int chunkMaxX = SectionPos.blockToSectionCoord(blockEntity.actualRegion1X);
+        int chunkMaxZ = SectionPos.blockToSectionCoord(blockEntity.actualRegion1Z);
+        for (int x = 0; chunkMinX + x <= chunkMaxX; x++) {
+            for (int z = 0; chunkMinZ + z <= chunkMaxZ; z++) {
+                map.putAll(level.getChunk(chunkMinX + x, chunkMinZ + z).getBlockEntities());
             }
+        }
 
-            Map<BlockPos, BlockEntity> filtered = map.entrySet()
-                    .stream()
-                    .filter(e -> e.getValue() instanceof FairkeeperSpawnerBlockEntity)
-                    .filter(e -> e.getKey().getX() < blockEntity.actualRegion1X && e.getKey().getX() >= blockEntity.actualRegion2X && e.getKey().getY() < blockEntity.actualRegion1Y && e.getKey().getY() >= blockEntity.actualRegion2Y && e.getKey().getZ() < blockEntity.actualRegion1Z && e.getKey().getZ() >= blockEntity.actualRegion2Z)
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            filtered.forEach(((blockPosEntry, blockEntityEntry) -> ((FairkeeperSpawnerBlockEntity) blockEntityEntry).alert(nearbyPlayers.size() == 0 ? 1 : nearbyPlayers.size(), blockPosEntry, (FairkeeperSpawnerBlockEntity) blockEntityEntry)));
+        Map<BlockPos, BlockEntity> filtered = map.entrySet()
+                .stream()
+                .filter(e -> e.getValue() instanceof FairkeeperSpawnerBlockEntity)
+                .filter(e -> e.getKey().getX() < blockEntity.actualRegion1X && e.getKey().getX() >= blockEntity.actualRegion2X && e.getKey().getY() < blockEntity.actualRegion1Y && e.getKey().getY() >= blockEntity.actualRegion2Y && e.getKey().getZ() < blockEntity.actualRegion1Z && e.getKey().getZ() >= blockEntity.actualRegion2Z)
+                .filter(e -> !e.getValue().getBlockState().getValue(DNLProperties.FAIRKEEPER_ALERT))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        //filtered.forEach(((blockPosEntry, blockEntityEntry) -> ((FairkeeperSpawnerBlockEntity) blockEntityEntry).alert(nearbyPlayers.size() == 0 ? 1 : nearbyPlayers.size(), blockPosEntry, (FairkeeperSpawnerBlockEntity) blockEntityEntry)));
+        blockEntity.spawnerLocationList = new ArrayList<>(filtered.keySet());
+    }
+
+    public static void clientTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
+        if (!state.getValue(DNLProperties.FAIRKEEPER_ALERT)) {
+            double x = blockEntity.actualRegion2X + (blockEntity.actualRegion1X - blockEntity.actualRegion2X) * level.random.nextFloat();
+            double y = blockEntity.actualRegion2Y + (blockEntity.actualRegion1Y - blockEntity.actualRegion2Y) * level.random.nextFloat();
+            double z = blockEntity.actualRegion2Z + (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z) * level.random.nextFloat();
+            level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion1Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion2Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, y, blockEntity.actualRegion1Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, y, blockEntity.actualRegion1Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, y, blockEntity.actualRegion2Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, y, blockEntity.actualRegion2Z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion1Y, z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion1Y, z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion2Y, z, 0, 0, 0);
+            level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, z, 0, 0, 0);
+        }
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
         if (level.getGameTime() % 20 == 0L) {
             if (level.hasNearbyAlivePlayer(pos.getX(), pos.getY(), pos.getZ(), 32.0D)) {
                 updateActualRegion(level, pos, state, blockEntity);
-                AABB aabb = new AABB(blockEntity.actualRegion1X, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z);
+                AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ()).inflate(32.0D);
                 List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, aabb);
                 nearbyPlayers.forEach(player -> Services.DATA.addFairkeeperChestPositionList(player, blockEntity.getBlockPos()));
+            }
+            if (state.getValue(DNLProperties.FAIRKEEPER_ALERT)) {
+                alertTick(level, pos, state, blockEntity);
             }
         }
         double x = blockEntity.actualRegion2X + (blockEntity.actualRegion1X - blockEntity.actualRegion2X) * level.random.nextFloat();
         double y = blockEntity.actualRegion2Y + (blockEntity.actualRegion1Y - blockEntity.actualRegion2Y) * level.random.nextFloat();
         double z = blockEntity.actualRegion2Z + (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z) * level.random.nextFloat();
-        level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion1Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion2Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, y, blockEntity.actualRegion1Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, y, blockEntity.actualRegion1Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, y, blockEntity.actualRegion2Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, y, blockEntity.actualRegion2Z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion1Y, z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion1Y, z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion2Y, z, 0, 0, 0);
-        level.addParticle(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, z, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion2Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, y, blockEntity.actualRegion2Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, y, blockEntity.actualRegion2Z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion1Y, z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion1Y, z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion2Y, z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, z, 1, 0, 0, 0, 0);
+    }
+
+    private static void alertTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
+        if (blockEntity.spawnerLocationList == null) {
+            blockEntity.spawnerLocationList = new ArrayList<>();
+            return;
+        }
+        if (blockEntity.spawnerLocationList.isEmpty()) {
+            return;
+        }
+        BlockPos spawnerBlockPos = blockEntity.spawnerLocationList.get(0);
+        BlockEntity spawnerBlockEntity = level.getBlockEntity(spawnerBlockPos);
+        if (spawnerBlockEntity instanceof FairkeeperSpawnerBlockEntity fairkeeperSpawnerBlockEntity) {
+            fairkeeperSpawnerBlockEntity.alert(blockEntity.playerCount == 0 ? 1 : blockEntity.playerCount, spawnerBlockPos, fairkeeperSpawnerBlockEntity);
+        }
+        redstoneBeam(level, pos, spawnerBlockPos);
+        blockEntity.spawnerLocationList.remove(0);
+    }
+
+    private static void redstoneBeam(Level level, BlockPos originPos, BlockPos targetPos) {
+        double d = (double) (targetPos.getX() - originPos.getX());
+        double e = (double) (targetPos.getY() - originPos.getY());
+        double f = (double) (targetPos.getZ() - originPos.getZ());
+        double s = Math.sqrt(d * d + e * e + f * f);
+        d /= s;
+        e /= s;
+        f /= s;
+        double r = level.random.nextDouble();
+        while (r < s) {
+            r += 0.2;
+            ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, (double) originPos.getX() + 0.5D + d * r, (double) originPos.getY() + 0.5D + e * r, (double) originPos.getZ() + 0.5D + f * r, 1, 0.0D, 0.0, 0.0, 0.0);
+            //level.addParticle(DustParticleOptions.REDSTONE, originPos.getX(), originPos.getY() + r, originPos.getZ(), 0.0, 0.0, 0.0);
+        }
     }
 
     public static boolean scanFairkeeperChestPositions(Level level, BlockPos fairkeeperChestPos, BlockPos brokenBlockPos) {
@@ -247,7 +316,8 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
         }
         if (level.getBlockEntity(fairkeeperChestPos) instanceof FairkeeperChestBlockEntity fairkeeperChestBlockEntity) {
             if (fairkeeperChestBlockEntity.actualRegion1X > brokenBlockPos.getX() && fairkeeperChestBlockEntity.actualRegion1Y > brokenBlockPos.getY() && fairkeeperChestBlockEntity.actualRegion1Z > brokenBlockPos.getZ() && fairkeeperChestBlockEntity.actualRegion2X <= brokenBlockPos.getX() && fairkeeperChestBlockEntity.actualRegion2Y <= brokenBlockPos.getY() && fairkeeperChestBlockEntity.actualRegion2Z <= brokenBlockPos.getZ()) {
-                trigger(level, fairkeeperChestBlockEntity);
+                redstoneBeam(level, fairkeeperChestPos, brokenBlockPos);
+                trigger(level, fairkeeperChestPos, fairkeeperChestBlockEntity);
                 return false;
             }
         }

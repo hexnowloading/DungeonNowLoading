@@ -101,7 +101,7 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
         }
     }
 
-    public static void alert(int playerCount, BlockPos blockPos, FairkeeperSpawnerBlockEntity blockEntity) {
+    public void alert(int playerCount, BlockPos blockPos, FairkeeperSpawnerBlockEntity blockEntity) {
         if (blockEntity.getBlockState().getValue(DNLProperties.FAIRKEEPER_ALERT) == Boolean.FALSE) {
             FairkeeperSpawnerBlock.setFairkeeperAlert(blockEntity.level, blockPos, Boolean.TRUE);
             blockEntity.remainingStoredMobs = Math.min(playerCount + 1, 4);
@@ -136,10 +136,12 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
         double x = 0, y = 0, z = 0;
         for (int i = 0; i < SPAWN_POS_TRIES; i++) {
             x = (double)this.getBlockPos().getX() + (level.random.nextDouble() - level.random.nextDouble()) * (double)this.SPAWN_RANGE + 0.5;
-            y = this.getBlockPos().getY() + level.random.nextInt(3) - 1;
+            y = (double)(this.getBlockPos().getY() + level.random.nextInt(3) - 1);
             z = (double)this.getBlockPos().getZ() + (level.random.nextDouble() - level.random.nextDouble()) * (double)this.SPAWN_RANGE + 0.5;
             mob.moveTo(x, y, z, level.random.nextFloat() * 360.0f, 0.0f);
-            if (level.noCollision(mob, entityType.getAABB(mob.getX(), mob.getY(), mob.getZ())) && mob.checkSpawnRules(level, MobSpawnType.SPAWNER) && mob.checkSpawnObstruction(level)) break;
+            //if (level.noCollision(mob, entityType.getAABB(mob.getX(), mob.getY(), mob.getZ())) && mob.checkSpawnRules(level, MobSpawnType.SPAWNER) && mob.checkSpawnObstruction(level)) break;
+            if (level.noCollision(mob, entityType.getAABB(mob.getX(), mob.getY(), mob.getZ())) && mob.checkSpawnObstruction(level)) break;
+
         }
         summonMob(spawnerMob, mob, x, y, z, level);
         level.sendParticles(ParticleTypes.CLOUD, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), 10, 0.5D, 0.5D, 0.5D, 0.0D);
