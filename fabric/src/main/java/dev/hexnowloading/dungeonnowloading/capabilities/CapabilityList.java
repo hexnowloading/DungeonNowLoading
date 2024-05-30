@@ -1,9 +1,8 @@
 package dev.hexnowloading.dungeonnowloading.capabilities;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
-import dev.hexnowloading.dungeonnowloading.capabilities.player.IPlayerCapability;
-import dev.hexnowloading.dungeonnowloading.capabilities.player.PlayerCapabilityHandler;
-import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.hexnowloading.dungeonnowloading.capabilities.fabric.FairkeeperChestPositionsCapabilityHandler;
+import dev.hexnowloading.dungeonnowloading.capabilities.fabric.IFairkeeperChestPositionsCapability;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -17,10 +16,10 @@ import org.intellij.lang.annotations.Identifier;
 
 public class CapabilityList implements EntityComponentInitializer {
 
-    public static final ComponentKey<IPlayerCapability> PLAYER_CAP = ComponentRegistryV3.INSTANCE.getOrCreate(new ResourceLocation(DungeonNowLoading.MOD_ID, "test_point"), IPlayerCapability.class);
+    public static final ComponentKey<IFairkeeperChestPositionsCapability> FAIRKEEPER_CHEST_POSITIONS_CAP = ComponentRegistry.getOrCreate(new ResourceLocation("dungeonnowloading:fairkeeper_chest_positions"), IFairkeeperChestPositionsCapability.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        registry.registerForPlayers(PLAYER_CAP, player -> new PlayerCapabilityHandler(), RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(FAIRKEEPER_CHEST_POSITIONS_CAP, player -> new FairkeeperChestPositionsCapabilityHandler());
     }
 }

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "fairkeeper_alert=false": { "model": "dungeonnowloading:block/fairkeeper_spawner_off" },
+    "fairkeeper_alert=true": { "model": "dungeonnowloading:block/fairkeeper_spawner_on" }
+  }
+}

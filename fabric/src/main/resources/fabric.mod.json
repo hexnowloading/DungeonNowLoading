@@ -21,7 +21,7 @@
         "client": [
             "dev.hexnowloading.dungeonnowloading.client.DNLFabricClient"
         ],
-        "cardinal-component": [
+        "cardinal-component-entity": [
             "dev.hexnowloading.dungeonnowloading.capabilities.CapabilityList"
         ]
     },
@@ -39,7 +39,7 @@
     },
     "custom": {
         "cardinal-components": [
-            "dungeonnowloading:test_point"
+            "dungeonnowloading:fairkeeper_chest_positions"
         ]
     },
     "accessWidener" : "dungeonnowloading.accesswidener"

@@ -54,6 +54,7 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
     private BlockPos minRegion;
     private int playerCount;
     private static final double PLAYER_RANGE = 32.0D;
+    private static final int START_UP_TICK = 60;
 
     public FairkeeperChestBlockEntity(BlockPos pos, BlockState state) {
         super(DNLBlockEntityTypes.FAIRKEEPER_CHEST.get(), pos, state);
@@ -198,6 +199,7 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
 
         //if (blockEntity.actualRegion1X > brokenBlockPos.getX() && blockEntity.actualRegion1Y > brokenBlockPos.getY() && blockEntity.actualRegion1Z > brokenBlockPos.getZ() && blockEntity.actualRegion2X <= brokenBlockPos.getX() && blockEntity.actualRegion2Y <= brokenBlockPos.getY() && blockEntity.actualRegion2Z <= brokenBlockPos.getZ()) {
 
+        blockEntity.startUpTick = START_UP_TICK;
         FairkeeperChestBlock.setFairkeeperAlert(level, fairkeeperChestPos, Boolean.TRUE);
         AABB aabb = new AABB(blockEntity.actualRegion1X, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z);
         List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, aabb);
@@ -245,7 +247,10 @@ public class FairkeeperChestBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
-        if (level.getGameTime() % 20 == 0L) {
+        if (blockEntity.startUpTick > 0) {
+            blockEntity.startUpTick--;
+        } else {
+            blockEntity.startUpTick = 20;
             if (level.hasNearbyAlivePlayer(pos.getX(), pos.getY(), pos.getZ(), 32.0D)) {
                 updateActualRegion(level, pos, state, blockEntity);
                 AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ()).inflate(32.0D);

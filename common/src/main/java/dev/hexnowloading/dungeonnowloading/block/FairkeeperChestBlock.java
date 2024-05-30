@@ -43,8 +43,8 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty FAIRKEEPER_ALERT = DNLProperties.FAIRKEEPER_ALERT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private static final VoxelShape SHAPE_X = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
-    private static final VoxelShape SHAPE_Z = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
+    private static final VoxelShape SHAPE_X = Block.box(1.5D, 0.0D, 1.5D, 14.5D, 15.0D, 14.5D);
+    private static final VoxelShape SHAPE_Z = Block.box(1.5D, 0.0D, 1.5D, 14.5D, 15.0D, 14.5D);
 
     public FairkeeperChestBlock(Properties properties) {
         super(properties);

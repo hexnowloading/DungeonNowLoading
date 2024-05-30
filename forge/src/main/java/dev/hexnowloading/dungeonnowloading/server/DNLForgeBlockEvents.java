@@ -25,7 +25,8 @@ public class DNLForgeBlockEvents {
 
         if (!(event.getLevel() instanceof Level level) || level.isClientSide()) return;
 
-        // The code below creates ghost block after the block is broken by the player
+        if (player.isCreative() || player.isSpectator()) return;
+
         Optional<List<BlockPos>> blockPosList = Services.DATA.getFairkeeperChestPositionList(player);
         blockPosList.ifPresent(pos -> Services.DATA.copyFairkeeperChestPositionList(player, pos.stream().filter(blockPos -> FairkeeperChestBlockEntity.scanFairkeeperChestPositions(level, blockPos, brokenBlockPos)).collect(Collectors.toList())));
     }
@@ -34,6 +35,8 @@ public class DNLForgeBlockEvents {
         BlockPos placedBlockPos = event.getPos();
 
         if (!(event.getLevel() instanceof Level level) || level.isClientSide() || !(event.getEntity() instanceof Player player)) return;
+
+        if (player.isCreative() || player.isSpectator()) return;
 
         Optional<List<BlockPos>> blockPosList = Services.DATA.getFairkeeperChestPositionList(player);
         blockPosList.ifPresent(pos -> Services.DATA.copyFairkeeperChestPositionList(player, pos.stream().filter(blockPos -> FairkeeperChestBlockEntity.scanFairkeeperChestPositions(level, blockPos, placedBlockPos)).collect(Collectors.toList())));

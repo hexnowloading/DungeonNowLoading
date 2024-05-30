@@ -10,7 +10,6 @@
     "structures.StructureTemplateMixin",
     "fabric.entities.LivingDamageMixin",
     "fabric.entities.PlayerDamageMixin",
-    "fabric.entities.PlayerListMixin",
     "fabric.structures.StructurePoolMixin"
   ],
   "client": [
