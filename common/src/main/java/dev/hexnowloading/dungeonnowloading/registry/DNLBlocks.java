@@ -6,6 +6,8 @@ import dev.hexnowloading.dungeonnowloading.registration.BlockRegistryObject;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -70,11 +72,6 @@ public class DNLBlocks {
 
     public static boolean blocksRegistered = false;
 
-    private static BlockRegistryObject<Block> registerBlock(String name, Supplier<Block> supplier) {
-        RegistryObject<Block> object = BLOCKS.register(name, supplier);
-        return BlockRegistryObject.wrap(object);
-    }
-
     public static void init() {
         // DESIGN BLOCKS
         MOSS = registerBlock("moss", () -> new MossMultifaceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.1F).noOcclusion().sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY).noLootTable()));
@@ -125,5 +122,36 @@ public class DNLBlocks {
 
         blocksRegistered = true;
     }
+
+    private static BlockRegistryObject<Block> registerBlock(String name, Supplier<Block> supplier) {
+        RegistryObject<Block> object = BLOCKS.register(name, supplier);
+        return BlockRegistryObject.wrap(object);
+    }
+
+    /*public static <T extends Block> BlockRegistryObject<T> registerBEWLR(String name, Supplier<T> block) {
+        RegistryObject<T> ret = BLOCKS.register(name, block);
+        DNLItems.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties()) {
+            public void initializeClient
+        });
+
+    }*/
+    /*private static RegistryObject<Block> registerBlockAndItem(String name, Supplier<Block> block, ItemType itemType) {
+        RegistryObject<Block> blockRegistryObject = BLOCKS.register(name, block);
+        DNLItems.ITEMS.register(name, get)
+    }
+
+    private static Supplier<? extends BlockItem> getBlockSupplier(ItemType itemType, RegistryObject<Block> blockRegistryObject) {
+        return switch (itemType) {
+            case DEFAULT -> () -> new BlockItem(blockRegistryObject.get(), new Item.Properties());
+            case BUILTIN -> () -> new ;
+        };
+    }
+
+    private enum ItemType {
+        DEFAULT,
+        BUILTIN;
+
+
+    }*/
 
 }

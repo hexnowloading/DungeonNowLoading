@@ -1,5 +1,6 @@
 package dev.hexnowloading.dungeonnowloading.block.entity;
 
+import dev.hexnowloading.dungeonnowloading.block.FairkeeperChestBlock;
 import dev.hexnowloading.dungeonnowloading.block.FairkeeperSpawnerBlock;
 import dev.hexnowloading.dungeonnowloading.entity.util.ArmorTrimMaterial;
 import dev.hexnowloading.dungeonnowloading.entity.util.ArmorTrimPattern;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.core.jmx.Server;
@@ -37,12 +39,14 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
     private int remainingStoredMobs;
     private int spawnDelay;
     private int startUpTick;
+    private int destroyTick;
 
     public FairkeeperSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(DNLBlockEntityTypes.FAIRKEEPER_SPAWNER.get(), blockPos, blockState);
         this.spawnerLevel = 0;
         this.spawnDelay = 0;
         this.startUpTick = 40;
+        this.destroyTick = -1;
         this.remainingStoredMobs = 0;
     }
 
@@ -77,7 +81,16 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FairkeeperSpawnerBlockEntity blockEntity) {
-        if (state.getValue(DNLProperties.FAIRKEEPER_ALERT) == Boolean.TRUE) {
+        if (state.getValue(DNLProperties.FAIRKEEPER_DISABLED)) {
+            if (blockEntity.destroyTick < 0) {
+                blockEntity.destroyTick = 20 + level.random.nextInt(40);
+            }
+            blockEntity.destroyTick--;
+            if (blockEntity.destroyTick == 0) {
+                level.destroyBlock(pos, false);
+            }
+        }
+        if (state.getValue(DNLProperties.FAIRKEEPER_ALERT)) {
             if (blockEntity.startUpTick > 0) {
                 if (blockEntity.startUpTick == 40) {
                     level.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.WITHER_SHOOT, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.2F + 0.8F);
@@ -97,8 +110,11 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
                     level.destroyBlock(pos, false);
                 }
             }
-
         }
+    }
+
+    public void destroySpawner(Level level, BlockPos blockPos) {
+        FairkeeperSpawnerBlock.setFairkeeperDisabled(level, blockPos, true);
     }
 
     public void alert(int playerCount, BlockPos blockPos, FairkeeperSpawnerBlockEntity blockEntity) {

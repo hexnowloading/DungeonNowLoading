@@ -20,16 +20,28 @@ public class FabricDataHelper implements DataHelper {
 
     @Override
     public Optional<List<BlockPos>> getFairkeeperChestPositionList(Player player) {
-        return Optional.ofNullable(CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.get(player).getList());
+        if (CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.isProvidedBy(player)) {
+            List<BlockPos> blockPosList = CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.get(player).getList();
+            return Optional.ofNullable(blockPosList);
+        }
+        return Optional.empty();
+        //return Optional.of(FairkeeperChestPositionsData.getList((IPlayerDataSaver) player));
     }
 
     @Override
     public void addFairkeeperChestPositionList(Player player, BlockPos blockPos) {
-        CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.get(player).addBlock(blockPos);
+        if (CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.isProvidedBy(player)) {
+            CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.get(player).addBlock(blockPos);
+            CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.sync(player);
+        }
+        //FairkeeperChestPositionsData.addBlockPos((IPlayerDataSaver) player, blockPos);
     }
 
     @Override
     public void copyFairkeeperChestPositionList(Player player, List<BlockPos> list) {
-        CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.get(player).copyList(list);
+        if (CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.isProvidedBy(player)) {
+            CapabilityList.FAIRKEEPER_CHEST_POSITIONS_CAP.get(player).copyList(list);
+        }
+        //FairkeeperChestPositionsData.copyList((IPlayerDataSaver) player, list);
     }
 }

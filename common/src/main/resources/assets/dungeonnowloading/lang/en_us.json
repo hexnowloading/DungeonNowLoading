@@ -103,5 +103,6 @@
   "sounds.dungeonnowloading.hollow_death": "Hollow dies",
   "sounds.dungeonnowloading.whimper_ambient": "Whimper sobs",
   "sounds.dungeonnowloading.whimper_hurt": "Whimper hurts",
-  "sounds.dungeonnowloading.whimper_death": "Whimper dies"
+  "sounds.dungeonnowloading.whimper_death": "Whimper dies",
+  "warning.dungeonnowloading.cannot_open_fairkeeper_chest": "All enemies in the room must be defeated first!"
 }

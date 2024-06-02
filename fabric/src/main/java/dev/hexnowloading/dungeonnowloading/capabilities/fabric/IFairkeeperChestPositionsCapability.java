@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface IFairkeeperChestPositionsCapability extends ComponentV3, AutoSyncedComponent {
 
-    ResourceLocation ID = new ResourceLocation("dungeonnowloading:fairkeeper_chest_positions");
+    //ResourceLocation ID = new ResourceLocation("dungeonnowloading:fairkeeper_chest_positions");
 
     List<BlockPos> getList();
 

@@ -1,7 +1,6 @@
 package dev.hexnowloading.dungeonnowloading;
 
 import dev.hexnowloading.dungeonnowloading.events.DNLFabricBlockEvents;
-import dev.hexnowloading.dungeonnowloading.network.ServerboundSetPlayerCapability;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import dev.hexnowloading.dungeonnowloading.server.entity.DNLFabricEntities;
 import net.fabricmc.api.ModInitializer;
@@ -43,7 +42,5 @@ public class DNLFabric implements ModInitializer {
     }
 
     private void registerPackets() {
-        ServerPlayNetworking.registerGlobalReceiver(ServerboundSetPlayerCapability.ID, (server, player, handler, buf, responseSender) ->
-    new ServerboundSetPlayerCapability().handler(player));
     }
 }

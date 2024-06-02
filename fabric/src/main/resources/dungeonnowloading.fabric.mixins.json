@@ -8,6 +8,7 @@
     "entities.EntityAvoidBlockMixin",
     "structures.StructureProcessorAccessor",
     "structures.StructureTemplateMixin",
+    "fabric.block.BlockPlaceMixin",
     "fabric.entities.LivingDamageMixin",
     "fabric.entities.PlayerDamageMixin",
     "fabric.structures.StructurePoolMixin"
