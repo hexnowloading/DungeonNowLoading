@@ -63,6 +63,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     private BlockPos maxRegion;
     private BlockPos minRegion;
     private int playerCount;
+    private boolean disabled;
     private static final double PLAYER_RANGE = 32.0D;
     private static final int START_UP_TICK = 60;
     private static final int OPEN_CLOSE_ANIMATION_DURATION = 10;
@@ -71,6 +72,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
 
     public FairkeeperChestBlockEntity(BlockPos pos, BlockState state) {
         super(DNLBlockEntityTypes.FAIRKEEPER_CHEST.get(), pos, state);
+        this.disabled = false;
     }
 
     // Saves the nbt when player leaves the world.
@@ -98,6 +100,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         nbt.put("OldBlockPos", this.newIntList(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()));
         nbt.putInt("StartUpTick", this.startUpTick);
         nbt.putInt("PlayerCount", this.playerCount);
+        nbt.putBoolean("Disabled", this.disabled);
         if (maxRegion != null) {
             nbt.put("MaxRegion", this.newIntList(this.maxRegion.getX(), this.maxRegion.getY(), this.maxRegion.getZ()));
         }
@@ -141,6 +144,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         }
         this.startUpTick = nbt.getInt("StartUpTick");
         this.playerCount = nbt.getInt("PlayerCount");
+        this.disabled = nbt.getBoolean("Disabled");
         this.oldBlockPos = new BlockPos(nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(0), nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(1), nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(2));
         if (nbt.contains("MaxRegion", CompoundTag.TAG_LIST)) {
             this.maxRegion = new BlockPos(nbt.getList("MaxRegion", CompoundTag.TAG_LIST).getInt(0), nbt.getList("MaxRegion", CompoundTag.TAG_LIST).getInt(1), nbt.getList("MaxRegion", CompoundTag.TAG_LIST).getInt(2));
@@ -174,7 +178,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
 
     public boolean hasLastSpawner(Level level, FairkeeperChestBlockEntity blockEntity) {
         if(blockEntity.lastSpawner != null) {
-            return level.getBlockState(blockEntity.lastSpawner).is(DNLBlocks.FAIRKEEPER_CHEST.get());
+            return level.getBlockState(blockEntity.lastSpawner).is(DNLBlocks.FAIRKEEEPER_SPAWNER.get());
         }
         return false;
     }
@@ -183,6 +187,14 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         if (this.lootTable != null) {
             this.lootTable = null;
         }
+    }
+
+    public void setDisabled(boolean b) {
+        this.disabled = b;
+    }
+
+    public boolean getDisabled() {
+        return this.disabled;
     }
     /*protected boolean trySaveLootTable(CompoundTag nbt) {
         if (this.lootTable == null) {
@@ -276,8 +288,6 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                 xn = -i;
             }
         }
-        System.out.println("MaxRegion:" + xp + ", " + yp + ", " + zp);
-        System.out.println("MinRegion:" + xn + ", " + yn + ", " + zn);
         blockEntity.maxRegion = new BlockPos(xp, yp, zp);
         blockEntity.minRegion = new BlockPos(xn, yn, zn);
 
@@ -410,7 +420,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                 .filter(e -> e.getKey().getX() < blockEntity.actualRegion1X && e.getKey().getX() >= blockEntity.actualRegion2X && e.getKey().getY() < blockEntity.actualRegion1Y && e.getKey().getY() >= blockEntity.actualRegion2Y && e.getKey().getZ() < blockEntity.actualRegion1Z && e.getKey().getZ() >= blockEntity.actualRegion2Z)
                 .filter(e -> !e.getValue().getBlockState().getValue(DNLProperties.FAIRKEEPER_ALERT))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        filtered.forEach(((blockPosEntry, blockEntityEntry) -> ((FairkeeperSpawnerBlockEntity) blockEntityEntry).destroySpawner(level, blockPosEntry)));
+        filtered.forEach(((blockPosEntry, blockEntityEntry) -> ((FairkeeperSpawnerBlockEntity) blockEntityEntry).setDisabled(true)));
     }
 
     public static void clientTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
@@ -431,7 +441,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
-        if (!state.getValue(DNLProperties.FAIRKEEPER_DISABLED)) {
+        if (!blockEntity.disabled) {
             if (blockEntity.startUpTick > 0) {
                 blockEntity.startUpTick--;
             } else {
@@ -508,10 +518,10 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         if (!fairkeeperChestState.is(DNLBlocks.FAIRKEEPER_CHEST.get())) {
             return false;
         }
-        if (fairkeeperChestState.getValue(DNLProperties.FAIRKEEPER_DISABLED)) {
-            return false;
-        }
         if (level.getBlockEntity(fairkeeperChestPos) instanceof FairkeeperChestBlockEntity fairkeeperChestBlockEntity) {
+            if (fairkeeperChestBlockEntity.disabled) {
+                return false;
+            }
             if (fairkeeperChestBlockEntity.actualRegion1X > brokenBlockPos.getX() && fairkeeperChestBlockEntity.actualRegion1Y > brokenBlockPos.getY() && fairkeeperChestBlockEntity.actualRegion1Z > brokenBlockPos.getZ() && fairkeeperChestBlockEntity.actualRegion2X <= brokenBlockPos.getX() && fairkeeperChestBlockEntity.actualRegion2Y <= brokenBlockPos.getY() && fairkeeperChestBlockEntity.actualRegion2Z <= brokenBlockPos.getZ()) {
                 fairkeeperChestBlockEntity.removeLootTable();
                 redstoneBeam(level, fairkeeperChestPos, brokenBlockPos);

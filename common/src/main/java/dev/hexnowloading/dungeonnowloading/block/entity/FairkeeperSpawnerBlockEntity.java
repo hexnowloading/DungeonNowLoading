@@ -9,6 +9,7 @@ import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import dev.hexnowloading.dungeonnowloading.util.WeightedRandomBag;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -40,6 +41,7 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
     private int spawnDelay;
     private int startUpTick;
     private int destroyTick;
+    private boolean disabled;
 
     public FairkeeperSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(DNLBlockEntityTypes.FAIRKEEPER_SPAWNER.get(), blockPos, blockState);
@@ -48,6 +50,7 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
         this.startUpTick = 40;
         this.destroyTick = -1;
         this.remainingStoredMobs = 0;
+        this.disabled = false;
     }
 
     @Override
@@ -56,6 +59,7 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
         compoundTag.putInt("RemainingStoredMobs", this.remainingStoredMobs);
         compoundTag.putInt("StartUpTick", this.startUpTick);
         compoundTag.putInt("SpawnDelay", this.spawnDelay);
+        compoundTag.putBoolean("Disabled", this.disabled);
         super.saveAdditional(compoundTag);
     }
 
@@ -65,9 +69,13 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
         this.remainingStoredMobs = compoundTag.getInt("RemainingStoredMobs");
         this.startUpTick = compoundTag.getInt("StartUpTick");
         this.spawnDelay = compoundTag.getInt("SpawnDelay");
+        this.disabled = compoundTag.getBoolean("Disabled");
         super.load(compoundTag);
     }
 
+    public void setDisabled(boolean b) {
+        this.disabled = b;
+    }
 
     public static void clientTick(Level level, BlockPos pos, BlockState state, FairkeeperSpawnerBlockEntity blockEntity) {
         if (state.getValue(DNLProperties.FAIRKEEPER_ALERT) == Boolean.TRUE) {
@@ -81,13 +89,17 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FairkeeperSpawnerBlockEntity blockEntity) {
-        if (state.getValue(DNLProperties.FAIRKEEPER_DISABLED)) {
+        if (blockEntity.disabled) {
             if (blockEntity.destroyTick < 0) {
                 blockEntity.destroyTick = 20 + level.random.nextInt(40);
             }
             blockEntity.destroyTick--;
             if (blockEntity.destroyTick == 0) {
                 level.destroyBlock(pos, false);
+                double d = (double) pos.getX() + 0.5D;
+                double e = (double) pos.getY() + 0.5D;
+                double f = (double) pos.getZ() + 0.5D;
+                ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, d, e, f, 10, 0.0D, 0.5, 0.5, 0.5);
             }
         }
         if (state.getValue(DNLProperties.FAIRKEEPER_ALERT)) {
@@ -111,10 +123,6 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
                 }
             }
         }
-    }
-
-    public void destroySpawner(Level level, BlockPos blockPos) {
-        FairkeeperSpawnerBlock.setFairkeeperDisabled(level, blockPos, true);
     }
 
     public void alert(int playerCount, BlockPos blockPos, FairkeeperSpawnerBlockEntity blockEntity) {

@@ -1,6 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.block;
 
 import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperChestBlockEntity;
+import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperSpawnerBlockEntity;
 import dev.hexnowloading.dungeonnowloading.block.property.ChestStates;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
@@ -45,14 +46,13 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
     public static final EnumProperty<ChestStates> CHEST_STATES = DNLProperties.CHEST_STATES;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty FAIRKEEPER_ALERT = DNLProperties.FAIRKEEPER_ALERT;
-    public static final BooleanProperty FAIRKEEPER_DISABLED = DNLProperties.FAIRKEEPER_DISABLED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE_X = Block.box(1.5D, 0.0D, 1.5D, 14.5D, 15.0D, 14.5D);
     private static final VoxelShape SHAPE_Z = Block.box(1.5D, 0.0D, 1.5D, 14.5D, 15.0D, 14.5D);
 
     public FairkeeperChestBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(CHEST_STATES, ChestStates.CLOSED).setValue(FACING, Direction.NORTH).setValue(FAIRKEEPER_ALERT, Boolean.FALSE).setValue(FAIRKEEPER_DISABLED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(CHEST_STATES, ChestStates.CLOSED).setValue(FACING, Direction.NORTH).setValue(FAIRKEEPER_ALERT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override
@@ -68,14 +68,14 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(CHEST_STATES, FACING, FAIRKEEPER_ALERT, FAIRKEEPER_DISABLED, WATERLOGGED);
+        stateBuilder.add(CHEST_STATES, FACING, FAIRKEEPER_ALERT, WATERLOGGED);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         Direction direction = ctx.getHorizontalDirection().getOpposite();
         FluidState fluidstate = ctx.getLevel().getFluidState(ctx.getClickedPos());
-        return this.defaultBlockState().setValue(CHEST_STATES, ChestStates.CLOSED).setValue(FACING, direction).setValue(FAIRKEEPER_ALERT, Boolean.FALSE).setValue(FAIRKEEPER_DISABLED, Boolean.FALSE).setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
+        return this.defaultBlockState().setValue(CHEST_STATES, ChestStates.CLOSED).setValue(FACING, direction).setValue(FAIRKEEPER_ALERT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
     }
 
     // Makes the block waterlogged when placed in water.
@@ -141,7 +141,7 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
                 return InteractWithLockedFairkeeperChest(level, player, pos);
             }
         }
-        setFairkeeperDisabled(level, pos, Boolean.TRUE);
+        setFairkeeperDisabled(level, pos, blockEntity, true);
         MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
         if (menuProvider != null) {
             player.openMenu(menuProvider);
@@ -157,23 +157,22 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
         return InteractionResult.SUCCESS;
     }
 
-    public static void setFairkeeperDisabled(Level level, BlockPos blockPos, Boolean b) {
+    public static void setFairkeeperDisabled(Level level, BlockPos blockPos, FairkeeperChestBlockEntity blockEntity, boolean b) {
         Direction direction = level.getBlockState(blockPos).getValue(FACING);
         boolean fairkeeper_alert = level.getBlockState(blockPos).getValue(FAIRKEEPER_ALERT);
-        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FAIRKEEPER_DISABLED, b).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
+        blockEntity.setDisabled(b);
+        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
     }
 
     public static void setFairkeeperChest(Level level, BlockPos pos, ChestStates chestStates) {
         Direction direction = level.getBlockState(pos).getValue(FACING);
         boolean fairkeeper_alert = level.getBlockState(pos).getValue(FAIRKEEPER_ALERT);
-        boolean fairkeeper_disabled = level.getBlockState(pos).getValue(FAIRKEEPER_DISABLED);
-        level.setBlock(pos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FAIRKEEPER_DISABLED, fairkeeper_disabled).setValue(FACING, direction).setValue(CHEST_STATES, chestStates), 2);
+        level.setBlock(pos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FACING, direction).setValue(CHEST_STATES, chestStates), 2);
     }
 
     public static void setFairkeeperAlert(Level level, BlockPos blockPos, Boolean b) {
         Direction direction = level.getBlockState(blockPos).getValue(FACING);
-        boolean fairkeeper_disabled = level.getBlockState(blockPos).getValue(FAIRKEEPER_DISABLED);
-        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, b).setValue(FAIRKEEPER_DISABLED, fairkeeper_disabled).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
+        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, b).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
     }
 
     private static void playSound(Level level, BlockPos pos, SoundEvent soundEvent) {
