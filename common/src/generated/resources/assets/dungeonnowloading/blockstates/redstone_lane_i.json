@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "facing=east,redstone_lane_mode=overpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_overpowered",
+      "y": 90
+    },
+    "facing=east,redstone_lane_mode=powered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_powered",
+      "y": 90
+    },
+    "facing=east,redstone_lane_mode=unpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_unpowered",
+      "y": 90
+    },
+    "facing=north,redstone_lane_mode=overpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_overpowered"
+    },
+    "facing=north,redstone_lane_mode=powered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_powered"
+    },
+    "facing=north,redstone_lane_mode=unpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_unpowered"
+    },
+    "facing=south,redstone_lane_mode=overpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_overpowered"
+    },
+    "facing=south,redstone_lane_mode=powered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_powered"
+    },
+    "facing=south,redstone_lane_mode=unpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_unpowered"
+    },
+    "facing=west,redstone_lane_mode=overpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_overpowered",
+      "y": 90
+    },
+    "facing=west,redstone_lane_mode=powered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_powered",
+      "y": 90
+    },
+    "facing=west,redstone_lane_mode=unpowered": {
+      "model": "dungeonnowloading:block/redstone_lane_i_unpowered",
+      "y": 90
+    }
+  }
+}

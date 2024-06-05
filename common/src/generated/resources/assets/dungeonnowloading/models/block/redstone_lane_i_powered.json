@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "dungeonnowloading:block/redstone_lane_bottom",
+    "east": "dungeonnowloading:block/redstone_lane_side",
+    "north": "dungeonnowloading:block/redstone_lane_front_powered",
+    "particle": "dungeonnowloading:block/redstone_lane_i_top_powered",
+    "south": "dungeonnowloading:block/redstone_lane_front_powered",
+    "up": "dungeonnowloading:block/redstone_lane_i_top_powered",
+    "west": "dungeonnowloading:block/redstone_lane_side"
+  }
+}
