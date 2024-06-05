@@ -6,7 +6,7 @@ public enum RedstoneLaneMode implements StringRepresentable {
 
     UNPOWERED("unpowered"),
     POWERED("powered"),
-    OVERHEATED("overheated");
+    OVERPOWERED("overpowered");
 
     private final String name;
 

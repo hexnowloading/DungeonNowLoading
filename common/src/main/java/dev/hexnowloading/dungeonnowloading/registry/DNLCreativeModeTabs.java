@@ -80,6 +80,8 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.FAIRKEEPER_CHEST.get());
                 output.accept(DNLItems.FAIRKEEPER_SPAWNER.get());
                 output.accept(DNLItems.REDSTONE_LANE_I.get());
+                output.accept(DNLItems.REDSTONE_LANE_L.get());
+                output.accept(DNLItems.REDSTONE_LANE_T.get());
 
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());

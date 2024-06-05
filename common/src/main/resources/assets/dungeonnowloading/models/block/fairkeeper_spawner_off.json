@@ -4,7 +4,7 @@
 	"render_type": "cutout",
 	"textures": {
 		"2": "dungeonnowloading:block/fairkeeper_spawner_off",
-		"particle": "dungeonnowloading:block/fairkeeper_chest_particle"
+		"particle": "dungeonnowloading:block/fairkeeper_spawner_particle"
 	},
 	"elements": [
 		{
