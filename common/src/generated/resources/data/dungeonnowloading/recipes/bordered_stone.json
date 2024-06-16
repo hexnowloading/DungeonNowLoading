@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "sss",
+    "s s",
+    "sss"
+  ],
+  "result": {
+    "count": 8,
+    "item": "dungeonnowloading:bordered_stone"
+  },
+  "show_notification": true
+}

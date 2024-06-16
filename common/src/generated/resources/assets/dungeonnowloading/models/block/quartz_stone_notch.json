@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "dungeonnowloading:block/quartz_stone_notch"
+  }
+}
