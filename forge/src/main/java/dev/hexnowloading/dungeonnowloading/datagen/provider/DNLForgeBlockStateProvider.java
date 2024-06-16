@@ -30,6 +30,25 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(DNLBlocks.SIGNALING_STONE_EMBLEM.get());
         simpleBlockWithItem(DNLBlocks.DUELING_STONE_EMBLEM.get());
         simpleBlockWithItem(DNLBlocks.PUZZLING_STONE_EMBLEM.get());
+        simpleBlockWithItem(DNLBlocks.POLISHED_STONE.get());
+        simpleBlockWithItem(DNLBlocks.BORDERED_STONE.get());
+        simpleBlockWithItem(DNLBlocks.STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.COAL_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.COPPER_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.IRON_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.GOLD_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.REDSTONE_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.AMETHYST_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.LAPIS_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.EMERALD_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.QUARTZ_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.GLOWSTONE_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.PRISMARINE_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.CHORUS_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.ECHO_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.DIAMOND_STONE_NOTCH.get());
+        simpleBlockWithItem(DNLBlocks.NETHERITE_STONE_NOTCH.get());
+
         stairsBlockWithItem((StairBlock) DNLBlocks.STONE_TILE_STAIRS.get(), DNLBlocks.STONE_TILES.get());
         slabBlockWithItems((SlabBlock) DNLBlocks.STONE_TILE_SLAB.get(), DNLBlocks.STONE_TILES.get());
         wallBlockWithItem((WallBlock) DNLBlocks.STONE_TILE_WALL.get(), DNLBlocks.STONE_TILES.get());
@@ -102,6 +121,17 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
         ModelFile slabDouble = models().cubeColumn(name(block) + "_double", side, top);
 
         slabBlock(block, slabBottom, slabTop, slabDouble);
+        simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
+    }
+
+    private void pressurePlateblockWithItems(PressurePlateBlock block) {
+        ResourceLocation deactive = blockTexture(block);
+        ResourceLocation active = extend(blockTexture(block), "_on");
+
+        ModelFile off = models().pressurePlate(name(block), deactive).renderType("cutout");
+        ModelFile on = models().pressurePlateDown(name(block) + "_on", active).renderType("cutout");
+
+        pressurePlateBlock(block, off, on);
         simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
     }
 

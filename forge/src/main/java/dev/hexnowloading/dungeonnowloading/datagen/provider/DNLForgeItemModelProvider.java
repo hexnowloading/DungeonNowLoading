@@ -3,6 +3,8 @@ package dev.hexnowloading.dungeonnowloading.datagen.provider;
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
+import dev.hexnowloading.dungeonnowloading.registry.DNLItems;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -14,12 +16,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class DNLForgeItemModelProvider extends ItemModelProvider {
 
-    public DNLForgeItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, DungeonNowLoading.MOD_ID, existingFileHelper);
+    public DNLForgeItemModelProvider(DataGenerator gen, ExistingFileHelper existingFileHelper) {
+        super(gen.getPackOutput(), DungeonNowLoading.MOD_ID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
+        simpleItem(DNLItems.REDSTONE_SUPPRESSOR);
+        simpleItem(DNLItems.REDSTONE_CORE);
+        simpleItem(DNLItems.REDSTONE_CHIP);
+        simpleItem(DNLItems.REDSTONE_CIRCUIT);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

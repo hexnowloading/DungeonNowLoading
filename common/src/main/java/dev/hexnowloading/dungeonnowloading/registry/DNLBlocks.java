@@ -6,8 +6,11 @@ import dev.hexnowloading.dungeonnowloading.registration.BlockRegistryObject;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -35,6 +38,8 @@ public class DNLBlocks {
     public static BlockRegistryObject<Block> SIGNALING_STONE_EMBLEM;
     public static BlockRegistryObject<Block> DUELING_STONE_EMBLEM;
     public static BlockRegistryObject<Block> PUZZLING_STONE_EMBLEM;
+    public static BlockRegistryObject<Block> POLISHED_STONE;
+    public static BlockRegistryObject<Block> BORDERED_STONE;
 
     public static BlockRegistryObject<Block> MOSS;
 
@@ -66,6 +71,24 @@ public class DNLBlocks {
     public static BlockRegistryObject<Block> REDSTONE_LANE_I;
     public static BlockRegistryObject<Block> REDSTONE_LANE_L;
     public static BlockRegistryObject<Block> REDSTONE_LANE_T;
+    public static BlockRegistryObject<Block> ROTATOR_PRESSURE_PLATE;
+    public static BlockRegistryObject<Block> STONE_NOTCH;
+    public static BlockRegistryObject<Block> COAL_STONE_NOTCH;
+    public static BlockRegistryObject<Block> COPPER_STONE_NOTCH;
+    public static BlockRegistryObject<Block> IRON_STONE_NOTCH;
+    public static BlockRegistryObject<Block> GOLD_STONE_NOTCH;
+    public static BlockRegistryObject<Block> REDSTONE_STONE_NOTCH;
+    public static BlockRegistryObject<Block> AMETHYST_STONE_NOTCH;
+    public static BlockRegistryObject<Block> LAPIS_STONE_NOTCH;
+    public static BlockRegistryObject<Block> EMERALD_STONE_NOTCH;
+    public static BlockRegistryObject<Block> QUARTZ_STONE_NOTCH;
+    public static BlockRegistryObject<Block> GLOWSTONE_STONE_NOTCH;
+    public static BlockRegistryObject<Block> PRISMARINE_STONE_NOTCH;
+    public static BlockRegistryObject<Block> CHORUS_STONE_NOTCH;
+    public static BlockRegistryObject<Block> ECHO_STONE_NOTCH;
+    public static BlockRegistryObject<Block> DIAMOND_STONE_NOTCH;
+    public static BlockRegistryObject<Block> NETHERITE_STONE_NOTCH;
+
 
     // Trophies
     public static BlockRegistryObject<Block> LABYRINTH_TROPHY;// = registerBlock("labyrinth_trophy", () -> new Block(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.CUSTOM_HEAD).strength(1.0f).pushReaction(PushReaction.DESTROY)));
@@ -89,6 +112,8 @@ public class DNLBlocks {
         SIGNALING_STONE_EMBLEM = registerBlock("signaling_stone_emblem", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
         DUELING_STONE_EMBLEM = registerBlock("dueling_stone_emblem", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
         PUZZLING_STONE_EMBLEM = registerBlock("puzzling_stone_emblem", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
+        POLISHED_STONE = registerBlock("polished_stone", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
+        BORDERED_STONE = registerBlock("bordered_stone", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
 
         // MECHANCIAL BLOCKS
         BOOK_PILE = registerBlock("book_pile", () -> new BookPileBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().sound(SoundType.WOOL)));
@@ -115,9 +140,26 @@ public class DNLBlocks {
 
         FAIRKEEPER_CHEST = registerBlock("fairkeeper_chest", () -> new FairkeeperChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(-1.0F, 3600000.0F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
         FAIRKEEEPER_SPAWNER = registerBlock("fairkeeper_spawner", () -> new FairkeeperSpawnerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(-1.0F, 3600000.0F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
-        REDSTONE_LANE_I = registerBlock("redstone_lane_i", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).noLootTable()));
-        REDSTONE_LANE_L = registerBlock("redstone_lane_l", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).noLootTable()));
-        REDSTONE_LANE_T = registerBlock("redstone_lane_t", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).noLootTable()));
+        REDSTONE_LANE_I = registerBlock("redstone_lane_i", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel(DNLBlocks::laneLight).noLootTable()));
+        REDSTONE_LANE_L = registerBlock("redstone_lane_l", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel(DNLBlocks::laneLight).noLootTable()));
+        REDSTONE_LANE_T = registerBlock("redstone_lane_t", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel(DNLBlocks::laneLight).noLootTable()));
+        ROTATOR_PRESSURE_PLATE = registerBlock("rotator_pressure_plate", () -> new RotatorPressurePlate(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY).lightLevel(blockState -> blockState.getValue(PressurePlateBlock.POWERED) ? 9 : 0).noLootTable(), BlockSetType.STONE));
+        STONE_NOTCH = registerBlock("stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.NONE));
+        COAL_STONE_NOTCH = registerBlock("coal_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.COAL));
+        COPPER_STONE_NOTCH = registerBlock("copper_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.COPPER));
+        IRON_STONE_NOTCH = registerBlock("iron_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.IRON));
+        GOLD_STONE_NOTCH = registerBlock("gold_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.GOLD));
+        REDSTONE_STONE_NOTCH = registerBlock("redstone_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.REDSTONE));
+        AMETHYST_STONE_NOTCH = registerBlock("amethyst_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.AMETHYST));
+        LAPIS_STONE_NOTCH = registerBlock("lapis_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.LAPIS));
+        EMERALD_STONE_NOTCH = registerBlock("emerald_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.EMERALD));
+        QUARTZ_STONE_NOTCH = registerBlock("quartz_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.QUARTZ));
+        GLOWSTONE_STONE_NOTCH = registerBlock("glowstone_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.GLOWSTONE));
+        PRISMARINE_STONE_NOTCH = registerBlock("prismarine_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.PRISMARINE));
+        CHORUS_STONE_NOTCH = registerBlock("chorus_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.CHORUS));
+        ECHO_STONE_NOTCH = registerBlock("echo_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.ECHO));
+        DIAMOND_STONE_NOTCH = registerBlock("diamond_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.DIAMOND));
+        NETHERITE_STONE_NOTCH = registerBlock("netherite_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.NETHERITE));
 
         // Trophies
         LABYRINTH_TROPHY = registerBlock("labyrinth_trophy", () -> new Block(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.CUSTOM_HEAD).strength(1.0f).noOcclusion().pushReaction(PushReaction.DESTROY).noLootTable()));
@@ -128,6 +170,14 @@ public class DNLBlocks {
     private static BlockRegistryObject<Block> registerBlock(String name, Supplier<Block> supplier) {
         RegistryObject<Block> object = BLOCKS.register(name, supplier);
         return BlockRegistryObject.wrap(object);
+    }
+
+    private static int laneLight(BlockState blockState) {
+        return switch (blockState.getValue(DNLProperties.REDSTONE_LANE_MODE)) {
+            default -> 0;
+            case POWERED -> 3;
+            case OVERPOWERED -> 15;
+        };
     }
 
     /*public static <T extends Block> BlockRegistryObject<T> registerBEWLR(String name, Supplier<T> block) {

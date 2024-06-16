@@ -13,6 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -78,6 +79,36 @@ public class RedstoneLaneBlock extends DirectionalBlock {
         super.onPlace(blockState, level, blockPos, oldBlockState, b);
     }
 
+    @Override
+    public int getSignal(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, Direction direction) {
+
+        if (blockState.getValue(DNLProperties.REDSTONE_LANE_MODE) == RedstoneLaneMode.UNPOWERED) return 0;
+
+        if (direction == Direction.DOWN) return 15;
+
+        List<Direction> directions = getConnectionDirection(blockState);
+
+        for (Direction laneDirection : directions) {
+            if (blockGetter.getBlockState(blockPos.relative(laneDirection)).getBlock() instanceof RedstoneLaneBlock) continue;
+            if (direction == laneDirection.getOpposite()) {
+                return 15;
+            }
+        }
+
+        return 0;
+
+    }
+
+    @Override
+    public int getDirectSignal(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, Direction direction) {
+        return blockState.getSignal(blockGetter, blockPos, direction);
+    }
+
+    @Override
+    public boolean isSignalSource(BlockState blockState) {
+        return true;
+    }
+
     /*@Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         serverLevel.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.POWERED), 2);
@@ -115,11 +146,14 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         int power;
 
+        int originalPower = blockState.getValue(DNLProperties.REDSTONE_LANE_POWER);
+
         boolean overpowered = false;
 
         boolean hasRedstoneBlock = !neighborLaneBlockPosList.stream().filter(b -> level.getBlockState(b).is(Blocks.REDSTONE_BLOCK)).toList().isEmpty();
 
         boolean hasMagmaBlock = !neighborLaneBlockPosList.stream().filter(b -> level.getBlockState(b).is(Blocks.MAGMA_BLOCK)).toList().isEmpty();
+
 
         if (hasRedstoneBlock || level.getBlockState(blockPos.above()).is(Blocks.REDSTONE_BLOCK)) {
 
@@ -137,16 +171,19 @@ public class RedstoneLaneBlock extends DirectionalBlock {
                     .filter(b -> isLaneConnected(level, blockState, blockPos, b))
                     .toList();
 
-            int originalPower = blockState.getValue(DNLProperties.REDSTONE_LANE_POWER);
-
             int highestPower = redstoneLanePosList.stream().mapToInt(b -> level.getBlockState(b).getValue(DNLProperties.REDSTONE_LANE_POWER)).max().orElse(0);
 
             overpowered = !redstoneLanePosList.stream().filter(b -> level.getBlockState(b).getValue(DNLProperties.REDSTONE_LANE_MODE) == RedstoneLaneMode.OVERPOWERED).toList().isEmpty();
 
             power = Math.max(highestPower - 1, 0);
 
-            if (originalPower == power) return;
         }
+
+        if (originalPower == power) {
+            //level.neighborChanged(blockPos.above(), this, blockPos);
+            return;
+        };
+
 
         if (power == 0) {
             level.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.UNPOWERED).setValue(DNLProperties.REDSTONE_LANE_POWER, 0), 2);
@@ -157,6 +194,8 @@ public class RedstoneLaneBlock extends DirectionalBlock {
                 level.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.POWERED).setValue(DNLProperties.REDSTONE_LANE_POWER, power), 2);
             }
         }
+
+        level.neighborChanged(blockPos.above(), this, blockPos);
 
         updateConnectedNegihbors(neighborLaneBlockPosList, level, blockPos);
     }
@@ -180,6 +219,8 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         poweredParticle(level, blockState, blockPos);
 
+        level.neighborChanged(blockPos.above(), this, blockPos);
+
         updateConnectedNeighborsWithExcluded(level, blockState, blockPos, neighbourBlock);
     }
 
@@ -202,6 +243,8 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         poweredParticle(level, blockState, blockPos);
 
+        level.neighborChanged(blockPos.above(), this, blockPos);
+
         updateConnectedNeighborsWithExcluded(level, blockState, blockPos, neighbourBlock);
     }
 
@@ -223,6 +266,8 @@ public class RedstoneLaneBlock extends DirectionalBlock {
             }
             poweredParticle(level, blockState, blockPos);
         }
+
+        level.neighborChanged(blockPos.above(), this, blockPos);
 
         updateConnectedNeighborsWithExcluded(level, blockState, blockPos, neighbourBlock);
 
@@ -288,6 +333,29 @@ public class RedstoneLaneBlock extends DirectionalBlock {
         }
 
         return neighborBlockPosList;
+    }
+
+    private List<Direction> getConnectionDirection(BlockState blockState) {
+        List<Direction> directions = new ArrayList<>();
+        Direction direction = blockState.getValue(FACING);
+
+        if (blockState.is(DNLBlocks.REDSTONE_LANE_I.get())) {
+            directions.add(direction);
+            directions.add(direction.getOpposite());
+        }
+
+        if (blockState.is(DNLBlocks.REDSTONE_LANE_L.get())) {
+            directions.add(direction.getCounterClockWise());
+            directions.add(direction);
+        }
+
+        if (blockState.is(DNLBlocks.REDSTONE_LANE_T.get())) {
+            directions.add(direction.getCounterClockWise());
+            directions.add(direction.getClockWise());
+            directions.add(direction);
+        }
+
+        return directions;
     }
 
     @Override

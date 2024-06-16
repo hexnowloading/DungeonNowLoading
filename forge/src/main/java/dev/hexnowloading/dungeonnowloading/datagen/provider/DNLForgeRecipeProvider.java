@@ -7,7 +7,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
 
@@ -25,6 +24,25 @@ public class DNLForgeRecipeProvider extends RecipeProvider {
     }
 
     private void buildShapedRecipes(Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DNLItems.REDSTONE_CIRCUIT.get(), 1)
+                .pattern("rpi")
+                .pattern("pss")
+                .pattern("gss")
+                .define('s', DNLItems.REDSTONE_CHIP.get())
+                .define('r', Items.REDSTONE_BLOCK)
+                .define('p', Items.REPEATER)
+                .define('i', Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
+                .define('g', Items.LIGHT_WEIGHTED_PRESSURE_PLATE)
+                .unlockedBy("has_redstone_chip", has(DNLItems.REDSTONE_CHIP.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DNLItems.REDSTONE_CORE.get(), 1)
+                .pattern("srs")
+                .pattern("rrr")
+                .pattern("srs")
+                .define('s', DNLItems.REDSTONE_SUPPRESSOR.get())
+                .define('r', Items.REDSTONE_BLOCK)
+                .unlockedBy("has_redstone_suppressor", has(DNLItems.REDSTONE_SUPPRESSOR.get()))
+                .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DNLItems.COILING_STONE_PILLAR.get(), 2)
                 .pattern("s")
                 .pattern("s")
@@ -111,6 +129,27 @@ public class DNLForgeRecipeProvider extends RecipeProvider {
                 .define('r', Items.DRIED_KELP)
                 .unlockedBy("has_stone_bricks", has(Items.STONE_BRICKS))
                 .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DNLItems.POLISHED_STONE.get(), 9)
+                .pattern("sss")
+                .pattern("sss")
+                .pattern("sss")
+                .define('s', Items.STONE)
+                .unlockedBy("has_stone", has(Items.STONE))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DNLItems.BORDERED_STONE.get(), 8)
+                .pattern("sss")
+                .pattern("s s")
+                .pattern("sss")
+                .define('s', Items.STONE)
+                .unlockedBy("has_stone", has(Items.STONE))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DNLItems.STONE_NOTCH.get(), 8)
+                .pattern("sss")
+                .pattern("s s")
+                .pattern("sss")
+                .define('s', Items.STONE_BRICKS)
+                .unlockedBy("has_stone_bricks", has(Items.STONE_BRICKS))
+                .save(consumer);
     }
 
     private void buildStoneCutterRecipes(Consumer<FinishedRecipe> consumer) {
@@ -127,6 +166,10 @@ public class DNLForgeRecipeProvider extends RecipeProvider {
         stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, DNLItems.SIGNALING_STONE_EMBLEM.get(), Items.STONE_BRICKS, 1);
         stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, DNLItems.DUELING_STONE_EMBLEM.get(), Items.STONE_BRICKS, 1);
         stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, DNLItems.PUZZLING_STONE_EMBLEM.get(), Items.STONE_BRICKS, 1);
+        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, DNLItems.STONE_NOTCH.get(), Items.STONE_BRICKS, 1);
+        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, DNLItems.POLISHED_STONE.get(), Items.STONE, 1);
+        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, DNLItems.BORDERED_STONE.get(), Items.STONE, 1);
+
     }
 
     private void buildSmeltingRecipes(Consumer<FinishedRecipe> consumer) {

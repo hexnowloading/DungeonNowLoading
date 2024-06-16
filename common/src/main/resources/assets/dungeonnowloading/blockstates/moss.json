@@ -1,39 +1,15 @@
 {
   "multipart": [
     {
-      "apply": [
-        { "model": "dungeonnowloading:block/moss_0" },
-        { "model": "dungeonnowloading:block/moss_1" },
-        { "model": "dungeonnowloading:block/moss_2" },
-        { "model": "dungeonnowloading:block/moss_0_90" },
-        { "model": "dungeonnowloading:block/moss_1_90" },
-        { "model": "dungeonnowloading:block/moss_2_90" },
-        { "model": "dungeonnowloading:block/moss_0_180" },
-        { "model": "dungeonnowloading:block/moss_1_180" },
-        { "model": "dungeonnowloading:block/moss_2_180" },
-        { "model": "dungeonnowloading:block/moss_0_270" },
-        { "model": "dungeonnowloading:block/moss_1_270" },
-        { "model": "dungeonnowloading:block/moss_2_270" }
-      ],
+      "apply":
+        { "model": "dungeonnowloading:block/moss" },
       "when": {
         "north": "true"
       }
     },
     {
-      "apply": [
-        { "model": "dungeonnowloading:block/moss_0" },
-        { "model": "dungeonnowloading:block/moss_1" },
-        { "model": "dungeonnowloading:block/moss_2" },
-        { "model": "dungeonnowloading:block/moss_0_90" },
-        { "model": "dungeonnowloading:block/moss_1_90" },
-        { "model": "dungeonnowloading:block/moss_2_90" },
-        { "model": "dungeonnowloading:block/moss_0_180" },
-        { "model": "dungeonnowloading:block/moss_1_180" },
-        { "model": "dungeonnowloading:block/moss_2_180" },
-        { "model": "dungeonnowloading:block/moss_0_270" },
-        { "model": "dungeonnowloading:block/moss_1_270" },
-        { "model": "dungeonnowloading:block/moss_2_270" }
-      ],
+      "apply":
+        { "model": "dungeonnowloading:block/moss" },
       "when": {
         "down": "false",
         "east": "false",
@@ -45,7 +21,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "y": 90
       },
@@ -55,7 +31,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "y": 90
       },
@@ -70,7 +46,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "y": 180
       },
@@ -80,7 +56,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "y": 180
       },
@@ -95,7 +71,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "y": 270
       },
@@ -105,7 +81,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "y": 270
       },
@@ -120,7 +96,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_ceiling_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "x": 270
       },
@@ -130,7 +106,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "x": 270
       },
@@ -145,7 +121,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "x": 90
       },
@@ -155,7 +131,7 @@
     },
     {
       "apply": {
-        "model": "dungeonnowloading:block/moss_0",
+        "model": "dungeonnowloading:block/moss",
         "uvlock": true,
         "x": 90
       },

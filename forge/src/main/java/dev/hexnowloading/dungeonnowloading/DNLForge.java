@@ -31,7 +31,6 @@ public class DNLForge {
 
         addForgeListeners();
 
-
         DungeonNowLoading.LOGGER.info("Hello Forge world!");
     }
 

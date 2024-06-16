@@ -14,6 +14,7 @@
     "dungeonnowloading:signaling_stone_emblem",
     "dungeonnowloading:dueling_stone_emblem",
     "dungeonnowloading:puzzling_stone_emblem",
+    "dungeonnowloading:polished_stone",
     "dungeonnowloading:cobblestone_pebbles",
     "dungeonnowloading:mossy_cobblestone_pebbles",
     "dungeonnowloading:iron_ingot_pile",
@@ -22,6 +23,22 @@
     "dungeonnowloading:chaos_spawner_diamond_edge",
     "dungeonnowloading:chaos_spawner_diamond_vertex",
     "dungeonnowloading:spikes",
-    "dungeonnowloading:fairkeeper_spawner"
+    "dungeonnowloading:fairkeeper_spawner",
+    "dungeonnowloading:stone_notch",
+    "dungeonnowloading:coal_stone_notch",
+    "dungeonnowloading:copper_stone_notch",
+    "dungeonnowloading:iron_stone_notch",
+    "dungeonnowloading:gold_stone_notch",
+    "dungeonnowloading:redstone_stone_notch",
+    "dungeonnowloading:amethyst_stone_notch",
+    "dungeonnowloading:lapis_stone_notch",
+    "dungeonnowloading:emerald_stone_notch",
+    "dungeonnowloading:quartz_stone_notch",
+    "dungeonnowloading:glowstone_stone_notch",
+    "dungeonnowloading:prismarine_stone_notch",
+    "dungeonnowloading:chorus_stone_notch",
+    "dungeonnowloading:echo_stone_notch",
+    "dungeonnowloading:diamond_stone_notch",
+    "dungeonnowloading:netherite_stone_notch"
   ]
 }

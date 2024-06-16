@@ -27,6 +27,10 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SOUL_CLOTH.get());
                 output.accept(DNLItems.SOUL_SILK.get());
                 output.accept(DNLItems.CHAOTIC_HEXAHEDRON.get());
+                output.accept(DNLItems.REDSTONE_SUPPRESSOR.get());
+                output.accept(DNLItems.REDSTONE_CORE.get());
+                output.accept(DNLItems.REDSTONE_CHIP.get());
+                output.accept(DNLItems.REDSTONE_CIRCUIT.get());
                 // Items - Functional
                 output.accept(DNLItems.GREAT_EXPERIENCE_BOTTLE.get());
                 output.accept(DNLItems.SCEPTER_OF_SEALED_CHAOS.get());
@@ -55,7 +59,9 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.SIGNALING_STONE_EMBLEM.get());
                 output.accept(DNLItems.DUELING_STONE_EMBLEM.get());
                 output.accept(DNLItems.PUZZLING_STONE_EMBLEM.get());
-                //output.accept(DNLItems.MOSS.get());
+                output.accept(DNLItems.POLISHED_STONE.get());
+                output.accept(DNLItems.BORDERED_STONE.get());
+                output.accept(DNLItems.MOSS.get());
 
                 // Blocks - Mechanical
                 output.accept(DNLItems.DUNGEON_WALL_TORCH.get());
@@ -82,6 +88,23 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.REDSTONE_LANE_I.get());
                 output.accept(DNLItems.REDSTONE_LANE_L.get());
                 output.accept(DNLItems.REDSTONE_LANE_T.get());
+                output.accept(DNLItems.ROTATOR_PRESSURE_PLATE.get());
+                output.accept(DNLItems.STONE_NOTCH.get());
+                output.accept(DNLItems.COAL_STONE_NOTCH.get());
+                output.accept(DNLItems.COPPER_STONE_NOTCH.get());
+                output.accept(DNLItems.IRON_STONE_NOTCH.get());
+                output.accept(DNLItems.GOLD_STONE_NOTCH.get());
+                output.accept(DNLItems.REDSTONE_STONE_NOTCH.get());
+                output.accept(DNLItems.AMETHYST_STONE_NOTCH.get());
+                output.accept(DNLItems.LAPIS_STONE_NOTCH.get());
+                output.accept(DNLItems.EMERALD_STONE_NOTCH.get());
+                output.accept(DNLItems.QUARTZ_STONE_NOTCH.get());
+                output.accept(DNLItems.GLOWSTONE_STONE_NOTCH.get());
+                output.accept(DNLItems.PRISMARINE_STONE_NOTCH.get());
+                output.accept(DNLItems.CHORUS_STONE_NOTCH.get());
+                output.accept(DNLItems.ECHO_STONE_NOTCH.get());
+                output.accept(DNLItems.DIAMOND_STONE_NOTCH.get());
+                output.accept(DNLItems.NETHERITE_STONE_NOTCH.get());
 
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());

@@ -2,6 +2,7 @@ package dev.hexnowloading.dungeonnowloading.datagen;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.datagen.provider.DNLForgeBlockStateProvider;
+import dev.hexnowloading.dungeonnowloading.datagen.provider.DNLForgeItemModelProvider;
 import dev.hexnowloading.dungeonnowloading.datagen.provider.DNLForgeLootTableProvider;
 import dev.hexnowloading.dungeonnowloading.datagen.provider.DNLForgeRecipeProvider;
 import dev.hexnowloading.dungeonnowloading.datagen.tag.DNLForgeBlockTagGenerator;
@@ -28,6 +29,7 @@ public class DNLForgeDataGenerators {
         DNLForgeBlockTagGenerator blockTagGenerator = new DNLForgeBlockTagGenerator(generator, lookupProvider, existingFileHelper);
         generator.addProvider(true, blockTagGenerator);
         generator.addProvider(true, new DNLForgeBlockStateProvider(generator, existingFileHelper));
+        generator.addProvider(true, new DNLForgeItemModelProvider(generator, existingFileHelper));
         generator.addProvider(true, new DNLForgeRecipeProvider(generator.getPackOutput()));
         generator.addProvider(true, DNLForgeLootTableProvider.create(generator.getPackOutput()));
     }

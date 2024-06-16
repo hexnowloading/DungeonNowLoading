@@ -35,6 +35,7 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
                 DNLBlocks.SIGNALING_STONE_EMBLEM.get(),
                 DNLBlocks.DUELING_STONE_EMBLEM.get(),
                 DNLBlocks.PUZZLING_STONE_EMBLEM.get(),
+                DNLBlocks.POLISHED_STONE.get(),
                 DNLBlocks.COBBLESTONE_PEBBLES.get(),
                 DNLBlocks.MOSSY_COBBLESTONE_PEBBLES.get(),
                 DNLBlocks.IRON_INGOT_PILE.get(),
@@ -43,7 +44,23 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
                 DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.get(),
                 DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.get(),
                 DNLBlocks.SPIKES.get(),
-                DNLBlocks.FAIRKEEEPER_SPAWNER.get()
+                DNLBlocks.FAIRKEEEPER_SPAWNER.get(),
+                DNLBlocks.STONE_NOTCH.get(),
+                DNLBlocks.COAL_STONE_NOTCH.get(),
+                DNLBlocks.COPPER_STONE_NOTCH.get(),
+                DNLBlocks.IRON_STONE_NOTCH.get(),
+                DNLBlocks.GOLD_STONE_NOTCH.get(),
+                DNLBlocks.REDSTONE_STONE_NOTCH.get(),
+                DNLBlocks.AMETHYST_STONE_NOTCH.get(),
+                DNLBlocks.LAPIS_STONE_NOTCH.get(),
+                DNLBlocks.EMERALD_STONE_NOTCH.get(),
+                DNLBlocks.QUARTZ_STONE_NOTCH.get(),
+                DNLBlocks.GLOWSTONE_STONE_NOTCH.get(),
+                DNLBlocks.PRISMARINE_STONE_NOTCH.get(),
+                DNLBlocks.CHORUS_STONE_NOTCH.get(),
+                DNLBlocks.ECHO_STONE_NOTCH.get(),
+                DNLBlocks.DIAMOND_STONE_NOTCH.get(),
+                DNLBlocks.NETHERITE_STONE_NOTCH.get()
         );
 
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(
