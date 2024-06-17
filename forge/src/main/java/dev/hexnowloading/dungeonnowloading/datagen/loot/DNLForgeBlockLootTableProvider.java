@@ -68,6 +68,7 @@ public class DNLForgeBlockLootTableProvider extends BlockLootSubProvider {
         this.add(DNLBlocks.ECHO_STONE_NOTCH.get(), block -> notchBlock(block, Items.ECHO_SHARD));
         this.add(DNLBlocks.DIAMOND_STONE_NOTCH.get(), block -> notchBlock(block, Items.DIAMOND));
         this.add(DNLBlocks.NETHERITE_STONE_NOTCH.get(), block -> notchBlock(block, Items.NETHERITE_INGOT));
+        this.dropSelf(DNLBlocks.SIGNAL_GATE.get());
 
         this.add(DNLBlocks.BOOK_PILE.get(), block -> bookPile());
         this.add(DNLBlocks.COBBLESTONE_PEBBLES.get(), block -> pileBlock(block, DNLItems.COBBLESTONE_PEBBLE.get()));

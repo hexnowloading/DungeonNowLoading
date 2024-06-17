@@ -84,6 +84,7 @@ public class DNLItems {
     public static final RegistryObject<Item> ECHO_STONE_NOTCH = register("echo_stone_notch", () -> new BlockItem(DNLBlocks.ECHO_STONE_NOTCH.get(), new Item.Properties()));
     public static final RegistryObject<Item> DIAMOND_STONE_NOTCH = register("diamond_stone_notch", () -> new BlockItem(DNLBlocks.DIAMOND_STONE_NOTCH.get(), new Item.Properties()));
     public static final RegistryObject<Item> NETHERITE_STONE_NOTCH = register("netherite_stone_notch", () -> new BlockItem(DNLBlocks.NETHERITE_STONE_NOTCH.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SIGNAL_GATE = register("signal_gate", () -> new BlockItem(DNLBlocks.SIGNAL_GATE.get(), new Item.Properties()));
 
 
     // MECHANICAL BLOCKS

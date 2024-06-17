@@ -4,6 +4,7 @@ import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.block.FairkeeperSpawnerBlock;
 import dev.hexnowloading.dungeonnowloading.block.PillarCapBlock;
 import dev.hexnowloading.dungeonnowloading.block.RedstoneLaneBlock;
+import dev.hexnowloading.dungeonnowloading.block.SignalGateBlock;
 import dev.hexnowloading.dungeonnowloading.block.property.RedstoneLaneMode;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
@@ -11,12 +12,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class DNLForgeBlockStateProvider extends BlockStateProvider {
     public DNLForgeBlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
@@ -61,6 +64,7 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
         redstoneLaneWithItem((RedstoneLaneBlock) DNLBlocks.REDSTONE_LANE_I.get());
         redstoneLaneWithItem((RedstoneLaneBlock) DNLBlocks.REDSTONE_LANE_L.get());
         redstoneLaneWithItem((RedstoneLaneBlock) DNLBlocks.REDSTONE_LANE_T.get());
+        signalGateWithItem((SignalGateBlock) DNLBlocks.SIGNAL_GATE.get());
 
         //fairkeeperSpawnerWithItem((FairkeeperSpawnerBlock) DNLBlocks.FAIRKEEEPER_SPAWNER.get());
         //simpleRandomBlockWithItem(DNLBlocks.MOSS.get(), 5);
@@ -173,6 +177,66 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
                 .partialState().with(HorizontalDirectionalBlock.FACING, Direction.EAST).modelForState().modelFile(normal).rotationY(90).addModel()
                 .partialState().with(HorizontalDirectionalBlock.FACING, Direction.SOUTH).modelForState().modelFile(normal).addModel()
                 .partialState().with(HorizontalDirectionalBlock.FACING, Direction.WEST).modelForState().modelFile(normal).rotationX(90).addModel();
+
+        simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
+    }
+
+    private void signalGateWithItem(SignalGateBlock block) {
+        ResourceLocation front = extend(blockTexture(block), "_front");
+        ResourceLocation back_on = extend(blockTexture(block), "_back_on");
+        ResourceLocation back_off = extend(blockTexture(block), "_back_off");
+        ResourceLocation bottom = extend(blockTexture(block), "_bottom");
+        ResourceLocation side_on = extend(blockTexture(block), "_side_on");
+        ResourceLocation side_on_reverse = extend(blockTexture(block), "_side_on_reverse");
+        ResourceLocation side_off = extend(blockTexture(block), "_side_off");
+        ResourceLocation side_off_reverse = extend(blockTexture(block), "_side_off_reverse");
+        ResourceLocation top_00 = extend(blockTexture(block), "_top_00");
+        ResourceLocation top_01 = extend(blockTexture(block), "_top_01");
+        ResourceLocation top_02 = extend(blockTexture(block), "_top_02");
+        ResourceLocation top_03 = extend(blockTexture(block), "_top_03");
+        ResourceLocation top_04 = extend(blockTexture(block), "_top_04");
+        ResourceLocation top_05 = extend(blockTexture(block), "_top_05");
+        ResourceLocation top_06 = extend(blockTexture(block), "_top_06");
+        ResourceLocation top_07 = extend(blockTexture(block), "_top_07");
+        ResourceLocation top_08 = extend(blockTexture(block), "_top_08");
+        ResourceLocation top_09 = extend(blockTexture(block), "_top_09");
+        ResourceLocation top_10 = extend(blockTexture(block), "_top_10");
+        ResourceLocation top_11 = extend(blockTexture(block), "_top_11");
+        ResourceLocation top_12 = extend(blockTexture(block), "_top_12");
+        ResourceLocation top_13 = extend(blockTexture(block), "_top_13");
+        ResourceLocation top_14 = extend(blockTexture(block), "_top_14");
+        ResourceLocation top_15 = extend(blockTexture(block), "_top_15");
+
+        ModelFile off = models().cube(name(block), bottom, top_00, front, back_off, side_off_reverse, side_off);
+        ModelFile on_01 = models().cube(name(block) + "_on_01", bottom, top_01, front, back_off, side_off_reverse, side_off);
+        ModelFile on_02 = models().cube(name(block) + "_on_02", bottom, top_02, front, back_off, side_off_reverse, side_off);
+        ModelFile on_03 = models().cube(name(block) + "_on_03", bottom, top_03, front, back_off, side_off_reverse, side_off);
+        ModelFile on_04 = models().cube(name(block) + "_on_04", bottom, top_04, front, back_off, side_off_reverse, side_off);
+        ModelFile on_05 = models().cube(name(block) + "_on_05", bottom, top_05, front, back_off, side_off_reverse, side_off);
+        ModelFile on_06 = models().cube(name(block) + "_on_06", bottom, top_06, front, back_off, side_off_reverse, side_off);
+        ModelFile on_07 = models().cube(name(block) + "_on_07", bottom, top_07, front, back_off, side_off_reverse, side_off);
+        ModelFile on_08 = models().cube(name(block) + "_on_08", bottom, top_08, front, back_off, side_off_reverse, side_off);
+        ModelFile on_09 = models().cube(name(block) + "_on_09", bottom, top_09, front, back_off, side_off_reverse, side_off);
+        ModelFile on_10 = models().cube(name(block) + "_on_10", bottom, top_10, front, back_off, side_off_reverse, side_off);
+        ModelFile on_11 = models().cube(name(block) + "_on_11", bottom, top_11, front, back_off, side_off_reverse, side_off);
+        ModelFile on_12 = models().cube(name(block) + "_on_12", bottom, top_12, front, back_off, side_off_reverse, side_off);
+        ModelFile on_13 = models().cube(name(block) + "_on_13", bottom, top_13, front, back_off, side_off_reverse, side_off);
+        ModelFile on_14 = models().cube(name(block) + "_on_14", bottom, top_14, front, back_off, side_off_reverse, side_off);
+        ModelFile on_15 = models().cube(name(block) + "_on_15", bottom, top_15, front, back_off, side_off_reverse, side_off);
+
+        List<ModelFile> modelFileList = Arrays.asList(off, on_01, on_02, on_03, on_04, on_05, on_06, on_07, on_08, on_09, on_10, on_11, on_12, on_13, on_14, on_15);
+        int i = 0;
+        for (Iterator<ModelFile> iter = modelFileList.iterator(); iter.hasNext(); ) {
+            ModelFile model = iter.next();
+            getVariantBuilder(block)
+                    .partialState().with(SignalGateBlock.FACING, Direction.UP).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationX(270).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.DOWN).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationX(90).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.NORTH).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.EAST).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationY(90).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.SOUTH).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationY(180).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.WEST).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationY(270).addModel();
+            i++;
+        }
 
         simpleBlockItem(block, models().getExistingFile(blockTexture(block)));
     }

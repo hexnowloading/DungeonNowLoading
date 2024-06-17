@@ -39,21 +39,26 @@ public class StoneNotchBlock extends Block {
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         ItemStack itemInHand = player.getItemInHand(hand);
-        if (itemInHand.is(DNLTags.STONE_NOTCH_MATERIAL) && blockState.is(DNLBlocks.STONE_NOTCH.get())) {
-            if (!level.isClientSide) {
+        if (itemInHand.is(DNLTags.STONE_NOTCH_MATERIAL)) {
+            if (blockState.is(DNLBlocks.STONE_NOTCH.get())) {
                 playSound(level, blockPos, SoundEvents.ITEM_FRAME_ADD_ITEM);
                 setNotchBlock(itemInHand.getItem(), level, blockPos);
                 player.awardStat(Stats.ITEM_USED.get(itemInHand.getItem()));
                 if (!player.getAbilities().instabuild) {
                     itemInHand.shrink(1);
                 }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            } else {
+                return popOutMaterial(level, blockState, blockPos) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        } else if (itemInHand.isEmpty() && !blockState.is(DNLBlocks.STONE_NOTCH.get())) {
-            return popOutMaterial(level, blockState, blockPos) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-        } else {
-            return InteractionResult.PASS;
         }
+        if (itemInHand.isEmpty()) {
+            if (blockState.is(DNLBlocks.STONE_NOTCH.get())) {
+                return InteractionResult.PASS;
+            }
+            return popOutMaterial(level, blockState, blockPos) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+        }
+        return InteractionResult.PASS;
     }
 
     private void setNotchBlock(Item item, Level level, BlockPos blockPos) {
@@ -91,7 +96,6 @@ public class StoneNotchBlock extends Block {
     }
 
     private boolean popOutMaterial(Level level, BlockState blockState, BlockPos blockPos) {
-        if (!level.isClientSide) {
             List<OffsetPos> offsetPos = new ArrayList<>();
 
             if (!level.getBlockState(blockPos.above()).isFaceSturdy(level, blockPos.above(), Direction.UP)) { offsetPos.add(OffsetPos.UP); }
@@ -129,8 +133,6 @@ public class StoneNotchBlock extends Block {
             level.setBlock(blockPos, DNLBlocks.STONE_NOTCH.defaultBlockState(), 3);
 
             return true;
-        }
-        return false;
     }
 
     @Override

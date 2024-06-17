@@ -105,6 +105,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.ECHO_STONE_NOTCH.get());
                 output.accept(DNLItems.DIAMOND_STONE_NOTCH.get());
                 output.accept(DNLItems.NETHERITE_STONE_NOTCH.get());
+                output.accept(DNLItems.SIGNAL_GATE.get());
 
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());

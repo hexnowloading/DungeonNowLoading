@@ -150,6 +150,16 @@ public class DNLForgeRecipeProvider extends RecipeProvider {
                 .define('s', Items.STONE_BRICKS)
                 .unlockedBy("has_stone_bricks", has(Items.STONE_BRICKS))
                 .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DNLItems.SIGNAL_GATE.get(), 1)
+                .pattern("srs")
+                .pattern("cct")
+                .pattern("sss")
+                .define('s', Items.COBBLESTONE)
+                .define('r', Items.REDSTONE)
+                .define('c', Items.COMPARATOR)
+                .define('t', Items.REDSTONE_TORCH)
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(consumer);
     }
 
     private void buildStoneCutterRecipes(Consumer<FinishedRecipe> consumer) {
