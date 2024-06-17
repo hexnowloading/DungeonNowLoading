@@ -207,34 +207,62 @@ public class DNLForgeBlockStateProvider extends BlockStateProvider {
         ResourceLocation top_14 = extend(blockTexture(block), "_top_14");
         ResourceLocation top_15 = extend(blockTexture(block), "_top_15");
 
-        ModelFile off = models().cube(name(block), bottom, top_00, front, back_off, side_off_reverse, side_off);
-        ModelFile on_01 = models().cube(name(block) + "_on_01", bottom, top_01, front, back_off, side_off_reverse, side_off);
-        ModelFile on_02 = models().cube(name(block) + "_on_02", bottom, top_02, front, back_off, side_off_reverse, side_off);
-        ModelFile on_03 = models().cube(name(block) + "_on_03", bottom, top_03, front, back_off, side_off_reverse, side_off);
-        ModelFile on_04 = models().cube(name(block) + "_on_04", bottom, top_04, front, back_off, side_off_reverse, side_off);
-        ModelFile on_05 = models().cube(name(block) + "_on_05", bottom, top_05, front, back_off, side_off_reverse, side_off);
-        ModelFile on_06 = models().cube(name(block) + "_on_06", bottom, top_06, front, back_off, side_off_reverse, side_off);
-        ModelFile on_07 = models().cube(name(block) + "_on_07", bottom, top_07, front, back_off, side_off_reverse, side_off);
-        ModelFile on_08 = models().cube(name(block) + "_on_08", bottom, top_08, front, back_off, side_off_reverse, side_off);
-        ModelFile on_09 = models().cube(name(block) + "_on_09", bottom, top_09, front, back_off, side_off_reverse, side_off);
-        ModelFile on_10 = models().cube(name(block) + "_on_10", bottom, top_10, front, back_off, side_off_reverse, side_off);
-        ModelFile on_11 = models().cube(name(block) + "_on_11", bottom, top_11, front, back_off, side_off_reverse, side_off);
-        ModelFile on_12 = models().cube(name(block) + "_on_12", bottom, top_12, front, back_off, side_off_reverse, side_off);
-        ModelFile on_13 = models().cube(name(block) + "_on_13", bottom, top_13, front, back_off, side_off_reverse, side_off);
-        ModelFile on_14 = models().cube(name(block) + "_on_14", bottom, top_14, front, back_off, side_off_reverse, side_off);
-        ModelFile on_15 = models().cube(name(block) + "_on_15", bottom, top_15, front, back_off, side_off_reverse, side_off);
+        ModelFile off_00 = models().cube(name(block), bottom, top_00, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_01 = models().cube(name(block) + "_off_01", bottom, top_01, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_02 = models().cube(name(block) + "_off_02", bottom, top_02, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_03 = models().cube(name(block) + "_off_03", bottom, top_03, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_04 = models().cube(name(block) + "_off_04", bottom, top_04, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_05 = models().cube(name(block) + "_off_05", bottom, top_05, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_06 = models().cube(name(block) + "_off_06", bottom, top_06, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_07 = models().cube(name(block) + "_off_07", bottom, top_07, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_08 = models().cube(name(block) + "_off_08", bottom, top_08, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_09 = models().cube(name(block) + "_off_09", bottom, top_09, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_10 = models().cube(name(block) + "_off_10", bottom, top_10, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_11 = models().cube(name(block) + "_off_11", bottom, top_11, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_12 = models().cube(name(block) + "_off_12", bottom, top_12, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_13 = models().cube(name(block) + "_off_13", bottom, top_13, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_14 = models().cube(name(block) + "_off_14", bottom, top_14, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile off_15 = models().cube(name(block) + "_off_15", bottom, top_15, front, back_off, side_off_reverse, side_off).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_00 = models().cube(name(block) + "_on_00", bottom, top_00, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_01 = models().cube(name(block) + "_on_01", bottom, top_01, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_02 = models().cube(name(block) + "_on_02", bottom, top_02, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_03 = models().cube(name(block) + "_on_03", bottom, top_03, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_04 = models().cube(name(block) + "_on_04", bottom, top_04, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_05 = models().cube(name(block) + "_on_05", bottom, top_05, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_06 = models().cube(name(block) + "_on_06", bottom, top_06, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_07 = models().cube(name(block) + "_on_07", bottom, top_07, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_08 = models().cube(name(block) + "_on_08", bottom, top_08, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_09 = models().cube(name(block) + "_on_09", bottom, top_09, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_10 = models().cube(name(block) + "_on_10", bottom, top_10, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_11 = models().cube(name(block) + "_on_11", bottom, top_11, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_12 = models().cube(name(block) + "_on_12", bottom, top_12, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_13 = models().cube(name(block) + "_on_13", bottom, top_13, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_14 = models().cube(name(block) + "_on_14", bottom, top_14, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
+        ModelFile on_15 = models().cube(name(block) + "_on_15", bottom, top_15, front, back_on, side_on_reverse, side_on).texture("particle", extend(blockTexture(block), "_front"));
 
-        List<ModelFile> modelFileList = Arrays.asList(off, on_01, on_02, on_03, on_04, on_05, on_06, on_07, on_08, on_09, on_10, on_11, on_12, on_13, on_14, on_15);
-        int i = 0;
-        for (Iterator<ModelFile> iter = modelFileList.iterator(); iter.hasNext(); ) {
-            ModelFile model = iter.next();
+        List<ModelFile> modelFileListOff = Arrays.asList(off_00, off_01, off_02, off_03, off_04, off_05, off_06, off_07, off_08, off_09, off_10, off_11, off_12, off_13, off_14, off_15);
+        int j = 0;
+        for (ModelFile model : modelFileListOff) {
             getVariantBuilder(block)
-                    .partialState().with(SignalGateBlock.FACING, Direction.UP).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationX(270).addModel()
-                    .partialState().with(SignalGateBlock.FACING, Direction.DOWN).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationX(90).addModel()
-                    .partialState().with(SignalGateBlock.FACING, Direction.NORTH).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).addModel()
-                    .partialState().with(SignalGateBlock.FACING, Direction.EAST).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationY(90).addModel()
-                    .partialState().with(SignalGateBlock.FACING, Direction.SOUTH).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationY(180).addModel()
-                    .partialState().with(SignalGateBlock.FACING, Direction.WEST).with(SignalGateBlock.POWER, i).modelForState().modelFile(model).rotationY(270).addModel();
+                    .partialState().with(SignalGateBlock.FACING, Direction.UP).with(SignalGateBlock.POWER, j).with(SignalGateBlock.POWERED, false).modelForState().modelFile(model).rotationX(270).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.DOWN).with(SignalGateBlock.POWER, j).with(SignalGateBlock.POWERED, false).modelForState().modelFile(model).rotationX(90).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.NORTH).with(SignalGateBlock.POWER, j).with(SignalGateBlock.POWERED, false).modelForState().modelFile(model).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.EAST).with(SignalGateBlock.POWER, j).with(SignalGateBlock.POWERED, false).modelForState().modelFile(model).rotationY(90).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.SOUTH).with(SignalGateBlock.POWER, j).with(SignalGateBlock.POWERED, false).modelForState().modelFile(model).rotationY(180).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.WEST).with(SignalGateBlock.POWER, j).with(SignalGateBlock.POWERED, false).modelForState().modelFile(model).rotationY(270).addModel();
+            j++;
+        }
+
+        List<ModelFile> modelFileList = Arrays.asList(on_00, on_01, on_02, on_03, on_04, on_05, on_06, on_07, on_08, on_09, on_10, on_11, on_12, on_13, on_14, on_15);
+        int i = 0;
+        for (ModelFile model : modelFileList) {
+            getVariantBuilder(block)
+                    .partialState().with(SignalGateBlock.FACING, Direction.UP).with(SignalGateBlock.POWER, i).with(SignalGateBlock.POWERED, true).modelForState().modelFile(model).rotationX(270).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.DOWN).with(SignalGateBlock.POWER, i).with(SignalGateBlock.POWERED, true).modelForState().modelFile(model).rotationX(90).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.NORTH).with(SignalGateBlock.POWER, i).with(SignalGateBlock.POWERED, true).modelForState().modelFile(model).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.EAST).with(SignalGateBlock.POWER, i).with(SignalGateBlock.POWERED, true).modelForState().modelFile(model).rotationY(90).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.SOUTH).with(SignalGateBlock.POWER, i).with(SignalGateBlock.POWERED, true).modelForState().modelFile(model).rotationY(180).addModel()
+                    .partialState().with(SignalGateBlock.FACING, Direction.WEST).with(SignalGateBlock.POWER, i).with(SignalGateBlock.POWERED, true).modelForState().modelFile(model).rotationY(270).addModel();
             i++;
         }
 

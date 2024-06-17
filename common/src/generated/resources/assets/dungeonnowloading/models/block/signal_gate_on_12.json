@@ -2,10 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "dungeonnowloading:block/signal_gate_bottom",
-    "east": "dungeonnowloading:block/signal_gate_side_off_reverse",
+    "east": "dungeonnowloading:block/signal_gate_side_on_reverse",
     "north": "dungeonnowloading:block/signal_gate_front",
-    "south": "dungeonnowloading:block/signal_gate_back_off",
+    "particle": "dungeonnowloading:block/signal_gate_front",
+    "south": "dungeonnowloading:block/signal_gate_back_on",
     "up": "dungeonnowloading:block/signal_gate_top_12",
-    "west": "dungeonnowloading:block/signal_gate_side_off"
+    "west": "dungeonnowloading:block/signal_gate_side_on"
   }
 }

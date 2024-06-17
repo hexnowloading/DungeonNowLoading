@@ -6,7 +6,7 @@
     "north": "dungeonnowloading:block/signal_gate_front",
     "particle": "dungeonnowloading:block/signal_gate_front",
     "south": "dungeonnowloading:block/signal_gate_back_on",
-    "up": "dungeonnowloading:block/signal_gate_top_01",
+    "up": "dungeonnowloading:block/signal_gate_top_00",
     "west": "dungeonnowloading:block/signal_gate_side_on"
   }
 }
