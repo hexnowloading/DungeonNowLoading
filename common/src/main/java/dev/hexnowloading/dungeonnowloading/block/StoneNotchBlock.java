@@ -125,9 +125,10 @@ public class StoneNotchBlock extends Block {
             if (notchMaterial.item != null) {
                 playSound(level, blockPos, SoundEvents.ITEM_FRAME_REMOVE_ITEM);
                 ItemStack itemStack = new ItemStack(notchMaterial.item, 1);
-                ItemEntity itemEntity = new ItemEntity(level, popPos.x(), popPos.y(), popPos.z(), itemStack);
+                ItemEntity itemEntity = new ItemEntity(level, popPos.x(), popPos.y(), popPos.z(), itemStack, chosenPos.dx, chosenPos.dy, chosenPos.dz);
+                System.out.println(itemEntity.getDeltaMovement());
                 itemEntity.setDefaultPickUpDelay();
-                itemEntity.setDeltaMovement(chosenPos.dx, chosenPos.dy, chosenPos.dz);
+                //itemEntity.setDeltaMovement(chosenPos.dx, chosenPos.dy, chosenPos.dz);
                 level.addFreshEntity(itemEntity);
             }
             level.setBlock(blockPos, DNLBlocks.STONE_NOTCH.defaultBlockState(), 3);
@@ -151,7 +152,7 @@ public class StoneNotchBlock extends Block {
 
     @Override
     public boolean hasAnalogOutputSignal(BlockState blockState) {
-        return !blockState.is(DNLBlocks.STONE_NOTCH.get());
+        return true;
     }
 
     @Override
@@ -196,7 +197,7 @@ public class StoneNotchBlock extends Block {
 
     private enum OffsetPos {
         UP(0.5, 1.01, 0.5, 0, 0.5, 0),
-        DOWN(0.5, -0.01, 0.5, 0, -0.5, 0),
+        DOWN(0.5, -0.4, 0.5, 0, -0.5, 0),
         NORTH(0.5, 0.5, -0.1, 0, 0, -0.5),
         EAST(1.1, 0.5, 0.5, 0.5, 0, 0),
         SOUTH(0.5, 0.5, 1.1, 0, 0, 0.5),

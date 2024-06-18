@@ -39,10 +39,8 @@ public class RotatorPressurePlate extends PressurePlateBlock {
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         List<Arrow> arrows = serverLevel.getEntitiesOfClass(Arrow.class, ROTATOR_TOUCH_AABB.move(blockPos)).stream().toList();
-        System.out.println("Tick Now");
         if (!arrows.isEmpty()) {
             arrows.forEach(arrow -> bounceArrows(serverLevel, arrow));
-            System.out.println("bounce");
         }
         super.tick(blockState, serverLevel, blockPos, randomSource);
     }

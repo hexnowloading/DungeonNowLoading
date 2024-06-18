@@ -5,8 +5,10 @@ import dev.hexnowloading.dungeonnowloading.block.*;
 import dev.hexnowloading.dungeonnowloading.registration.BlockRegistryObject;
 import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
 import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -161,7 +163,7 @@ public class DNLBlocks {
         ECHO_STONE_NOTCH = registerBlock("echo_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.ECHO));
         DIAMOND_STONE_NOTCH = registerBlock("diamond_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.DIAMOND));
         NETHERITE_STONE_NOTCH = registerBlock("netherite_stone_notch", () -> new StoneNotchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F), StoneNotchBlock.StoneNotchMaterialSignalStrength.NETHERITE));
-        SIGNAL_GATE = registerBlock("signal_gate", () -> new SignalGateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
+        SIGNAL_GATE = registerBlock("signal_gate", () -> new SignalGateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).isRedstoneConductor(DNLBlocks::never).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
 
         // Trophies
         LABYRINTH_TROPHY = registerBlock("labyrinth_trophy", () -> new Block(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.CUSTOM_HEAD).strength(1.0f).noOcclusion().pushReaction(PushReaction.DESTROY).noLootTable()));
@@ -180,6 +182,10 @@ public class DNLBlocks {
             case POWERED -> 3;
             case OVERPOWERED -> 15;
         };
+    }
+
+    private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return false;
     }
 
     /*public static <T extends Block> BlockRegistryObject<T> registerBEWLR(String name, Supplier<T> block) {

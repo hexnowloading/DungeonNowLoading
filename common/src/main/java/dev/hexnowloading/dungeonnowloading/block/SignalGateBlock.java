@@ -122,11 +122,6 @@ public class SignalGateBlock extends DirectionalBlock {
         level.updateNeighborsAtExceptFromFacing(blockPos1, this, direction);
     }
 
-    private void checkTickOnNeighbor(Level level, BlockPos blockPos, BlockState blockState) {
-        boolean b0 = blockState.getValue(POWERED);
-
-    }
-
     private int getSignalInFront(LevelAccessor level, BlockPos blockPos, BlockState blockState) {
         Direction direction = blockState.getValue(FACING);
         BlockPos blockPos1 = blockPos.relative(direction);
@@ -156,7 +151,8 @@ public class SignalGateBlock extends DirectionalBlock {
         if (blockState.is(blockState2.getBlock())) {
             return;
         }
-        if (!level.isClientSide() && blockState.getValue(POWERED).booleanValue() && !level.getBlockTicks().hasScheduledTick(blockPos, this)) {
+        if (!level.isClientSide() && !blockState.getValue(POWERED) && !level.getBlockTicks().hasScheduledTick(blockPos, this)) {
+            this.startSignal(level, blockPos);
             BlockState blockState3 = (BlockState)blockState.setValue(POWERED, false);
             level.setBlock(blockPos, blockState3, 18);
             this.updateNeighborsInFront(level, blockPos, blockState3);
