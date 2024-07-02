@@ -40,7 +40,7 @@ public class DungeonNowLoading {
         DNLClientConfig.register();
     }
 
-    public static ResourceLocation prefix(String name) {
-        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
+    public static ResourceLocation id(String name) {
+        return new ResourceLocation(MOD_ID, name);
     }
 }

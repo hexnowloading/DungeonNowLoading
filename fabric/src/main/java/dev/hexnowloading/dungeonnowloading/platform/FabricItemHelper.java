@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public class FabricItemHelper implements ItemHelper {
     @Override
-    public Supplier<SpawnEggItem> makeSpawnEgg(Supplier<EntityType<? extends Mob>> entityType, int bg, int fg, Item.Properties properties) {
+    public Supplier<Item> makeSpawnEgg(Supplier<EntityType<? extends Mob>> entityType, int bg, int fg, Item.Properties properties) {
         return () -> new SpawnEggItem(entityType.get(), bg, fg, properties);
     }
 }

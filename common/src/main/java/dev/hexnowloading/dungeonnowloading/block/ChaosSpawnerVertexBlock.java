@@ -123,13 +123,13 @@ public class ChaosSpawnerVertexBlock extends Block implements SimpleWaterloggedB
     private void brokenFrame(Level level, BlockPos blockPos, BlockState blockState) {
         if (blockState.is(DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.get())) {
             playSound(level, blockPos, 1.5F);
-            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_VERTEX.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(HALF, blockState.getValue(HALF)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_VERTEX.get().defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(HALF, blockState.getValue(HALF)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
             this.signalToBarrierCenter(level, blockPos, blockState);
         }
     }
 
     public static void fixFrame(Level level, BlockPos blockPos, BlockState blockState) {
-        level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(HALF, blockState.getValue(HALF)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+        level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_DIAMOND_VERTEX.get().defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(HALF, blockState.getValue(HALF)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
     }
 
     private void signalToBarrierCenter(Level level, BlockPos blockPos, BlockState blockState) {

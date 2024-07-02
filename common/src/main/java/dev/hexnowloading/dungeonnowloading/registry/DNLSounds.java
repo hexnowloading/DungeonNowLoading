@@ -1,29 +1,27 @@
 package dev.hexnowloading.dungeonnowloading.registry;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
-import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
-import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
-import net.minecraft.core.registries.Registries;
+import dev.hexnowloading.dungeonnowloading.platform.Services;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
+
+import java.util.function.Supplier;
 
 public class DNLSounds {
-    public static final RegistrationProvider<SoundEvent> SOUND_EVENTS = RegistrationProvider.get(Registries.SOUND_EVENT, DungeonNowLoading.MOD_ID);
+    public static final Supplier<SoundEvent> CHAOS_SPAWNER_LAUGHTER = registerSoundEvent("chaos_spawner_laughter");
+    public static final Supplier<SoundEvent> CHAOS_SPAWNER_CHAIN_BREAK = registerSoundEvent("chaos_spawner_chain_break");
+    public static final Supplier<SoundEvent> CHAOS_SPAWNER_HURT = registerSoundEvent("chaos_spawner_hurt");
+    public static final Supplier<SoundEvent> CHAOS_SPAWNER_DEATH = registerSoundEvent("chaos_spawner_death");
+    public static final Supplier<SoundEvent> HOLLOW_AMBIENT = registerSoundEvent("hollow_ambient");
+    public static final Supplier<SoundEvent> HOLLOW_HURT = registerSoundEvent("hollow_hurt");
+    public static final Supplier<SoundEvent> HOLLOW_DEATH = registerSoundEvent("hollow_death");
+    public static final Supplier<SoundEvent> WHIMPER_AMBIENT = registerSoundEvent("whimper_ambient");
+    public static final Supplier<SoundEvent> WHIMPER_HURT = registerSoundEvent("whimper_hurt");
+    public static final Supplier<SoundEvent> WHIMPER_DEATH = registerSoundEvent("whimper_death");
 
-    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_LAUGHTER = registerSoundEvent("chaos_spawner_laughter");
-    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_CHAIN_BREAK = registerSoundEvent("chaos_spawner_chain_break");
-    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_HURT = registerSoundEvent("chaos_spawner_hurt");
-    public static final RegistryObject<SoundEvent> CHAOS_SPAWNER_DEATH = registerSoundEvent("chaos_spawner_death");
-    public static final RegistryObject<SoundEvent> HOLLOW_AMBIENT = registerSoundEvent("hollow_ambient");
-    public static final RegistryObject<SoundEvent> HOLLOW_HURT = registerSoundEvent("hollow_hurt");
-    public static final RegistryObject<SoundEvent> HOLLOW_DEATH = registerSoundEvent("hollow_death");
-    public static final RegistryObject<SoundEvent> WHIMPER_AMBIENT = registerSoundEvent("whimper_ambient");
-    public static final RegistryObject<SoundEvent> WHIMPER_HURT = registerSoundEvent("whimper_hurt");
-    public static final RegistryObject<SoundEvent> WHIMPER_DEATH = registerSoundEvent("whimper_death");
-
-    private static RegistryObject<SoundEvent> registerSoundEvent(String string) {
-        return SOUND_EVENTS.register(string, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(DungeonNowLoading.MOD_ID, string)));
+    private static <T extends SoundEvent> Supplier<SoundEvent> registerSoundEvent(String string) {
+        return Services.REGISTRY.register(BuiltInRegistries.SOUND_EVENT, string, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(DungeonNowLoading.MOD_ID, string)));
     }
 
     public static void init() {}

@@ -63,35 +63,35 @@ public class StoneNotchBlock extends Block {
 
     private void setNotchBlock(Item item, Level level, BlockPos blockPos) {
         if (item.equals(Items.COAL)) {
-            level.setBlock(blockPos, DNLBlocks.COAL_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.COAL_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.COPPER_INGOT)) {
-            level.setBlock(blockPos, DNLBlocks.COPPER_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.COPPER_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.IRON_INGOT)) {
-            level.setBlock(blockPos, DNLBlocks.IRON_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.IRON_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.GOLD_INGOT)) {
-            level.setBlock(blockPos, DNLBlocks.GOLD_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.GOLD_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.REDSTONE)) {
-            level.setBlock(blockPos, DNLBlocks.REDSTONE_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.REDSTONE_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.AMETHYST_SHARD)) {
-            level.setBlock(blockPos, DNLBlocks.AMETHYST_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.AMETHYST_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.LAPIS_LAZULI)) {
-            level.setBlock(blockPos, DNLBlocks.LAPIS_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.LAPIS_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.EMERALD)) {
-            level.setBlock(blockPos, DNLBlocks.EMERALD_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.EMERALD_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.QUARTZ)) {
-            level.setBlock(blockPos, DNLBlocks.QUARTZ_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.QUARTZ_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.GLOWSTONE_DUST)) {
-            level.setBlock(blockPos, DNLBlocks.GLOWSTONE_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.GLOWSTONE_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.PRISMARINE_SHARD)) {
-            level.setBlock(blockPos, DNLBlocks.PRISMARINE_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.PRISMARINE_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.POPPED_CHORUS_FRUIT)) {
-            level.setBlock(blockPos, DNLBlocks.CHORUS_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.CHORUS_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.ECHO_SHARD)) {
-            level.setBlock(blockPos, DNLBlocks.ECHO_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.ECHO_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.DIAMOND)) {
-            level.setBlock(blockPos, DNLBlocks.DIAMOND_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.DIAMOND_STONE_NOTCH.get().defaultBlockState(), 3);
         } else if (item.equals(Items.NETHERITE_INGOT)) {
-            level.setBlock(blockPos, DNLBlocks.NETHERITE_STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.NETHERITE_STONE_NOTCH.get().defaultBlockState(), 3);
         }
     }
 
@@ -131,7 +131,7 @@ public class StoneNotchBlock extends Block {
                 //itemEntity.setDeltaMovement(chosenPos.dx, chosenPos.dy, chosenPos.dz);
                 level.addFreshEntity(itemEntity);
             }
-            level.setBlock(blockPos, DNLBlocks.STONE_NOTCH.defaultBlockState(), 3);
+            level.setBlock(blockPos, DNLBlocks.STONE_NOTCH.get().defaultBlockState(), 3);
 
             return true;
     }

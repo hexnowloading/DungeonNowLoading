@@ -48,6 +48,6 @@ public class FairkeeperSpawnerBlock extends BaseEntityBlock implements EntityBlo
     }
 
     public static void setFairkeeperAlert(Level level, BlockPos blockPos, Boolean b) {
-        level.setBlock(blockPos, DNLBlocks.FAIRKEEEPER_SPAWNER.defaultBlockState().setValue(FAIRKEEPER_ALERT, b), 2);
+        level.setBlock(blockPos, DNLBlocks.FAIRKEEEPER_SPAWNER.get().defaultBlockState().setValue(FAIRKEEPER_ALERT, b), 2);
     }
 }

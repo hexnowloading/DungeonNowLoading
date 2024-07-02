@@ -161,18 +161,18 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
         Direction direction = level.getBlockState(blockPos).getValue(FACING);
         boolean fairkeeper_alert = level.getBlockState(blockPos).getValue(FAIRKEEPER_ALERT);
         blockEntity.setDisabled(b);
-        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
+        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.get().defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
     }
 
     public static void setFairkeeperChest(Level level, BlockPos pos, ChestStates chestStates) {
         Direction direction = level.getBlockState(pos).getValue(FACING);
         boolean fairkeeper_alert = level.getBlockState(pos).getValue(FAIRKEEPER_ALERT);
-        level.setBlock(pos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FACING, direction).setValue(CHEST_STATES, chestStates), 2);
+        level.setBlock(pos, DNLBlocks.FAIRKEEPER_CHEST.get().defaultBlockState().setValue(FAIRKEEPER_ALERT, fairkeeper_alert).setValue(FACING, direction).setValue(CHEST_STATES, chestStates), 2);
     }
 
     public static void setFairkeeperAlert(Level level, BlockPos blockPos, Boolean b) {
         Direction direction = level.getBlockState(blockPos).getValue(FACING);
-        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.defaultBlockState().setValue(FAIRKEEPER_ALERT, b).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
+        level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.get().defaultBlockState().setValue(FAIRKEEPER_ALERT, b).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
     }
 
     private static void playSound(Level level, BlockPos pos, SoundEvent soundEvent) {

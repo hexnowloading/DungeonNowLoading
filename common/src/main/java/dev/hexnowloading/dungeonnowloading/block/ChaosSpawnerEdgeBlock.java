@@ -162,19 +162,19 @@ public class ChaosSpawnerEdgeBlock extends Block implements SimpleWaterloggedBlo
     private void brokenFrame(Level level, BlockPos blockPos, BlockState blockState) {
         if (blockState.is(DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.get())) {
             playSound(level, blockPos, 1.5F);
-            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_EDGE.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_EDGE.get().defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
             this.signalToBarrierCenter(level, blockPos, blockState);
         } else if (blockState.is(DNLBlocks.CHAOS_SPAWNER_EDGE.get())) {
             playSound(level, blockPos, 2.0F);
-            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BROKEN_EDGE.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_BROKEN_EDGE.get().defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
         }
     }
 
     public static void fixFrame(Level level, BlockPos blockPos, BlockState blockState) {
         if (blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_DIAMOND_EDGE.get())) {
-            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_DIAMOND_EDGE.get().defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
         } else if (blockState.is(DNLBlocks.CHAOS_SPAWNER_BROKEN_EDGE.get())) {
-            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_EDGE.defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
+            level.setBlock(blockPos, DNLBlocks.CHAOS_SPAWNER_EDGE.get().defaultBlockState().setValue(FACING, blockState.getValue(FACING)).setValue(ALL_SIDES, blockState.getValue(ALL_SIDES)).setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)), 2);
         }
     }
 

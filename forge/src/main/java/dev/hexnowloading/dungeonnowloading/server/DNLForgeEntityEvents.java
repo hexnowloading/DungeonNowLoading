@@ -1,18 +1,12 @@
 package dev.hexnowloading.dungeonnowloading.server;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
-import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperChestBlockEntity;
-import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperSpawnerBlockEntity;
 import dev.hexnowloading.dungeonnowloading.capability.forge.FairkeeperChestPositionsCapability;
 import dev.hexnowloading.dungeonnowloading.capability.forge.FairkeeperChestPositionsCapabilityProvider;
 import dev.hexnowloading.dungeonnowloading.entity.DNLEntityEvents;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
-import dev.hexnowloading.dungeonnowloading.platform.ForgeDataHelper;
-import dev.hexnowloading.dungeonnowloading.platform.Services;
-import dev.hexnowloading.dungeonnowloading.platform.services.DataHelper;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -29,9 +23,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.List;
-import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = DungeonNowLoading.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DNLForgeEntityEvents {

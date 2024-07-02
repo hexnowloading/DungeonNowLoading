@@ -1,19 +1,16 @@
 package dev.hexnowloading.dungeonnowloading.registry;
 
-import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
-import dev.hexnowloading.dungeonnowloading.registration.RegistrationProvider;
-import dev.hexnowloading.dungeonnowloading.registration.RegistryObject;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
+import dev.hexnowloading.dungeonnowloading.platform.Services;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.function.Supplier;
 
 public class DNLCreativeModeTabs {
-    public static final RegistrationProvider<CreativeModeTab> CREATIVE_MODE_TAB = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, DungeonNowLoading.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> DUNGEONNOWLOADING_TAB = CREATIVE_MODE_TAB.register("dungeonnowloading", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
-            .title(Component.translatable("creativemodetab.dungeonnowloading.tab"))
-            .icon(() -> DNLItems.DNL_LOGO.get().getDefaultInstance())
-            .displayItems(((itemDisplayParameters, output) -> {
+    public static final Supplier<CreativeModeTab> DUNGEONNOWLOADING_TAB = register("dungeonnowloading",
+            () -> DNLItems.DNL_LOGO.get().getDefaultInstance(),
+            (itemDisplayParameters, output) -> {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
@@ -110,8 +107,11 @@ public class DNLCreativeModeTabs {
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());
                 output.accept(DNLItems.LABYRINTH_TROPHY.get());
-            }))
-            .build());
+            });
+
+    public static Supplier<CreativeModeTab> register(String name, Supplier<ItemStack> iconSupplier, CreativeModeTab.DisplayItemsGenerator itemsGenerator) {
+        return Services.REGISTRY.registerCreativeTab(name, iconSupplier, itemsGenerator);
+    }
 
     public static void init() {}
 }
