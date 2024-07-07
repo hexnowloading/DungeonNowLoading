@@ -10,6 +10,7 @@ import net.minecraft.world.item.Items;
 
 public class DNLTags {
     public static final TagKey<DamageType> HOLLOW_HURTABLE = registerDamageTypeTag("hollow_hurtable");
+    public static final TagKey<DamageType> SCUTTLE_HURTABLE = registerDamageTypeTag("scuttle_hurtable");
     public static final TagKey<Item> STONE_NOTCH_MATERIAL = registerItemTag("stone_notch_material");
 
     private static TagKey<Item> registerItemTag(String string) {

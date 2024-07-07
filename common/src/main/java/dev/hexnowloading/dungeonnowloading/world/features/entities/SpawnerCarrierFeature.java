@@ -3,7 +3,7 @@ package dev.hexnowloading.dungeonnowloading.world.features.entities;
 import com.mojang.serialization.Codec;
 import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
-import dev.hexnowloading.dungeonnowloading.util.EntityScale;
+import dev.hexnowloading.dungeonnowloading.entity.util.EntityScale;
 import dev.hexnowloading.dungeonnowloading.world.features.configs.EntityTypeConfig;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;

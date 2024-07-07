@@ -5,10 +5,12 @@ import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.GreatExperienceBottleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
+import dev.hexnowloading.dungeonnowloading.entity.monster.ScuttleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
 import dev.hexnowloading.dungeonnowloading.entity.passive.SealedChaosEntity;
 import dev.hexnowloading.dungeonnowloading.entity.passive.WhimperEntity;
 import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
+import dev.hexnowloading.dungeonnowloading.entity.projectile.FlameProjectileEntity;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -30,6 +32,7 @@ public class DNLEntityTypes {
     // Monsters
     public static final Supplier<EntityType<HollowEntity>> HOLLOW = register("hollow", () -> EntityType.Builder.of(HollowEntity::new, MobCategory.MONSTER).sized(0.95F, 0.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "hollow").toString()));
     public static final Supplier<EntityType<SpawnerCarrierEntity>> SPAWNER_CARRIER = register("spawner_carrier", () -> EntityType.Builder.of(SpawnerCarrierEntity::new, MobCategory.MONSTER).sized(1.95F, 1.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "spawner_carrier").toString()));
+    public static final Supplier<EntityType<ScuttleEntity>> SCUTTLE = register("scuttle", () -> EntityType.Builder.of(ScuttleEntity::new, MobCategory.MONSTER).sized(0.95F, 1.95F).fireImmune().build(new ResourceLocation(DungeonNowLoading.MOD_ID, "scuttle").toString()));
 
     // Passive
     public static final Supplier<EntityType<SealedChaosEntity>> SEALED_CHAOS = register("sealed_chaos", () -> EntityType.Builder.of(SealedChaosEntity::new, MobCategory.CREATURE).sized(1F, 1F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "sealed_chaos").toString()));
@@ -37,6 +40,7 @@ public class DNLEntityTypes {
 
     // Projectiles
     public static final Supplier<EntityType<ChaosSpawnerProjectileEntity>> CHAOS_SPAWNER_PROJECTILE = register("chaos_spawner_projectile", () -> EntityType.Builder.<ChaosSpawnerProjectileEntity>of(ChaosSpawnerProjectileEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).clientTrackingRange(4).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner_projectile").toString()));
+    public static final Supplier<EntityType<FlameProjectileEntity>> FLAME_PROJECTILE = register("flame_projectile", () -> EntityType.Builder.<FlameProjectileEntity>of(FlameProjectileEntity::new, MobCategory.MISC).sized(1.0f, 1.0f).clientTrackingRange(4).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "flame_projectile").toString()));
 
     // Misc
     public static final Supplier<EntityType<SpecialItemEntity>> SPECIAL_ITEM_ENTITY = register("special_item_entity", () -> EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "special_item_entity").toString()));
@@ -52,6 +56,7 @@ public class DNLEntityTypes {
         map.put(CHAOS_SPAWNER.get(), ChaosSpawnerEntity.createAttributes().build());
         map.put(HOLLOW.get(), HollowEntity.createAttributes().build());
         map.put(SPAWNER_CARRIER.get(), SpawnerCarrierEntity.createAttributes().build());
+        map.put(SCUTTLE.get(), ScuttleEntity.createAttributes().build());
         map.put(SEALED_CHAOS.get(), SealedChaosEntity.createAttributes().build());
         map.put(WHIMPER.get(), WhimperEntity.createAttributes().build());
 

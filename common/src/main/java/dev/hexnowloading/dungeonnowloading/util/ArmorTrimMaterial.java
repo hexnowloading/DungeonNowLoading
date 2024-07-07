@@ -1,4 +1,4 @@
-package dev.hexnowloading.dungeonnowloading.entity.util;
+package dev.hexnowloading.dungeonnowloading.util;
 
 public enum ArmorTrimMaterial {
     NONE("none"),
@@ -14,7 +14,7 @@ public enum ArmorTrimMaterial {
     QUARTZ("quartz");
 
 
-    final String material;
+    public final String material;
     ArmorTrimMaterial(String material) {
         this.material = material;
     }

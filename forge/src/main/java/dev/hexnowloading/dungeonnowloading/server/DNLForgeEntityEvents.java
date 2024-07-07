@@ -5,6 +5,7 @@ import dev.hexnowloading.dungeonnowloading.capability.forge.FairkeeperChestPosit
 import dev.hexnowloading.dungeonnowloading.capability.forge.FairkeeperChestPositionsCapabilityProvider;
 import dev.hexnowloading.dungeonnowloading.entity.DNLEntityEvents;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
+import dev.hexnowloading.dungeonnowloading.entity.monster.ScuttleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +37,7 @@ public class DNLForgeEntityEvents {
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
         event.register(DNLEntityTypes.HOLLOW.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, HollowEntity::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
         event.register(DNLEntityTypes.SPAWNER_CARRIER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SpawnerCarrierEntity::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(DNLEntityTypes.SCUTTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ScuttleEntity::checkMonsterSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
     }
 
     public static void onLivingDamageEvent(LivingDamageEvent event) {

@@ -1,12 +1,12 @@
 package dev.hexnowloading.dungeonnowloading.block.entity;
 
-import dev.hexnowloading.dungeonnowloading.block.FairkeeperChestBlock;
 import dev.hexnowloading.dungeonnowloading.block.FairkeeperSpawnerBlock;
-import dev.hexnowloading.dungeonnowloading.entity.util.ArmorTrimMaterial;
-import dev.hexnowloading.dungeonnowloading.entity.util.ArmorTrimPattern;
+import dev.hexnowloading.dungeonnowloading.entity.util.SlumberingEntity;
 import dev.hexnowloading.dungeonnowloading.entity.util.SpawnMobUtil;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
+import dev.hexnowloading.dungeonnowloading.util.ArmorTrimMaterial;
+import dev.hexnowloading.dungeonnowloading.util.ArmorTrimPattern;
 import dev.hexnowloading.dungeonnowloading.util.WeightedRandomBag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -20,17 +20,12 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.apache.logging.log4j.core.jmx.Server;
 
 public class FairkeeperSpawnerBlockEntity extends BlockEntity {
 

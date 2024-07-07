@@ -29,11 +29,17 @@ public class DNLForgeItemModelProvider extends ItemModelProvider {
         simpleItem(DNLItems.REDSTONE_CORE.get());
         simpleItem(DNLItems.REDSTONE_CHIP.get());
         simpleItem(DNLItems.REDSTONE_CIRCUIT.get());
+        spawnEggItem(DNLItems.SCUTTLE_SPAWNEGG.get());
     }
 
     private void simpleItem(Item item) {
         String name = ForgeRegistries.ITEMS.getKey(item).getPath();
         withExistingParent(ITEM_FOLDER + "/" + name, mcLoc(ITEM_FOLDER + "/generated")).texture("layer0", ITEM_FOLDER + "/" + name);
+    }
+
+    private void spawnEggItem(Item item) {
+        String name = ForgeRegistries.ITEMS.getKey(item).getPath();
+        withExistingParent(ITEM_FOLDER + "/" + name, mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
     }
 
     /*private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

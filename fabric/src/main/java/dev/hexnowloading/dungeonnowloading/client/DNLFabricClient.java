@@ -7,12 +7,11 @@ import dev.hexnowloading.dungeonnowloading.block.client.renderer.FairkeeperChest
 import dev.hexnowloading.dungeonnowloading.entity.client.model.*;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.*;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
-import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
-import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
-import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
-import dev.hexnowloading.dungeonnowloading.registry.DNLItems;
+import dev.hexnowloading.dungeonnowloading.particle.LargeFlameParticle;
+import dev.hexnowloading.dungeonnowloading.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -30,6 +29,7 @@ public class DNLFabricClient implements ClientModInitializer {
         registerBlockRenderers();
         registerRenderers();
         registerModelLayers();
+        registerParticleFactories();
     }
 
     private void registerItemRenderers() {
@@ -60,6 +60,7 @@ public class DNLFabricClient implements ClientModInitializer {
         // Monsters
         EntityRendererRegistry.register(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
         EntityRendererRegistry.register(DNLEntityTypes.SPAWNER_CARRIER.get(), SpawnerCarrierRenderer::new);
+        EntityRendererRegistry.register(DNLEntityTypes.SCUTTLE.get(), ScuttleRenderer::new);
 
         // Passive
         EntityRendererRegistry.register(DNLEntityTypes.SEALED_CHAOS.get(), SealedChaosRenderer::new);
@@ -68,6 +69,7 @@ public class DNLFabricClient implements ClientModInitializer {
 
         // Projectiles
         EntityRendererRegistry.register(DNLEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);
+        EntityRendererRegistry.register(DNLEntityTypes.FLAME_PROJECTILE.get(), ThrownItemRenderer::new);
         EntityRendererRegistry.register(DNLEntityTypes.GREAT_EXPERIENCE_BOTTLE.get(), (context) -> {
             return new ThrownItemRenderer<>(context, 1.25F, false);
         });
@@ -86,6 +88,7 @@ public class DNLFabricClient implements ClientModInitializer {
         // Monsters
         EntityModelLayerRegistry.registerModelLayer(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(SpawnerCarrierModel.LAYER_LOCATION, SpawnerCarrierModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ScuttleModel.LAYER_LOCATION, ScuttleModel::createBodyLayer);
 
         // Passive
         EntityModelLayerRegistry.registerModelLayer(SealedChaosModel.LAYER_LOCATION, SealedChaosModel::createBodyLayer);
@@ -97,5 +100,10 @@ public class DNLFabricClient implements ClientModInitializer {
 
         // Block Entities
         EntityModelLayerRegistry.registerModelLayer(FairkeeperChestModel.LAYER_LOCATION, FairkeeperChestModel::createBodyLayer);
+    }
+
+    private static void registerParticleFactories() {
+        ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
+        registry.register(DNLParticleTypes.LARGE_FLAME_PARTICLE.get(), LargeFlameParticle.Factory::new);
     }
 }

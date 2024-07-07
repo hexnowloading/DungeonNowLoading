@@ -44,6 +44,7 @@ public class DNLForge {
     private void addModClientListeners(IEventBus bus) {
         bus.addListener(DNLForgeClientEvents::onRegisterRenderer);
         bus.addListener(DNLForgeClientEvents::onRegisterLayers);
+        bus.addListener(DNLForgeClientEvents::onRegisterParticleProviders);
     }
 
     private void addForgeListeners() {

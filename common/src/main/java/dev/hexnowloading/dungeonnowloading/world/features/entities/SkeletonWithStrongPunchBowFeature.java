@@ -1,7 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.world.features.entities;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
-import dev.hexnowloading.dungeonnowloading.util.EntityScale;
+import dev.hexnowloading.dungeonnowloading.entity.util.EntityScale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;

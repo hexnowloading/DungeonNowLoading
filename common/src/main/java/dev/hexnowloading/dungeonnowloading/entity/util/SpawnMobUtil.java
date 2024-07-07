@@ -1,13 +1,13 @@
 package dev.hexnowloading.dungeonnowloading.entity.util;
 
-import dev.hexnowloading.dungeonnowloading.util.EntityScale;
+import dev.hexnowloading.dungeonnowloading.util.ArmorTrimMaterial;
+import dev.hexnowloading.dungeonnowloading.util.ArmorTrimPattern;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;

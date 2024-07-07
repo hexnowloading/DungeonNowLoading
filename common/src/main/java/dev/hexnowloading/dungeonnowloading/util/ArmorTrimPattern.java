@@ -1,4 +1,4 @@
-package dev.hexnowloading.dungeonnowloading.entity.util;
+package dev.hexnowloading.dungeonnowloading.util;
 
 public enum ArmorTrimPattern {
     NONE("none"),
@@ -19,7 +19,7 @@ public enum ArmorTrimPattern {
     WAYFINDER("wayfinder"),
     WILD("wild");
 
-    final String pattern;
+    public final String pattern;
     ArmorTrimPattern(String pattern) {
         this.pattern = pattern;
     }

@@ -1,4 +1,4 @@
-package dev.hexnowloading.dungeonnowloading.util;
+package dev.hexnowloading.dungeonnowloading.entity.util;
 
 import dev.hexnowloading.dungeonnowloading.config.BossConfig;
 import dev.hexnowloading.dungeonnowloading.config.MobConfig;

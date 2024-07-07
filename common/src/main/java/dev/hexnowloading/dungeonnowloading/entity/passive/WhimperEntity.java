@@ -4,7 +4,7 @@ import dev.hexnowloading.dungeonnowloading.config.PvpConfig;
 import dev.hexnowloading.dungeonnowloading.entity.ai.WhimperChargeAttackGoal;
 import dev.hexnowloading.dungeonnowloading.entity.ai.WhimperMoveControl;
 import dev.hexnowloading.dungeonnowloading.entity.ai.WhimperRandomMoveGoal;
-import dev.hexnowloading.dungeonnowloading.util.PlayerSupporterEntity;
+import dev.hexnowloading.dungeonnowloading.entity.util.PlayerSupporterEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

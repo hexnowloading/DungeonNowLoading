@@ -1,4 +1,4 @@
-package dev.hexnowloading.dungeonnowloading.util;
+package dev.hexnowloading.dungeonnowloading.entity.util;
 
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;

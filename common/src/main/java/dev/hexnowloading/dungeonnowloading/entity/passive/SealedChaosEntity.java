@@ -3,7 +3,7 @@ package dev.hexnowloading.dungeonnowloading.entity.passive;
 import dev.hexnowloading.dungeonnowloading.config.PvpConfig;
 import dev.hexnowloading.dungeonnowloading.entity.ai.EntityBodyRotationControl;
 import dev.hexnowloading.dungeonnowloading.entity.ai.SealedChaosAttackGoal;
-import dev.hexnowloading.dungeonnowloading.util.PlayerSupporterEntity;
+import dev.hexnowloading.dungeonnowloading.entity.util.PlayerSupporterEntity;
 import dev.hexnowloading.dungeonnowloading.registry.DNLItems;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;

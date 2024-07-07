@@ -1,6 +1,6 @@
 package dev.hexnowloading.dungeonnowloading.registry;
 
-import dev.hexnowloading.dungeonnowloading.util.EntityExcludedDamageSource;
+import dev.hexnowloading.dungeonnowloading.entity.util.EntityExcludedDamageSource;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;

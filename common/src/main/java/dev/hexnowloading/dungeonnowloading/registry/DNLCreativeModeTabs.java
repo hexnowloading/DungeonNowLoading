@@ -15,6 +15,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
                 output.accept(DNLItems.SPAWNER_CARRIER_SPAWNEGG.get());
+                output.accept(DNLItems.SCUTTLE_SPAWNEGG.get());
                 output.accept(DNLItems.SEALED_CHAOS_SPAWNEGG.get());
                 output.accept(DNLItems.WHIMPER_SPAWNEGG.get());
                 // Items - Ingredients

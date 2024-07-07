@@ -1,6 +1,6 @@
 package dev.hexnowloading.dungeonnowloading.world.features.entities;
 
-import dev.hexnowloading.dungeonnowloading.util.EntityScale;
+import dev.hexnowloading.dungeonnowloading.entity.util.EntityScale;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Skeleton;
