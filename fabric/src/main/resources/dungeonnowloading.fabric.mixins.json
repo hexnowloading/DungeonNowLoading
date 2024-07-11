@@ -13,8 +13,7 @@
     "fabric.structures.StructurePoolMixin"
   ],
   "client": [
-    "MaxHealthAttributeMixin",
-    "MixinTitleScreen"
+    "MaxHealthAttributeMixin"
   ],
   "server": [
   ],
