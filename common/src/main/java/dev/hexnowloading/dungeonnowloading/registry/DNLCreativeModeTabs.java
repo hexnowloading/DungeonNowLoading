@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 public class DNLCreativeModeTabs {
 
-    public static final Supplier<CreativeModeTab> DUNGEONNOWLOADING_TAB = register("dungeonnowloading",
+    public static final Supplier<CreativeModeTab> DUNGEONNOWLOADING_TAB = register("main",
             () -> DNLItems.DNL_LOGO.get().getDefaultInstance(),
             (itemDisplayParameters, output) -> {
                 // Spawn Eggs
@@ -104,6 +104,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.DIAMOND_STONE_NOTCH.get());
                 output.accept(DNLItems.NETHERITE_STONE_NOTCH.get());
                 output.accept(DNLItems.SIGNAL_GATE.get());
+                output.accept(DNLItems.SCUTTLE_STATUE.get());
 
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());

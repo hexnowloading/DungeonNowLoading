@@ -1,11 +1,8 @@
 package dev.hexnowloading.dungeonnowloading.entity.client.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.client.animation.ScuttleAnimation;
 import dev.hexnowloading.dungeonnowloading.entity.monster.ScuttleEntity;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -13,8 +10,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
 
 public class ScuttleModel<T extends ScuttleEntity> extends HierarchicalModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -95,8 +90,6 @@ public class ScuttleModel<T extends ScuttleEntity> extends HierarchicalModel<T> 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
 
-    private float oldAgeInTicks;
-
     @Override
     public void setupAnim(ScuttleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
@@ -113,24 +106,87 @@ public class ScuttleModel<T extends ScuttleEntity> extends HierarchicalModel<T> 
             right_back_leg.z -= 2.0F;
             right_back_leg.x += 1.0F;
         }
-        if (entity.isState(ScuttleEntity.ScuttleState.OPENING) && entity.getAttackTick() == 0) {
-            this.oldAgeInTicks = ageInTicks;
-        }
-        if (entity.isState(ScuttleEntity.ScuttleState.OPENING) || entity.isState(ScuttleEntity.ScuttleState.OPENED)) {
-            float AGEINTICKS_TO_SECONDS = ageInTicks / 20 - 1.0F;
-            float OLD_AGEINTICK_TO_SECONDS = this.oldAgeInTicks / 20;
-            float ROTATION_DEGREE = 180;
-            float ROTATION_RAD = Mth.DEG_TO_RAD * ROTATION_DEGREE;
-            float FULL_ROTATION_SECOND = 5;
-            flame_thrower.yRot += ROTATION_RAD * ((AGEINTICKS_TO_SECONDS - OLD_AGEINTICK_TO_SECONDS) / FULL_ROTATION_SECOND);
-            //flame_thrower.yRot += Mth.DEG_TO_RAD * ROTATION_DEGREE * Mth.sin(AGEINTICKS_TO_SECONDS * Mth.TWO_PI / FULL_ROTATION_SECOND);
-        }
+        this.animateFlameThrowerRotation(entity, ageInTicks, 12, 0.3F, 0.4F, 0.3F);
         this.animate(entity.wakingUpAnimationState, ScuttleAnimation.SCUTTLE_WAKING_UP, ageInTicks);
         this.animate(entity.mouthOpenAnimationState, ScuttleAnimation.SCUTTLE_MOUTH_OPEN, ageInTicks);
         this.animate(entity.mouthCloseAnimationState, ScuttleAnimation.SCUTTLE_MOUTH_CLOSE, ageInTicks);
         this.animate(entity.idleClosedAnimationState, ScuttleAnimation.SCUTTLE_IDLE_CLOSED, ageInTicks);
         this.animate(entity.idleOpenedAnimationState, ScuttleAnimation.SCUTTLE_IDLE_OPENED, ageInTicks);
         this.animate(entity.blockFormAnimationState, ScuttleAnimation.SCUTTLE_BLOCK_FORM, ageInTicks);
+    }
+
+    private void animateFlameThrowerRotation(ScuttleEntity entity, float ageInTicks, int numberOfRotation, float timeEaseIn, float timeConstant, float timeEaseOut) {
+        if (entity.isState(ScuttleEntity.ScuttleState.OPENING) && !entity.isRotateStarted()) {
+            entity.setOldAgeInTicks(ageInTicks);
+            entity.setRotateStarted(true);
+        }
+        if (entity.isState(ScuttleEntity.ScuttleState.OPENING) || entity.isState(ScuttleEntity.ScuttleState.OPENED)) {
+
+            float timeInSeconds = (ageInTicks - entity.getOldAgeInTicks()) / 20.0F;
+            float ROTATION_RAD = Mth.DEG_TO_RAD * numberOfRotation * 180.0F;
+            float FULL_ROTATION_SECOND = 10.0F;
+            float time = timeInSeconds / FULL_ROTATION_SECOND;
+            easeInPhase(ROTATION_RAD, time, timeEaseIn);
+            constantPhase(ROTATION_RAD, time, timeEaseIn, timeConstant);
+            easeOutPhase(ROTATION_RAD, time, timeEaseIn, timeConstant, timeEaseOut);
+            //flame_thrower.yRot += 3 * ROTATION_RAD * time * time - 2 * ROTATION_RAD * time * time * time;
+            //flame_thrower.yRot += ROTATION_RAD * time * time;
+            //flame_thrower.yRot += (float) (ROTATION_RAD * -Math.exp(-time));
+            //flame_thrower.yRot += Mth.DEG_TO_RAD * ROTATION_DEGREE * Mth.sin(AGEINTICKS_TO_SECONDS * Mth.TWO_PI / FULL_ROTATION_SECOND);
+        }
+        if (!entity.isAttackingState() && entity.isRotateStarted()) {
+            entity.setRotateStarted(false);
+        }
+    }
+
+    private void easeInPhase(float rotationRad, float time, float timeIn) {
+        if (time < timeIn) {
+            flame_thrower.yRot = easeInRotation(rotationRad, time, timeIn);
+        }
+    }
+
+    private void constantPhase(float rotationRad, float time, float timeIn, float timeConstant) {
+        if ((time == timeIn || time > timeIn) && time < timeIn + timeConstant) {
+            flame_thrower.yRot = constantRotation(rotationRad, time, timeIn, timeConstant);
+        }
+    }
+
+    private void easeOutPhase(float rotationRad, float time, float timeIn, float timeConstant, float timeOut) {
+        if ((time == timeIn + timeConstant || time > timeIn + timeConstant) && (time < 1 || time == 1)) {
+            flame_thrower.yRot = easeOutRotation(rotationRad, time, timeOut);
+        }
+    }
+
+    private float easeInRotation(float rotationRad, float time, float timeIn) {
+        float a = time / timeIn;
+        return rotationRad * (float) Math.pow(a, 2);
+    }
+
+    private float constantRotation(float rotationRad, float time, float timeIn, float timeConstant) {
+        float a = (2 * time - timeIn) / timeConstant;
+        return rotationRad * a;
+    }
+
+    private float easeOutRotation(float rotationRad, float time, float timeOut) {
+        float a = (1 - time) / timeOut;
+        return rotationRad - rotationRad * (float) Math.pow(a, 2);
+    }
+
+    private float easeInSteepness(int steepness, float time, float rotationRad) {
+        /*float a = 1.0F;
+        for (int i = 0; i < steepness; i++) {
+            a *= time;
+        }*/
+        return (float) Math.pow(2, steepness - 1) * rotationRad * (float) Math.pow(time, steepness);
+    }
+
+    private float easeOutSteepness(int steepness, float time, float rotationRad) {
+        /*float a = 1.0F;
+        for (int i = 0; i < steepness; i++) {
+            a *= (-2 * time + 2);
+        }*/
+        float a = (-2.0F * time + 2.0F);
+        return rotationRad * (1.0F - (float) Math.pow(a, steepness) / 2.0F);
     }
 
     @Override

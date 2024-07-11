@@ -3,6 +3,7 @@ package dev.hexnowloading.dungeonnowloading.particle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 public class LargeFlameParticle extends TextureSheetParticle {
@@ -26,7 +27,7 @@ public class LargeFlameParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         //this.rCol = (float) (this.lifetime - this.age) / this.lifetime;
-        this.quadSize -= this.quadSize > 0 ? 0.05F : 0;
+        this.quadSize -= Math.min(this.quadSize, 0.05F);
         this.gCol = 1.0F - 0.9F * ((float)this.age / this.lifetime);
         this.bCol = 1.0F - 0.9F * ((float)this.age / this.lifetime);
         //this.gCol = (float) this.age / this.lifetime;
@@ -35,7 +36,6 @@ public class LargeFlameParticle extends TextureSheetParticle {
         this.yo = this.y;
         this.zo = this.z;
         int sprite = this.age % 8;
-        System.out.println(sprite);
         this.setSprite(spriteSet.get(sprite, 8));
         if (sprite > 0) {
             this.xd = 0;
@@ -50,6 +50,11 @@ public class LargeFlameParticle extends TextureSheetParticle {
             this.yd *= (double) this.friction;
             this.zd *= (double) this.friction;
         }
+    }
+
+    @Override
+    public int getLightColor(float $$0) {
+        return 240;
     }
 
     @Override

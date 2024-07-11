@@ -63,24 +63,6 @@ public class DNLItems {
     public static final Supplier<Item> PUZZLING_STONE_EMBLEM = register("puzzling_stone_emblem", () -> new BlockItem(DNLBlocks.PUZZLING_STONE_EMBLEM.get(), new Item.Properties()));
     public static final Supplier<Item> POLISHED_STONE = register("polished_stone", () -> new BlockItem(DNLBlocks.POLISHED_STONE.get(), new Item.Properties()));
     public static final Supplier<Item> BORDERED_STONE = register("bordered_stone", () -> new BlockItem(DNLBlocks.BORDERED_STONE.get(), new Item.Properties()));
-    public static final Supplier<Item> STONE_NOTCH = register("stone_notch", () -> new BlockItem(DNLBlocks.STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> COAL_STONE_NOTCH = register("coal_stone_notch", () -> new BlockItem(DNLBlocks.COAL_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> COPPER_STONE_NOTCH = register("copper_stone_notch", () -> new BlockItem(DNLBlocks.COPPER_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> IRON_STONE_NOTCH = register("iron_stone_notch", () -> new BlockItem(DNLBlocks.IRON_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> GOLD_STONE_NOTCH = register("gold_stone_notch", () -> new BlockItem(DNLBlocks.GOLD_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> REDSTONE_STONE_NOTCH = register("redstone_stone_notch", () -> new BlockItem(DNLBlocks.REDSTONE_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> AMETHYST_STONE_NOTCH = register("amethyst_stone_notch", () -> new BlockItem(DNLBlocks.AMETHYST_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> LAPIS_STONE_NOTCH = register("lapis_stone_notch", () -> new BlockItem(DNLBlocks.LAPIS_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> EMERALD_STONE_NOTCH = register("emerald_stone_notch", () -> new BlockItem(DNLBlocks.EMERALD_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> QUARTZ_STONE_NOTCH = register("quartz_stone_notch", () -> new BlockItem(DNLBlocks.QUARTZ_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> GLOWSTONE_STONE_NOTCH = register("glowstone_stone_notch", () -> new BlockItem(DNLBlocks.GLOWSTONE_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> PRISMARINE_STONE_NOTCH = register("prismarine_stone_notch", () -> new BlockItem(DNLBlocks.PRISMARINE_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> CHORUS_STONE_NOTCH = register("chorus_stone_notch", () -> new BlockItem(DNLBlocks.CHORUS_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> ECHO_STONE_NOTCH = register("echo_stone_notch", () -> new BlockItem(DNLBlocks.ECHO_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> DIAMOND_STONE_NOTCH = register("diamond_stone_notch", () -> new BlockItem(DNLBlocks.DIAMOND_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> NETHERITE_STONE_NOTCH = register("netherite_stone_notch", () -> new BlockItem(DNLBlocks.NETHERITE_STONE_NOTCH.get(), new Item.Properties()));
-    public static final Supplier<Item> SIGNAL_GATE = register("signal_gate", () -> new BlockItem(DNLBlocks.SIGNAL_GATE.get(), new Item.Properties()));
-
 
     // MECHANICAL BLOCKS
     public static final Supplier<Item> DUNGEON_WALL_TORCH = register("dungeon_wall_torch", () -> new BlockItem(DNLBlocks.DUNGEON_WALL_TORCH.get(), new Item.Properties()));
@@ -111,7 +93,24 @@ public class DNLItems {
     public static final Supplier<Item> REDSTONE_LANE_L = register("redstone_lane_l", () -> new BlockItem(DNLBlocks.REDSTONE_LANE_L.get(), new Item.Properties()));
     public static final Supplier<Item> REDSTONE_LANE_T = register("redstone_lane_t", () -> new BlockItem(DNLBlocks.REDSTONE_LANE_T.get(), new Item.Properties()));
     public static final Supplier<Item> ROTATOR_PRESSURE_PLATE = register("rotator_pressure_plate", () -> new BlockItem(DNLBlocks.ROTATOR_PRESSURE_PLATE.get(), new Item.Properties()));
-
+    public static final Supplier<Item> STONE_NOTCH = register("stone_notch", () -> new BlockItem(DNLBlocks.STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> COAL_STONE_NOTCH = register("coal_stone_notch", () -> new BlockItem(DNLBlocks.COAL_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> COPPER_STONE_NOTCH = register("copper_stone_notch", () -> new BlockItem(DNLBlocks.COPPER_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> IRON_STONE_NOTCH = register("iron_stone_notch", () -> new BlockItem(DNLBlocks.IRON_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> GOLD_STONE_NOTCH = register("gold_stone_notch", () -> new BlockItem(DNLBlocks.GOLD_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> REDSTONE_STONE_NOTCH = register("redstone_stone_notch", () -> new BlockItem(DNLBlocks.REDSTONE_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> AMETHYST_STONE_NOTCH = register("amethyst_stone_notch", () -> new BlockItem(DNLBlocks.AMETHYST_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> LAPIS_STONE_NOTCH = register("lapis_stone_notch", () -> new BlockItem(DNLBlocks.LAPIS_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> EMERALD_STONE_NOTCH = register("emerald_stone_notch", () -> new BlockItem(DNLBlocks.EMERALD_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> QUARTZ_STONE_NOTCH = register("quartz_stone_notch", () -> new BlockItem(DNLBlocks.QUARTZ_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> GLOWSTONE_STONE_NOTCH = register("glowstone_stone_notch", () -> new BlockItem(DNLBlocks.GLOWSTONE_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> PRISMARINE_STONE_NOTCH = register("prismarine_stone_notch", () -> new BlockItem(DNLBlocks.PRISMARINE_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> CHORUS_STONE_NOTCH = register("chorus_stone_notch", () -> new BlockItem(DNLBlocks.CHORUS_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> ECHO_STONE_NOTCH = register("echo_stone_notch", () -> new BlockItem(DNLBlocks.ECHO_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> DIAMOND_STONE_NOTCH = register("diamond_stone_notch", () -> new BlockItem(DNLBlocks.DIAMOND_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> NETHERITE_STONE_NOTCH = register("netherite_stone_notch", () -> new BlockItem(DNLBlocks.NETHERITE_STONE_NOTCH.get(), new Item.Properties()));
+    public static final Supplier<Item> SIGNAL_GATE = register("signal_gate", () -> new BlockItem(DNLBlocks.SIGNAL_GATE.get(), new Item.Properties()));
+    public static final Supplier<Item> SCUTTLE_STATUE = register("scuttle_statue", () -> new BlockItem(DNLBlocks.SCUTTLE_STATUE.get(), new Item.Properties()));
 
     public static final Supplier<Item> DNL_LOGO = register("dnl_logo", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
     public static final Supplier<Item> LABYRINTH_TROPHY = register("labyrinth_trophy", () -> new BlockItem(DNLBlocks.LABYRINTH_TROPHY.get(), new Item.Properties().rarity(Rarity.RARE)));

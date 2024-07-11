@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,half=upper": { "model": "dungeonnowloading:block/scuttle_statue_upper_half" },
+    "facing=east,half=upper": { "model": "dungeonnowloading:block/scuttle_statue_upper_half", "y":  90},
+    "facing=south,half=upper": { "model": "dungeonnowloading:block/scuttle_statue_upper_half", "y": 180 },
+    "facing=west,half=upper": { "model": "dungeonnowloading:block/scuttle_statue_upper_half", "y": 270 },
+    "facing=north,half=lower": { "model": "dungeonnowloading:block/scuttle_statue_lower_half" },
+    "facing=east,half=lower": { "model": "dungeonnowloading:block/scuttle_statue_lower_half", "y":  90},
+    "facing=south,half=lower": { "model": "dungeonnowloading:block/scuttle_statue_lower_half", "y": 180 },
+    "facing=west,half=lower": { "model": "dungeonnowloading:block/scuttle_statue_lower_half", "y": 270 }
+  }
+}

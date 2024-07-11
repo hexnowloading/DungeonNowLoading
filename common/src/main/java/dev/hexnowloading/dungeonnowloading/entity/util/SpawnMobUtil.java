@@ -31,6 +31,17 @@ public class SpawnMobUtil {
         return mob;
     }
 
+    public static Mob spawnEntityWithRot(Mob mob, double x, double y, double z, float yRot, float xRot, Level level) {
+        if (mob != null) {
+            mob.moveTo(x, y, z, yRot, xRot);
+            EntityScale.scaleMobAttributes(mob);
+            mob.setPersistenceRequired();
+            BlockPos blockPos = BlockPos.containing(x, y, z);
+            mob.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPos), MobSpawnType.SPAWNER, null, null);
+        }
+        return mob;
+    }
+
     public static Mob spawnEntityWithoutMove(Mob mob, double x, double y, double z, Level level) {
         if (mob != null) {
             EntityScale.scaleMobAttributes(mob);

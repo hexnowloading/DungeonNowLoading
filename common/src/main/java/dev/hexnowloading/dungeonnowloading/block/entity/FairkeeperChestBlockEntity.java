@@ -34,6 +34,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     protected long lootTableSeed;
     private ResourceLocation combatLootTable;
     private long combatLootTableSeed;
-    private List<BlockPos> spawnerLocationList;
+    private List<BlockPos> blockEntityLocationList;
     private BlockPos oldBlockPos; // This block position will be different from the actual fairkeeper chest block pos if it was generated through structure.
     private BlockPos lastSpawner;
     private int startUpTick;
@@ -89,9 +91,9 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                 }
             }
         }
-        if (this.spawnerLocationList != null) {
+        if (this.blockEntityLocationList != null) {
             ListTag listTag = new ListTag();
-            this.spawnerLocationList.forEach(blockPos -> listTag.add(this.newIntList(blockPos.getX(), blockPos.getY(), blockPos.getZ())));
+            this.blockEntityLocationList.forEach(blockPos -> listTag.add(this.newIntList(blockPos.getX(), blockPos.getY(), blockPos.getZ())));
             nbt.put("SpawnerLocations", listTag);
         }
         if (lastSpawner != null) {
@@ -132,11 +134,11 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         }
         if (nbt.contains("SpawnerLocations", CompoundTag.TAG_LIST)) {
             ListTag listTag = nbt.getList("SpawnerLocations", CompoundTag.TAG_LIST);
-            if (this.spawnerLocationList == null) {
-                this.spawnerLocationList = new ArrayList<>();
+            if (this.blockEntityLocationList == null) {
+                this.blockEntityLocationList = new ArrayList<>();
             }
             for (int a = 0; a < listTag.size(); ++a) {
-                this.spawnerLocationList.add(new BlockPos(listTag.getInt(0), listTag.getInt(1), listTag.getInt(2)));
+                this.blockEntityLocationList.add(new BlockPos(listTag.getInt(0), listTag.getInt(1), listTag.getInt(2)));
             }
         }
         if (nbt.contains("LastSpawner", CompoundTag.TAG_LIST)) {
@@ -155,10 +157,10 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     }
 
     public boolean hasSpawnerLocations() {
-        if (this.spawnerLocationList == null) {
+        if (this.blockEntityLocationList == null) {
             return false;
         }
-        return !this.spawnerLocationList.isEmpty();
+        return !this.blockEntityLocationList.isEmpty();
     }
 
     public CompoundTag setCombatLootTable(FairkeeperChestBlockEntity blockEntity) {
@@ -394,12 +396,11 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
 
         Map<BlockPos, BlockEntity> filtered = map.entrySet()
                 .stream()
-                .filter(e -> e.getValue() instanceof FairkeeperSpawnerBlockEntity)
+                .filter(e -> (e.getValue() instanceof FairkeeperSpawnerBlockEntity fairkeeperSpawnerBlockEntity && !fairkeeperSpawnerBlockEntity.getBlockState().getValue(DNLProperties.FAIRKEEPER_ALERT)) || (e.getValue() instanceof ScuttleStatueBlockEntity scuttleStatueBlockEntity && scuttleStatueBlockEntity.getBlockState().getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER))
                 .filter(e -> e.getKey().getX() < blockEntity.actualRegion1X && e.getKey().getX() >= blockEntity.actualRegion2X && e.getKey().getY() < blockEntity.actualRegion1Y && e.getKey().getY() >= blockEntity.actualRegion2Y && e.getKey().getZ() < blockEntity.actualRegion1Z && e.getKey().getZ() >= blockEntity.actualRegion2Z)
-                .filter(e -> !e.getValue().getBlockState().getValue(DNLProperties.FAIRKEEPER_ALERT))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         //filtered.forEach(((blockPosEntry, blockEntityEntry) -> ((FairkeeperSpawnerBlockEntity) blockEntityEntry).alert(nearbyPlayers.size() == 0 ? 1 : nearbyPlayers.size(), blockPosEntry, (FairkeeperSpawnerBlockEntity) blockEntityEntry)));
-        blockEntity.spawnerLocationList = new ArrayList<>(filtered.keySet());
+        blockEntity.blockEntityLocationList = new ArrayList<>(filtered.keySet());
     }
 
     private static void destroySpawners(Level level, FairkeeperChestBlockEntity blockEntity) {
@@ -453,8 +454,8 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                     nearbyPlayers.forEach(player -> Services.DATA.addFairkeeperChestPositionList(player, blockEntity.getBlockPos()));
                 }
                 if (state.getValue(DNLProperties.FAIRKEEPER_ALERT)) {
-                    if (blockEntity.spawnerLocationList != null && blockEntity.spawnerLocationList.size() == 1) {
-                        blockEntity.lastSpawner = blockEntity.spawnerLocationList.get(0);
+                    if (blockEntity.blockEntityLocationList != null && blockEntity.blockEntityLocationList.size() == 1) {
+                        blockEntity.lastSpawner = blockEntity.blockEntityLocationList.get(0);
                     }
                     alertTick(level, pos, state, blockEntity);
                 }
@@ -478,20 +479,23 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     }
 
     private static void alertTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
-        if (blockEntity.spawnerLocationList == null) {
-            blockEntity.spawnerLocationList = new ArrayList<>();
+        if (blockEntity.blockEntityLocationList == null) {
+            blockEntity.blockEntityLocationList = new ArrayList<>();
             return;
         }
-        if (blockEntity.spawnerLocationList.isEmpty()) {
+        if (blockEntity.blockEntityLocationList.isEmpty()) {
             return;
         }
-        BlockPos spawnerBlockPos = blockEntity.spawnerLocationList.get(0);
-        BlockEntity spawnerBlockEntity = level.getBlockEntity(spawnerBlockPos);
-        if (spawnerBlockEntity instanceof FairkeeperSpawnerBlockEntity fairkeeperSpawnerBlockEntity) {
+        BlockPos spawnerBlockPos = blockEntity.blockEntityLocationList.get(0);
+        BlockEntity alertBlockEntity = level.getBlockEntity(spawnerBlockPos);
+        if (alertBlockEntity instanceof FairkeeperSpawnerBlockEntity fairkeeperSpawnerBlockEntity) {
             fairkeeperSpawnerBlockEntity.alert(blockEntity.playerCount == 0 ? 1 : blockEntity.playerCount, spawnerBlockPos, fairkeeperSpawnerBlockEntity);
         }
+        if (alertBlockEntity instanceof ScuttleStatueBlockEntity scuttleStatueBlockEntity) {
+            scuttleStatueBlockEntity.alert(spawnerBlockPos, scuttleStatueBlockEntity);
+        }
         redstoneBeam(level, pos, spawnerBlockPos);
-        blockEntity.spawnerLocationList.remove(0);
+        blockEntity.blockEntityLocationList.remove(0);
     }
 
     private static void redstoneBeam(Level level, BlockPos originPos, BlockPos targetPos) {

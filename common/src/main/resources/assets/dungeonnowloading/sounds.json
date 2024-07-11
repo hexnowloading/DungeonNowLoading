@@ -2,105 +2,149 @@
   "chaos_spawner_laughter": {
     "subtitle": "sounds.dungeonnowloading.chaos_spawner_laughter",
     "sounds": [
-      {
-        "name": "dungeonnowloading:chaos_spawner_laughter"
-      }
+      "dungeonnowloading:mob/chaos_spawner/chaos_spawner_laughter"
     ]
   },
   "chaos_spawner_chain_break": {
     "subtitle": "sounds.dungeonnowloading.chaos_spawner_chain_break",
     "sounds": [
-      {
-        "name": "dungeonnowloading:chaos_spawner_chain_break"
-      }
+      "dungeonnowloading:mob/chaos_spawner/chaos_spawner_chain_break"
     ]
   },
   "chaos_spawner_hurt": {
     "subtitle": "sounds.dungeonnowloading.chaos_spawner_hurt",
     "sounds": [
-      {
-        "name": "dungeonnowloading:chaos_spawner_hurt_0"
-      },
-      {
-        "name": "dungeonnowloading:chaos_spawner_hurt_1"
-      },
-      {
-        "name": "dungeonnowloading:chaos_spawner_hurt_2"
-      }
+      "dungeonnowloading:mob/chaos_spawner/chaos_spawner_hurt_0",
+      "dungeonnowloading:mob/chaos_spawner/chaos_spawner_hurt_1",
+      "dungeonnowloading:mob/chaos_spawner/chaos_spawner_hurt_2"
     ]
   },
   "chaos_spawner_death": {
     "subtitle": "sounds.dungeonnowloading.chaos_spawner_death",
     "sounds": [
-      {
-        "name": "dungeonnowloading:chaos_spawner_death"
-      }
+      "dungeonnowloading:mob/chaos_spawner/chaos_spawner_death"
     ]
   },
   "hollow_ambient": {
     "subtitle": "sounds.dungeonnowloading.hollow_ambient",
     "sounds": [
-      {
-        "name": "dungeonnowloading:hollow_ambient_0"
-      },
-      {
-        "name": "dungeonnowloading:hollow_ambient_1"
-      },
-      {
-        "name": "dungeonnowloading:hollow_ambient_2"
-      }
+      "dungeonnowloading:mob/hollow/hollow_ambient_0",
+      "dungeonnowloading:mob/hollow/hollow_ambient_1",
+      "dungeonnowloading:mob/hollow/hollow_ambient_2"
     ]
   },
   "hollow_hurt": {
     "subtitle": "sounds.dungeonnowloading.hollow_hurt",
     "sounds": [
-      {
-        "name": "dungeonnowloading:hollow_hurt_0"
-      },
-      {
-        "name": "dungeonnowloading:hollow_hurt_1"
-      },
-      {
-        "name": "dungeonnowloading:hollow_hurt_2"
-      }
+      "dungeonnowloading:mob/hollow/hollow_hurt_0",
+      "dungeonnowloading:mob/hollow/hollow_hurt_1",
+      "dungeonnowloading:mob/hollow/hollow_hurt_2"
     ]
   },
   "hollow_death": {
     "subtitle": "sounds.dungeonnowloading.hollow_death",
     "sounds": [
-      {
-        "name": "dungeonnowloading:hollow_death"
-      }
+      "dungeonnowloading:mob/hollow/hollow_death"
     ]
   },
   "whimper_ambient": {
     "subtitle": "sounds.dungeonnowloading.whimper_ambient",
     "sounds": [
-      {
-        "name": "dungeonnowloading:whimper_ambient_0"
-      },
-      {
-        "name": "dungeonnowloading:whimper_ambient_1"
-      },
-      {
-        "name": "dungeonnowloading:whimper_ambient_2"
-      }
+      "dungeonnowloading:mob/whimper/whimper_ambient_0",
+      "dungeonnowloading:mob/whimper/whimper_ambient_1",
+      "dungeonnowloading:mob/whimper/whimper_ambient_2"
     ]
   },
   "whimper_hurt": {
     "subtitle": "sounds.dungeonnowloading.whimper_hurt",
     "sounds": [
-      {
-        "name": "dungeonnowloading:whimper_hurt"
-      }
+        "dungeonnowloading:mob/whimper/whimper_hurt"
     ]
   },
   "whimper_death": {
     "subtitle": "sounds.dungeonnowloading.whimper_death",
     "sounds": [
-      {
-        "name": "dungeonnowloading:whimper_death"
-      }
+        "dungeonnowloading:mob/whimper/whimper_death"
+    ]
+  },
+  "scuttle_waking": {
+    "subtitle": "sounds.dungeonnowloading.scuttle_waking",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_waking"
+    ]
+  },
+  "scuttle_step": {
+    "subtitle": "sounds.dungeonnowloading.scuttle_step",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_step_0",
+      "dungeonnowloading:mob/scuttle/scuttle_step_1"
+    ]
+  },
+  "scuttle_idle": {
+    "subtitle": "sounds.dungeonnowloading.scuttle_idle",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_idle_0",
+      "dungeonnowloading:mob/scuttle/scuttle_idle_1"
+    ]
+  },
+  "scuttle_shooting_open": {
+    "subtitle": "sounds.dungeonnowloading.shooting_open",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_0_open"
+    ]
+  },
+  "scuttle_shooting_charge": {
+    "subtitle": "sounds.dungeonnowloading.shooting_charge",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_1_charge"
+    ]
+  },
+  "scuttle_shooting_burst": {
+    "subtitle": "sounds.dungeonnowloading.shooting_burst",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_2_burst"
+    ]
+  },
+  "scuttle_shooting_flame": {
+    "subtitle": "sounds.dungeonnowloading.shooting_flame",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_3_flame_0",
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_3_flame_1",
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_3_flame_2",
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_3_flame_3"
+    ]
+  },
+  "scuttle_shooting_stop": {
+    "subtitle": "sounds.dungeonnowloading.shooting_stop",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_4_stop"
+    ]
+  },
+  "scuttle_shooting_close": {
+    "subtitle": "sounds.dungeonnowloading.shooting_close",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_shooting_5_close"
+    ]
+  },
+  "scuttle_deflect": {
+    "subtitle": "sounds.dungeonnowloading.scuttle_deflect",
+    "sounds": [
+        "dungeonnowloading:mob/scuttle/scuttle_deflect_0",
+        "dungeonnowloading:mob/scuttle/scuttle_deflect_1"
+    ]
+  },
+  "scuttle_hurt": {
+    "subtitle": "sounds.dungeonnowloading.hurt",
+    "sounds": [
+      "dungeonnowloading:mob/scuttle/scuttle_hurt_0",
+      "dungeonnowloading:mob/scuttle/scuttle_hurt_1",
+      "dungeonnowloading:mob/scuttle/scuttle_hurt_2"
+    ]
+  },
+  "scuttle_death": {
+    "subtitle": "sounds.dungeonnowloading.scuttle_death",
+    "sounds": [
+        "dungeonnowloading:mob/scuttle/scuttle_death"
     ]
   }
 }

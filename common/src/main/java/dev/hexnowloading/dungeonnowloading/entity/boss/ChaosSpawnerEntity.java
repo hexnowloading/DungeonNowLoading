@@ -194,7 +194,6 @@ public class ChaosSpawnerEntity extends Monster implements Enemy, UniqueDeathAni
             uuidCompoundTag.putUUID("PlayerUUID", uuid1);
         }*/
         compoundTag.put("PlayerUUIDs", listTag);
-        System.out.println(this.playerUUIDs);
     }
 
     @Override

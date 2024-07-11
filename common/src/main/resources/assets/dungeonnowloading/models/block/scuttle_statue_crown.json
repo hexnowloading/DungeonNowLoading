@@ -1,0 +1,165 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "cutout",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "dungeonnowloading:block/scuttle_statue",
+		"particle": "dungeonnowloading:block/scuttle_statue_particle"
+	},
+	"elements": [
+		{
+			"name": "Coal",
+			"from": [2, -1, 2],
+			"to": [14, 2, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1, 8]},
+			"faces": {
+				"north": {"uv": [1.5, 10.75, 3, 11.125], "texture": "#0"},
+				"east": {"uv": [0, 10.75, 1.5, 11.125], "texture": "#0"},
+				"south": {"uv": [4.5, 10.75, 6, 11.125], "texture": "#0"},
+				"west": {"uv": [3, 10.75, 4.5, 11.125], "texture": "#0"},
+				"up": {"uv": [3, 10.75, 1.5, 9.25], "texture": "#0"},
+				"down": {"uv": [4.5, 9.25, 3, 10.75], "texture": "#0"}
+			}
+		},
+		{
+			"name": "coal_north",
+			"from": [2, -1, 2],
+			"to": [14, 2, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 1.5, 0.375], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"south": {"uv": [3, 10.75, 1.5, 11.125], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"up": {"uv": [0, 0, 1.5, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 1.5, 0], "texture": "#0"}
+			}
+		},
+		{
+			"name": "coal_south",
+			"from": [2, -1, 14],
+			"to": [14, 2, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 14]},
+			"faces": {
+				"north": {"uv": [6, 10.75, 4.5, 11.125], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"south": {"uv": [1.5, 0, 0, 0.375], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"up": {"uv": [0, 0, 1.5, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 1.5, 0], "texture": "#0"}
+			}
+		},
+		{
+			"name": "coal_east",
+			"from": [14, -1, 2],
+			"to": [14, 2, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 14]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"east": {"uv": [0, 0, 1.5, 0.375], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"west": {"uv": [1.5, 10.75, 0, 11.125], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 1.5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 1.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "coal_west",
+			"from": [2, -1, 2],
+			"to": [2, 2, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-10, 0, 14]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"east": {"uv": [4.5, 10.75, 3, 11.125], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 0.375], "texture": "#0"},
+				"west": {"uv": [1.5, 0, 0, 0.375], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 1.5], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 1.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Cage",
+			"from": [-0.25, -1.5, -0.25],
+			"to": [16.25, 4, 16.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 3, 1]},
+			"faces": {
+				"north": {"uv": [2, 15.375, 4, 16], "texture": "#0"},
+				"east": {"uv": [0, 15.375, 2, 16], "texture": "#0"},
+				"south": {"uv": [6, 15.375, 8, 16], "texture": "#0"},
+				"west": {"uv": [4, 15.375, 6, 16], "texture": "#0"},
+				"up": {"uv": [4, 15.375, 2, 13.375], "texture": "#0"},
+				"down": {"uv": [6, 13.375, 4, 15.375], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cage_up",
+			"from": [-0.25, 4, -0.25],
+			"to": [16.25, 4.5, 16.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2.25, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 0], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 0], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 0], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 0], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"down": {"uv": [2, 13.375, 4, 15.375], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cage_south",
+			"from": [-0.25, -1.5, 16.25],
+			"to": [16.25, 4, 16.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1.75, 0.5]},
+			"faces": {
+				"north": {"uv": [8, 15.375, 6, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 0.625], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 0], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cage_north",
+			"from": [-0.25, -1.5, -0.75],
+			"to": [16.25, 4, -0.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1.75, -16.5]},
+			"faces": {
+				"north": {"uv": [2, 0, 0, 0.625], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"south": {"uv": [4, 15.375, 2, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 0], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 0], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cage_east",
+			"from": [16.25, -1.5, -0.25],
+			"to": [16.75, 4, 16.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.5, 1.75, -16]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 0.625], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"west": {"uv": [2, 15.375, 0, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cage_west",
+			"from": [-0.75, -1.5, -0.25],
+			"to": [-0.25, 4, 16.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-16.5, 1.75, -16]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"east": {"uv": [6, 15.375, 4, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 0.625], "texture": "#0"},
+				"west": {"uv": [2, 0, 0, 0.625], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 2], "texture": "#0"}
+			}
+		}
+	]
+}

@@ -126,7 +126,6 @@ public class StoneNotchBlock extends Block {
                 playSound(level, blockPos, SoundEvents.ITEM_FRAME_REMOVE_ITEM);
                 ItemStack itemStack = new ItemStack(notchMaterial.item, 1);
                 ItemEntity itemEntity = new ItemEntity(level, popPos.x(), popPos.y(), popPos.z(), itemStack, chosenPos.dx, chosenPos.dy, chosenPos.dz);
-                System.out.println(itemEntity.getDeltaMovement());
                 itemEntity.setDefaultPickUpDelay();
                 //itemEntity.setDeltaMovement(chosenPos.dx, chosenPos.dy, chosenPos.dz);
                 level.addFreshEntity(itemEntity);
