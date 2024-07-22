@@ -3,8 +3,10 @@ package dev.hexnowloading.dungeonnowloading.block;
 import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperChestBlockEntity;
 import dev.hexnowloading.dungeonnowloading.block.entity.FairkeeperSpawnerBlockEntity;
 import dev.hexnowloading.dungeonnowloading.block.property.ChestStates;
+import dev.hexnowloading.dungeonnowloading.particle.FairkeeperBoundaryParticle;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
+import dev.hexnowloading.dungeonnowloading.registry.DNLParticleTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
@@ -49,6 +52,10 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE_X = Block.box(1.5D, 0.0D, 1.5D, 14.5D, 15.0D, 14.5D);
     private static final VoxelShape SHAPE_Z = Block.box(1.5D, 0.0D, 1.5D, 14.5D, 15.0D, 14.5D);
+    private static final int XP_AXIS = 0;
+    private static final int YP_AXIS = 1;
+
+
 
     public FairkeeperChestBlock(Properties properties) {
         super(properties);
@@ -175,12 +182,42 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
         level.setBlock(blockPos, DNLBlocks.FAIRKEEPER_CHEST.get().defaultBlockState().setValue(FAIRKEEPER_ALERT, b).setValue(FACING, direction).setValue(CHEST_STATES, ChestStates.CLOSED), 2);
     }
 
+    public static int getFacingInt(Level level, BlockPos blockPos) {
+        Direction direction = level.getBlockState(blockPos).getValue(FACING);
+        return switch (direction) {
+            default -> 0;
+            case EAST -> 1;
+            case SOUTH -> 2;
+            case WEST -> 3;
+        };
+    }
+
     private static void playSound(Level level, BlockPos pos, SoundEvent soundEvent) {
         double d0 = (double)pos.getX() + 0.5D;
         double d1 = (double)pos.getY() + 0.5D;
         double d2 = (double)pos.getZ() + 0.5D;
 
         level.playSound((Player)null, d0, d1, d2, soundEvent, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+    }
+
+    @Override
+    public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
+        /*if (level.isClientSide) {
+            int actualRegion1X = fairkeeperChest.getActualRegion1X(fairkeeperChest);
+            int actualRegion2X = fairkeeperChest.getActualRegion2X(fairkeeperChest);
+            int actualRegion1Y = fairkeeperChest.getActualRegion1Y(fairkeeperChest);
+            int actualRegion2Y = fairkeeperChest.getActualRegion2Y(fairkeeperChest);
+            int actualRegion1Z = fairkeeperChest.getActualRegion1Z(fairkeeperChest)
+            double x = actualRegion2X + (actualRegion1X - actualRegion2X) * level.random.nextFloat();
+            double y = actualRegion2Y + (actualRegion1Y - actualRegion2Y) * level.random.nextFloat();
+            double z = actualRegion2Z + (actualRegion1Z - actualRegion2Z) * level.random.nextFloat();
+            level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), blockEntity.actualRegion1X, y, z, 1, 90.0F, 0.0F);
+            level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), blockEntity.actualRegion2X, y, z, 1, 90.0F, 0.0F);
+            level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), x, blockEntity.actualRegion1Y, z, 0, 90.0F, 0.0F);
+            level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), x, blockEntity.actualRegion2Y, z, 0, 90.0F, 0.0F);
+            level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), x, y, blockEntity.actualRegion1Z, 1, 90.0F, 0.0F);
+            level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), x, y, blockEntity.actualRegion2Z, 1, 90.0F, 0.0F);
+        }*/
     }
 
     @Nullable

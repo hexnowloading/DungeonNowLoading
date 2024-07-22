@@ -7,6 +7,7 @@ import dev.hexnowloading.dungeonnowloading.block.client.renderer.FairkeeperChest
 import dev.hexnowloading.dungeonnowloading.entity.client.model.*;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.*;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
+import dev.hexnowloading.dungeonnowloading.particle.FairkeeperBoundaryParticle;
 import dev.hexnowloading.dungeonnowloading.particle.LargeFlameParticle;
 import dev.hexnowloading.dungeonnowloading.registry.*;
 import net.fabricmc.api.ClientModInitializer;
@@ -106,5 +107,6 @@ public class DNLFabricClient implements ClientModInitializer {
     private static void registerParticleFactories() {
         ParticleFactoryRegistry registry = ParticleFactoryRegistry.getInstance();
         registry.register(DNLParticleTypes.LARGE_FLAME_PARTICLE.get(), LargeFlameParticle.Factory::new);
+        registry.register(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), FairkeeperBoundaryParticle.Factory::new);
     }
 }

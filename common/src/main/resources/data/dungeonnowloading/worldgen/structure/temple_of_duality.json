@@ -1,0 +1,90 @@
+{
+  "type": "dungeonnowloading:generic_jigsaw_structure",
+  "biomes": "#dungeonnowloading:has_structure/temple_of_duality",
+  "step": "surface_structures",
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:spider",
+          "weight": 100,
+          "minCount": 4,
+          "maxCount": 4
+        },
+        {
+          "type": "minecraft:zombie",
+          "weight": 95,
+          "minCount": 4,
+          "maxCount": 4
+        },
+        {
+          "type": "minecraft:zombie_villager",
+          "weight": 5,
+          "minCount": 1,
+          "maxCount": 1
+        },
+        {
+          "type": "minecraft:skeleton",
+          "weight": 100,
+          "minCount": 4,
+          "maxCount": 4
+        },
+        {
+          "type": "minecraft:slime",
+          "weight": 100,
+          "minCount": 4,
+          "maxCount": 4
+        },
+        {
+          "type": "minecraft:enderman",
+          "weight": 10,
+          "minCount": 1,
+          "maxCount": 4
+        },
+        {
+          "type": "minecraft:witch",
+          "weight": 5,
+          "minCount": 1,
+          "maxCount": 1
+        },
+        {
+          "type": "minecraft:drowned",
+          "weight": 95,
+          "minCount": 4,
+          "maxCount": 4
+        }
+      ]
+    },
+    "underground_water_creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:glow_squid",
+          "weight": 10,
+          "minCount": 4,
+          "maxCount": 6
+        }
+      ]
+    },
+    "ambient": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:bat",
+          "weight": 10,
+          "minCount": 8,
+          "maxCount": 8
+        }
+      ]
+    }
+  },
+  "terrain_adaptation": "none",
+  "start_pool": "dungeonnowloading:temple_of_duality/starts",
+  "size": 30,
+  "start_height": {
+    "absolute": 63
+  },
+  "max_distance_from_center": 116,
+  "use_expansion_hack": false
+}

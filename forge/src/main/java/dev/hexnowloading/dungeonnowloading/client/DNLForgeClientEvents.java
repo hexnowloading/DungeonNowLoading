@@ -5,6 +5,7 @@ import dev.hexnowloading.dungeonnowloading.block.client.model.FairkeeperChestMod
 import dev.hexnowloading.dungeonnowloading.block.client.renderer.FairkeeperChestBlockRenderer;
 import dev.hexnowloading.dungeonnowloading.entity.client.model.*;
 import dev.hexnowloading.dungeonnowloading.entity.client.renderer.*;
+import dev.hexnowloading.dungeonnowloading.particle.FairkeeperBoundaryParticle;
 import dev.hexnowloading.dungeonnowloading.particle.LargeFlameParticle;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
@@ -63,5 +64,6 @@ public class DNLForgeClientEvents {
 
     public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(DNLParticleTypes.LARGE_FLAME_PARTICLE.get(), LargeFlameParticle.Factory::new);
+        event.registerSpriteSet(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), FairkeeperBoundaryParticle.Factory::new);
     }
 }

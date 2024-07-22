@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "dungeonnowloading:temple_of_duality",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 83979417,
+    "exclusion_zone": {
+      "other_set": "minecraft:jungle_temples",
+      "chunk_count": 1
+    },
+    "spacing": 64,
+    "separation": 16
+  }
+}

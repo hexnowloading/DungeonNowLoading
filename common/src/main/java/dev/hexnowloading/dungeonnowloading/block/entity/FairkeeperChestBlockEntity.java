@@ -2,9 +2,11 @@ package dev.hexnowloading.dungeonnowloading.block.entity;
 
 import dev.hexnowloading.dungeonnowloading.block.FairkeeperChestBlock;
 import dev.hexnowloading.dungeonnowloading.block.property.ChestStates;
+import dev.hexnowloading.dungeonnowloading.particle.type.AxisParticleType;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
+import dev.hexnowloading.dungeonnowloading.registry.DNLParticleTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import dev.hexnowloading.dungeonnowloading.util.DNLMath;
 import net.minecraft.core.BlockPos;
@@ -31,6 +33,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -62,6 +65,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     private int actualRegion2X;
     private int actualRegion2Y;
     private int actualRegion2Z;
+    private int facing;
     private BlockPos maxRegion;
     private BlockPos minRegion;
     private int playerCount;
@@ -99,14 +103,15 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         if (lastSpawner != null) {
             nbt.put("LastSpawner", this.newIntList(this.lastSpawner.getX(), this.lastSpawner.getY(), this.lastSpawner.getZ()));
         }
+        nbt.putInt("Facing", this.facing);
         nbt.put("OldBlockPos", this.newIntList(this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ()));
         nbt.putInt("StartUpTick", this.startUpTick);
         nbt.putInt("PlayerCount", this.playerCount);
         nbt.putBoolean("Disabled", this.disabled);
-        if (maxRegion != null) {
+        if (this.maxRegion != null) {
             nbt.put("MaxRegion", this.newIntList(this.maxRegion.getX(), this.maxRegion.getY(), this.maxRegion.getZ()));
         }
-        if (minRegion != null) {
+        if (this.minRegion != null) {
             nbt.put("MinRegion", this.newIntList(this.minRegion.getX(), this.minRegion.getY(), this.minRegion.getZ()));
         }
     }
@@ -142,17 +147,24 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
             }
         }
         if (nbt.contains("LastSpawner", CompoundTag.TAG_LIST)) {
-            this.lastSpawner = new BlockPos(nbt.getList("LastSpawner", CompoundTag.TAG_LIST).getInt(0), nbt.getList("LastSpawner", CompoundTag.TAG_LIST).getInt(1), nbt.getList("LastSpawner", CompoundTag.TAG_LIST).getInt(2));
+            this.lastSpawner = new BlockPos(nbt.getList("LastSpawner", CompoundTag.TAG_INT).getInt(0), nbt.getList("LastSpawner", CompoundTag.TAG_INT).getInt(1), nbt.getList("LastSpawner", CompoundTag.TAG_INT).getInt(2));
+            System.out.println("LastSpawner");
+            System.out.println(this.lastSpawner);
         }
+        this.facing = nbt.getInt("Facing");
         this.startUpTick = nbt.getInt("StartUpTick");
         this.playerCount = nbt.getInt("PlayerCount");
         this.disabled = nbt.getBoolean("Disabled");
-        this.oldBlockPos = new BlockPos(nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(0), nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(1), nbt.getList("OldBlockPos", CompoundTag.TAG_LIST).getInt(2));
+        this.oldBlockPos = new BlockPos(nbt.getList("OldBlockPos", CompoundTag.TAG_INT).getInt(0), nbt.getList("OldBlockPos", CompoundTag.TAG_INT).getInt(1), nbt.getList("OldBlockPos", CompoundTag.TAG_INT).getInt(2));
+        System.out.println("OldBlockPos");
+        System.out.println(this.oldBlockPos);
         if (nbt.contains("MaxRegion", CompoundTag.TAG_LIST)) {
-            this.maxRegion = new BlockPos(nbt.getList("MaxRegion", CompoundTag.TAG_LIST).getInt(0), nbt.getList("MaxRegion", CompoundTag.TAG_LIST).getInt(1), nbt.getList("MaxRegion", CompoundTag.TAG_LIST).getInt(2));
+            System.out.println("Load");
+            this.maxRegion = new BlockPos(nbt.getList("MaxRegion", CompoundTag.TAG_INT).getInt(0), nbt.getList("MaxRegion", CompoundTag.TAG_INT).getInt(1), nbt.getList("MaxRegion", CompoundTag.TAG_INT).getInt(2));
+            System.out.println(this.maxRegion.getX() + " " + this.maxRegion.getY() + " " + this.maxRegion.getZ());
         }
         if (nbt.contains("MinRegion", CompoundTag.TAG_LIST)) {
-            this.minRegion = new BlockPos(nbt.getList("MinRegion", CompoundTag.TAG_LIST).getInt(0), nbt.getList("MinRegion", CompoundTag.TAG_LIST).getInt(1), nbt.getList("MinRegion", CompoundTag.TAG_LIST).getInt(2));
+            this.minRegion = new BlockPos(nbt.getList("MinRegion", CompoundTag.TAG_INT).getInt(0), nbt.getList("MinRegion", CompoundTag.TAG_INT).getInt(1), nbt.getList("MinRegion", CompoundTag.TAG_INT).getInt(2));
         }
     }
 
@@ -178,6 +190,10 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         return new AABB(this.actualRegion1X, this.actualRegion1Y, this.actualRegion1Z, this.actualRegion2X, this.actualRegion2Y, this.actualRegion2Z);
     }
 
+    public int getActualRegion1X() {
+        return this.actualRegion1X;
+    }
+
     public boolean hasLastSpawner(Level level, FairkeeperChestBlockEntity blockEntity) {
         if(blockEntity.lastSpawner != null) {
             return level.getBlockState(blockEntity.lastSpawner).is(DNLBlocks.FAIRKEEEPER_SPAWNER.get());
@@ -195,9 +211,6 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         this.disabled = b;
     }
 
-    public boolean getDisabled() {
-        return this.disabled;
-    }
     /*protected boolean trySaveLootTable(CompoundTag nbt) {
         if (this.lootTable == null) {
             return false;
@@ -309,6 +322,10 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     }
 
     private static void rotationalSetRegion(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
+
+        //System.out.println(blockEntity.maxRegion.getX() + " " + blockEntity.maxRegion.getY() + " " + blockEntity.maxRegion.getZ());
+        //System.out.println(" / " + blockEntity.minRegion.getX() + " " + blockEntity.minRegion.getY() + " " + blockEntity.minRegion.getZ());
+
         BlockPos actualMax = new BlockPos(
                 Math.max(blockEntity.maxRegion.getX(), blockEntity.minRegion.getX()) + 1,
                 Math.max(blockEntity.maxRegion.getY(), blockEntity.minRegion.getY()) + 1,
@@ -322,31 +339,66 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
 
         BlockPos tempRegion1;
         BlockPos tempRegion2;
-        switch (state.getValue(FairkeeperChestBlock.FACING)) {
-            case NORTH:
+
+        int facingDifference = FairkeeperChestBlock.getFacingInt(level, pos) - blockEntity.facing;
+
+        switch (facingDifference) {
             default:
-                //tempRegion1 = blockEntity.region1.rotate(Rotation.COUNTERCLOCKWISE_90);
-                //tempRegion2 = blockEntity.region2.rotate(Rotation.COUNTERCLOCKWISE_90);
-                tempRegion1 = DNLMath.rotateVector(actualMax, Direction.Axis.Y, Math.toRadians(90)).south();
-                tempRegion2 = DNLMath.rotateVector(actualMin, Direction.Axis.Y, Math.toRadians(90)).south();
-                break;
-            case EAST:
                 tempRegion1 = actualMax;
                 tempRegion2 = actualMin;
+                break;
+            case 1:
+            case -3:
+                tempRegion1 = actualMax.rotate(Rotation.CLOCKWISE_90).east();
+                tempRegion2 = actualMin.rotate(Rotation.CLOCKWISE_90).east();
+                break;
+            case -1:
+            case 3:
+                tempRegion1 = actualMax.rotate(Rotation.COUNTERCLOCKWISE_90).south();
+                tempRegion2 = actualMin.rotate(Rotation.COUNTERCLOCKWISE_90).south();
+                break;
+            case -2:
+            case 2:
+                tempRegion1 = actualMax.rotate(Rotation.CLOCKWISE_180).east().south();
+                tempRegion2 = actualMin.rotate(Rotation.CLOCKWISE_180).east().south();
+                break;
+
+        }
+
+
+        /*switch (state.getValue(FairkeeperChestBlock.FACING)) {
+            case NORTH:
+            default:
+                tempRegion1 = actualMax.rotate(Rotation.CLOCKWISE_90).east();
+                tempRegion2 = actualMin.rotate(Rotation.CLOCKWISE_90).east();
+                System.out.println("NORTH");
+                //tempRegion1 = DNLMath.rotateVector(actualMax, Direction.Axis.Y, Math.toRadians(-90)).south();
+                //tempRegion2 = DNLMath.rotateVector(actualMin, Direction.Axis.Y, Math.toRadians(-90)).south();
+                break;
+            case EAST:
+                tempRegion1 = actualMax.rotate(Rotation.CLOCKWISE_180).south().east();
+                tempRegion2 = actualMin.rotate(Rotation.CLOCKWISE_180).south().east();
+                System.out.println("EAST");
+                //tempRegion1 = DNLMath.rotateVector(actualMax, Direction.Axis.Y, Math.toRadians(180)).south().east();
+                //tempRegion2 = DNLMath.rotateVector(actualMin, Direction.Axis.Y, Math.toRadians(180)).south().east();
                 break;
             case SOUTH:
                 //tempRegion1 = blockEntity.region1.rotate(Rotation.CLOCKWISE_90);
                 //tempRegion2 = blockEntity.region2.rotate(Rotation.CLOCKWISE_90);
-                tempRegion1 = DNLMath.rotateVector(actualMax, Direction.Axis.Y, Math.toRadians(-90)).east();
-                tempRegion2 = DNLMath.rotateVector(actualMin, Direction.Axis.Y, Math.toRadians(-90)).east();
+                tempRegion1 = actualMax.rotate(Rotation.COUNTERCLOCKWISE_90).south();
+                tempRegion2 = actualMin.rotate(Rotation.COUNTERCLOCKWISE_90).south();
+                System.out.println("SOUTH");
+                //tempRegion1 = DNLMath.rotateVector(actualMax, Direction.Axis.Y, Math.toRadians(90)).east();
+                //tempRegion2 = DNLMath.rotateVector(actualMin, Direction.Axis.Y, Math.toRadians(90)).east();
                 break;
             case WEST:
                 //tempRegion1 = blockEntity.region1.rotate(Rotation.CLOCKWISE_180);
                 //tempRegion2 = blockEntity.region2.rotate(Rotation.CLOCKWISE_180);
-                tempRegion1 = DNLMath.rotateVector(actualMax, Direction.Axis.Y, Math.toRadians(180)).south().east();
-                tempRegion2 = DNLMath.rotateVector(actualMin, Direction.Axis.Y, Math.toRadians(180)).south().east();
+                tempRegion1 = actualMax;
+                tempRegion2 = actualMin;
+                System.out.println("WEST");
                 break;
-        }
+        }*/
 
         int tempActualRegion1X = pos.getX() + tempRegion1.getX();
         int tempActualRegion1Y = pos.getY() + tempRegion1.getY();
@@ -361,11 +413,26 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         blockEntity.actualRegion2X = Math.min(tempActualRegion1X, tempActualRegion2X);
         blockEntity.actualRegion2Y = Math.min(tempActualRegion1Y, tempActualRegion2Y);
         blockEntity.actualRegion2Z = Math.min(tempActualRegion1Z, tempActualRegion2Z);
+
+        //System.out.println(blockEntity.maxRegion.getX() + " " + blockEntity.maxRegion.getY() + " " + blockEntity.maxRegion.getZ());
+        //System.out.println(" / " + blockEntity.minRegion.getX() + " " + blockEntity.minRegion.getY() + " " + blockEntity.minRegion.getZ());
     }
 
     private static void updateActualRegion(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
-        if (pos != blockEntity.oldBlockPos) {
+        if (blockEntity.maxRegion == null) {
+            blockEntity.maxRegion = new BlockPos(0, 0, 0);
+        }
+        if (blockEntity.minRegion == null) {
+            blockEntity.minRegion = new BlockPos(0, 0, 0);
+        }
+        if (blockEntity.oldBlockPos == null) {
             setMaxMinRegion(level, pos, blockEntity);
+            blockEntity.oldBlockPos = pos;
+            blockEntity.facing = FairkeeperChestBlock.getFacingInt(level, pos);
+            return;
+        }
+        if (pos != blockEntity.oldBlockPos) {
+            rotationalSetRegion(level, pos, state, blockEntity);
             blockEntity.oldBlockPos = pos;
         }
     }
@@ -439,6 +506,10 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                 blockEntity.openCloseAnimationProgress--;
             }
         }
+        /*System.out.println(blockEntity);
+        level.addParticle(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 90), pos.getX() + 2, pos.getY() + 0.5F, pos.getZ() + 0.5F, 1, 90F, 0.0F);
+        level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), pos.getX() + 0.5F, pos.getY() + 2, pos.getZ() + 0.5F, 0, 90F, 0.0F);
+        level.addParticle(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 2, 1, 0F, 0.0F);*/
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, FairkeeperChestBlockEntity blockEntity) {
@@ -460,10 +531,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                     alertTick(level, pos, state, blockEntity);
                 }
             }
-            double x = blockEntity.actualRegion2X + (blockEntity.actualRegion1X - blockEntity.actualRegion2X) * level.random.nextFloat();
-            double y = blockEntity.actualRegion2Y + (blockEntity.actualRegion1Y - blockEntity.actualRegion2Y) * level.random.nextFloat();
-            double z = blockEntity.actualRegion2Z + (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z) * level.random.nextFloat();
-            ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
+            /*((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion2Z, 1, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion2Y, blockEntity.actualRegion2Z, 1, 0, 0, 0, 0);
@@ -474,7 +542,29 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
             ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion1Y, z, 1, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion1Y, z, 1, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion1X, blockEntity.actualRegion2Y, z, 1, 0, 0, 0, 0);
-            ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, z, 1, 0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, blockEntity.actualRegion2X, blockEntity.actualRegion2Y, z, 1, 0, 0, 0, 0);*/
+
+            float xy = 1.0F - ((float) (blockEntity.actualRegion1X - blockEntity.actualRegion2X) * (blockEntity.actualRegion1Y - blockEntity.actualRegion2Y)) / 1024F;
+            float xz = 1.0F - ((float) (blockEntity.actualRegion1X - blockEntity.actualRegion2X) * (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z)) / 1024F;
+            float yz = 1.0F - ((float) (blockEntity.actualRegion1Y - blockEntity.actualRegion2Y) * (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z)) / 1024F;
+            double x = blockEntity.actualRegion2X + (blockEntity.actualRegion1X - blockEntity.actualRegion2X) * level.random.nextFloat();
+            double y = blockEntity.actualRegion2Y + (blockEntity.actualRegion1Y - blockEntity.actualRegion2Y) * level.random.nextFloat();
+            double z = blockEntity.actualRegion2Z + (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z) * level.random.nextFloat();
+            float r = level.random.nextFloat();
+
+            System.out.println(xy);
+            if (r + 0.2F > yz) {
+                ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 270), blockEntity.actualRegion1X + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, y, z, 1, 0, 0, 0, 0);
+                ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 90), blockEntity.actualRegion2X + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, y, z, 1, 0, 0, 0, 0);
+            }
+            if (r + 0.2F > xz) {
+                ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 0, 90), x, blockEntity.actualRegion1Y + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, z, 1, 0, 0, 0, 0);
+                ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 0, 270), x, blockEntity.actualRegion2Y + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, z, 1, 0, 0, 0, 0);
+            }
+            if (r + 0.2F > xy) {
+                ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 180), x, y, blockEntity.actualRegion1Z + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, 1, 0, 0, 0, 0);
+                ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 0), x, y, blockEntity.actualRegion2Z + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, 1, 0, 0, 0, 0);
+            }
         }
     }
 
@@ -554,5 +644,9 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
 
     public float getOpenProgress(float partialTicks) {
         return (prevOpenCloseAnimationProgress + (openCloseAnimationProgress - prevOpenCloseAnimationProgress) * partialTicks) / OPEN_CLOSE_ANIMATION_DURATION;
+    }
+
+    public boolean isDisabled(FairkeeperChestBlockEntity blockEntity) {
+        return blockEntity.disabled;
     }
 }

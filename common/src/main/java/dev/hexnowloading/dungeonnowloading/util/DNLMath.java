@@ -15,19 +15,19 @@ public class DNLMath {
         switch (axis) {
             case X:
             default:
-                u=1.0d;
+                u=0.0d;
                 v=0.0d;
                 w=0.0d;
                 break;
             case Y:
                 u=0.0d;
-                v=1.0d;
+                v=0.0d;
                 w=0.0d;
                 break;
             case Z:
                 u=0.0d;
                 v=0.0d;
-                w=1.0d;
+                w=0.0d;
         }
 
         double a = u*x + v*y + w*z;
