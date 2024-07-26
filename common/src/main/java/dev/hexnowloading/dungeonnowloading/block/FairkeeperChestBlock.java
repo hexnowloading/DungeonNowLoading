@@ -10,6 +10,7 @@ import dev.hexnowloading.dungeonnowloading.registry.DNLParticleTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -22,6 +23,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -105,13 +107,19 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState state, boolean moved) {
         if (!oldState.is(state.getBlock())) {
             BlockEntity blockentity = level.getBlockEntity(pos);
-            if (blockentity instanceof Container) {
+            if (blockentity instanceof FairkeeperChestBlockEntity fairkeeperChestBlock && fairkeeperChestBlock.isDisabled(fairkeeperChestBlock)) {
                 Containers.dropContents(level, pos, (Container)blockentity);
                 level.updateNeighbourForOutputSignal(pos, this);
             }
 
             super.onRemove(oldState, level, pos, state, moved);
         }
+    }
+
+    @Override
+    public void playerWillDestroy(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+
+        super.playerWillDestroy(level, blockPos, blockState, player);
     }
 
     protected Stat<ResourceLocation> getOpenChestStat() { return Stats.CUSTOM.get(Stats.OPEN_CHEST); }

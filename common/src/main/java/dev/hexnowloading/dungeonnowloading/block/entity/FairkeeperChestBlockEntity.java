@@ -2,6 +2,7 @@ package dev.hexnowloading.dungeonnowloading.block.entity;
 
 import dev.hexnowloading.dungeonnowloading.block.FairkeeperChestBlock;
 import dev.hexnowloading.dungeonnowloading.block.property.ChestStates;
+import dev.hexnowloading.dungeonnowloading.entity.util.PlayerSupporterEntity;
 import dev.hexnowloading.dungeonnowloading.particle.type.AxisParticleType;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import dev.hexnowloading.dungeonnowloading.registry.DNLBlockEntityTypes;
@@ -26,6 +27,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -41,10 +46,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.AABB;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity implements MenuProvider {
@@ -148,20 +151,14 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         }
         if (nbt.contains("LastSpawner", CompoundTag.TAG_LIST)) {
             this.lastSpawner = new BlockPos(nbt.getList("LastSpawner", CompoundTag.TAG_INT).getInt(0), nbt.getList("LastSpawner", CompoundTag.TAG_INT).getInt(1), nbt.getList("LastSpawner", CompoundTag.TAG_INT).getInt(2));
-            System.out.println("LastSpawner");
-            System.out.println(this.lastSpawner);
         }
         this.facing = nbt.getInt("Facing");
         this.startUpTick = nbt.getInt("StartUpTick");
         this.playerCount = nbt.getInt("PlayerCount");
         this.disabled = nbt.getBoolean("Disabled");
         this.oldBlockPos = new BlockPos(nbt.getList("OldBlockPos", CompoundTag.TAG_INT).getInt(0), nbt.getList("OldBlockPos", CompoundTag.TAG_INT).getInt(1), nbt.getList("OldBlockPos", CompoundTag.TAG_INT).getInt(2));
-        System.out.println("OldBlockPos");
-        System.out.println(this.oldBlockPos);
         if (nbt.contains("MaxRegion", CompoundTag.TAG_LIST)) {
-            System.out.println("Load");
             this.maxRegion = new BlockPos(nbt.getList("MaxRegion", CompoundTag.TAG_INT).getInt(0), nbt.getList("MaxRegion", CompoundTag.TAG_INT).getInt(1), nbt.getList("MaxRegion", CompoundTag.TAG_INT).getInt(2));
-            System.out.println(this.maxRegion.getX() + " " + this.maxRegion.getY() + " " + this.maxRegion.getZ());
         }
         if (nbt.contains("MinRegion", CompoundTag.TAG_LIST)) {
             this.minRegion = new BlockPos(nbt.getList("MinRegion", CompoundTag.TAG_INT).getInt(0), nbt.getList("MinRegion", CompoundTag.TAG_INT).getInt(1), nbt.getList("MinRegion", CompoundTag.TAG_INT).getInt(2));
@@ -274,6 +271,14 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
             FairkeeperChestBlockEntity.playSound(this.getLevel(), this.getBlockPos(), SoundEvents.CHEST_CLOSE);
         }
     }
+
+    /*public void destroyed() {
+        CompoundTag compoundTag = this.saveWithFullMetadata().copy();
+        if (compoundTag.contains("LootTable")) {
+            compoundTag.remove("LootTable");
+        }
+        this.load(compoundTag);
+    }*/
 
     public static void playSound(Level level, BlockPos blockPos, SoundEvent soundEvent) {
         level.playSound((Player) null, blockPos, soundEvent, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1f + 0.9f);
@@ -425,7 +430,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         if (blockEntity.minRegion == null) {
             blockEntity.minRegion = new BlockPos(0, 0, 0);
         }
-        if (blockEntity.oldBlockPos == null) {
+        if (blockEntity.oldBlockPos == null || blockEntity.maxRegion.compareTo(blockEntity.minRegion) == 0) {
             setMaxMinRegion(level, pos, blockEntity);
             blockEntity.oldBlockPos = pos;
             blockEntity.facing = FairkeeperChestBlock.getFacingInt(level, pos);
@@ -529,6 +534,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                         blockEntity.lastSpawner = blockEntity.blockEntityLocationList.get(0);
                     }
                     alertTick(level, pos, state, blockEntity);
+                    //commandMobs(level, blockEntity);
                 }
             }
             /*((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, x, blockEntity.actualRegion1Y, blockEntity.actualRegion1Z, 1, 0, 0, 0, 0);
@@ -552,7 +558,6 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
             double z = blockEntity.actualRegion2Z + (blockEntity.actualRegion1Z - blockEntity.actualRegion2Z) * level.random.nextFloat();
             float r = level.random.nextFloat();
 
-            System.out.println(xy);
             if (r + 0.2F > yz) {
                 ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 270), blockEntity.actualRegion1X + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, y, z, 1, 0, 0, 0, 0);
                 ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 90), blockEntity.actualRegion2X + (level.random.nextFloat() - level.random.nextFloat()) * 0.1F, y, z, 1, 0, 0, 0, 0);
@@ -612,6 +617,9 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
         if (!fairkeeperChestState.is(DNLBlocks.FAIRKEEPER_CHEST.get())) {
             return false;
         }
+        if (fairkeeperChestState.getValue(FairkeeperChestBlock.FAIRKEEPER_ALERT)) {
+            return false;
+        }
         if (level.getBlockEntity(fairkeeperChestPos) instanceof FairkeeperChestBlockEntity fairkeeperChestBlockEntity) {
             if (fairkeeperChestBlockEntity.disabled) {
                 return false;
@@ -629,10 +637,19 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     }
 
     private static void outlineCauseBlock(Level level, BlockPos blockPos) {
-        double d = (double) blockPos.getX() + 0.5D;
-        double e = (double) blockPos.getY() + 0.5D;
-        double f = (double) blockPos.getZ() + 0.5D;
-        ((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, d, e, f, 10, 0.0D, 0.5, 0.5, 0.5);
+        double x = (double) blockPos.getX() + 0.5D;
+        double y = (double) blockPos.getY() + 0.5D;
+        double z = (double) blockPos.getZ() + 0.5D;
+
+        ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 270), blockPos.getX() + 1.1F, y, z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 90), blockPos.getX() - 0.1F, y, z, 1, 0, 0, 0, 0);
+
+        ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 0, 90), x, blockPos.getY() + 1.1F, z, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 0, 270), x, blockPos.getY() - 0.1F, z, 1, 0, 0, 0, 0);
+
+        ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 180), x, y, blockPos.getZ() + 1.1F, 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(new AxisParticleType.AxisParticleData(DNLParticleTypes.FAIRKEEPER_BOUNDARY_PARTICLE.get(), 1, 0), x, y, blockPos.getZ() - 0.1F, 1, 0, 0, 0, 0);
+        //((ServerLevel) level).sendParticles(DustParticleOptions.REDSTONE, d, e, f, 10, 0.0D, 0.5, 0.5, 0.5);
     }
 
     private static float fairkeeperChestToBrokenBlockDistance(BlockPos fairkeeperChestPos, BlockPos brokenBlockPos) {

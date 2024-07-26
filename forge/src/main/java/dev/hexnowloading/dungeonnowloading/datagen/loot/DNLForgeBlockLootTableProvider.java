@@ -1,5 +1,6 @@
 package dev.hexnowloading.dungeonnowloading.datagen.loot;
 
+import dev.hexnowloading.dungeonnowloading.block.FairkeeperChestBlock;
 import dev.hexnowloading.dungeonnowloading.block.PileBlock;
 import dev.hexnowloading.dungeonnowloading.platform.ForgeCommonRegistryHelper;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
@@ -77,6 +78,25 @@ public class DNLForgeBlockLootTableProvider extends BlockLootSubProvider {
         this.add(DNLBlocks.GOLD_INGOT_PILE.get(), block -> pileBlock(block, Items.GOLD_INGOT));
         this.dropSelf(DNLBlocks.WOODEN_WALL_RACK.get());
         this.dropSelf(DNLBlocks.WOODEN_WALL_PLATFORM.get());
+        this.add(DNLBlocks.FAIRKEEPER_CHEST.get(), this::fairkeeperChestBlock);
+        this.dropSelf(DNLBlocks.WISE_FAIRKEEPER_CHEST.get());
+        this.dropSelf(DNLBlocks.FIERCE_FAIRKEEPER_CHEST.get());
+    }
+
+    private LootTable.Builder fairkeeperChestBlock(Block block) {
+        return LootTable.lootTable()
+                .withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(DNLItems.WISE_FAIRKEEPER_CHEST.get())
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(DNLBlocks.FAIRKEEPER_CHEST.get())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FairkeeperChestBlock.FAIRKEEPER_ALERT, false)))))
+                .withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(DNLItems.FIERCE_FAIRKEEPER_CHEST.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(DNLBlocks.FAIRKEEPER_CHEST.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FairkeeperChestBlock.FAIRKEEPER_ALERT, true)))));
+                        //.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(DNLBlocks.FAIRKEEPER_CHEST.get())
+                            //.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PileBlock.PILE, 1))))))
     }
 
     private LootTable.Builder notchBlock(Block block, Item item) {

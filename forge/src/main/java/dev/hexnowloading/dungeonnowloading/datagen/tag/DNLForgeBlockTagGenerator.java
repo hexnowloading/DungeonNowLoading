@@ -67,7 +67,10 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(
                 DNLBlocks.WOODEN_WALL_RACK.get(),
                 DNLBlocks.WOODEN_WALL_PLATFORM.get(),
-                DNLBlocks.FAIRKEEPER_CHEST.get()
+                DNLBlocks.FAIRKEEPER_CHEST.get(),
+                DNLBlocks.WISE_FAIRKEEPER_CHEST.get(),
+                DNLBlocks.FIERCE_FAIRKEEPER_CHEST.get(),
+                DNLBlocks.FAIRKEEEPER_SPAWNER.get()
         );
 
         this.tag(BlockTags.WALLS).add(

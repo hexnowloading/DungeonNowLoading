@@ -90,6 +90,8 @@
   "block.dungeonnowloading.chaos_spawner_broken_diamond_edge": "Broken Diamond Chaos Spawner Frame Edge",
   "block.dungeonnowloading.chaos_spawner_broken_diamond_vertex": "Broken Diamond Chaos Spawner Frame Vertex",
   "block.dungeonnowloading.fairkeeper_chest": "Fairkeeper Chest",
+  "block.dungeonnowloading.wise_fairkeeper_chest": "Wise Fairkeeper Chest",
+  "block.dungeonnowloading.fierce_fairkeeper_chest": "Fierce Fairkeeper Chest",
   "block.dungeonnowloading.fairkeeper_spawner": "Fairkeeper Spawner",
   "block.dungeonnowloading.redstone_lane_i": "Redstone Lane I",
   "block.dungeonnowloading.redstone_lane_l": "Redstone Lane L",

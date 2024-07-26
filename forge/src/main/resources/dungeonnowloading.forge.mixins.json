@@ -9,7 +9,9 @@
         "structures.StructureProcessorAccessor",
         "structures.StructureTemplateMixin",
         "forge.structures.StructurePoolMixin",
-        "forge.blockentities.FairkeeperChestBlockItemMixin"
+        "forge.blockentities.FairkeeperChestBlockItemMixin",
+        "forge.blockentities.WiseFairkeeperChestBlockItemMixin",
+        "forge.blockentities.FierceFairkeeperChestBlockItemMixin"
     ],
     "client": [
         "MixinTitleScreen",

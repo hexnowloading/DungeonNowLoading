@@ -84,14 +84,14 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         if (blockState.getValue(DNLProperties.REDSTONE_LANE_MODE) == RedstoneLaneMode.UNPOWERED) return 0;
 
-        if (direction == Direction.DOWN) return 15;
+        if (direction == Direction.DOWN) return 150;
 
         List<Direction> directions = getConnectionDirection(blockState);
 
         for (Direction laneDirection : directions) {
             if (blockGetter.getBlockState(blockPos.relative(laneDirection)).getBlock() instanceof RedstoneLaneBlock) continue;
             if (direction == laneDirection.getOpposite()) {
-                return 15;
+                return 150;
             }
         }
 
@@ -157,11 +157,11 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         if (hasRedstoneBlock || level.getBlockState(blockPos.above()).is(Blocks.REDSTONE_BLOCK)) {
 
-            power = 15;
+            power = 150;
 
         } else if (hasMagmaBlock || level.getBlockState(blockPos.above()).is(Blocks.MAGMA_BLOCK)) {
 
-            power = 15;
+            power = 150;
             overpowered = true;
 
         } else {
@@ -215,7 +215,7 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         if (!isRedstoneBlock) return;
 
-        level.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.POWERED).setValue(DNLProperties.REDSTONE_LANE_POWER, 15), 2);
+        level.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.POWERED).setValue(DNLProperties.REDSTONE_LANE_POWER, 150), 2);
 
         poweredParticle(level, blockState, blockPos);
 
@@ -239,7 +239,7 @@ public class RedstoneLaneBlock extends DirectionalBlock {
 
         if (!isOverpoweredBlock) return;
 
-        level.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.OVERPOWERED).setValue(DNLProperties.REDSTONE_LANE_POWER, 15), 2);
+        level.setBlock(blockPos, blockState.setValue(DNLProperties.REDSTONE_LANE_MODE, RedstoneLaneMode.OVERPOWERED).setValue(DNLProperties.REDSTONE_LANE_POWER, 150), 2);
 
         poweredParticle(level, blockState, blockPos);
 

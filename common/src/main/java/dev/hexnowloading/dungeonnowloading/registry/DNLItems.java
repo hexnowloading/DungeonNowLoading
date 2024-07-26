@@ -2,6 +2,8 @@ package dev.hexnowloading.dungeonnowloading.registry;
 
 import dev.hexnowloading.dungeonnowloading.item.*;
 import dev.hexnowloading.dungeonnowloading.item.blockitem.FairkeeperChestBlockItem;
+import dev.hexnowloading.dungeonnowloading.item.blockitem.FierceFairkeeperChestBlockItem;
+import dev.hexnowloading.dungeonnowloading.item.blockitem.WiseFairkeeperChestBlockItem;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -87,7 +89,9 @@ public class DNLItems {
     public static final Supplier<Item> CHAOS_SPAWNER_BARRIER_EDGE = register("chaos_spawner_barrier_edge", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_EDGE.get(), new Item.Properties()));
     public static final Supplier<Item> CHAOS_SPAWNER_BARRIER_VERTEX = register("chaos_spawner_barrier_vertex", () -> new BlockItem(DNLBlocks.CHAOS_SPAWNER_BARRIER_VERTEX.get(), new Item.Properties()));
 
-    public static final Supplier<Item> FAIRKEEPER_CHEST = register("fairkeeper_chest", FairkeeperChestBlockItem::new) ;
+    public static final Supplier<Item> FAIRKEEPER_CHEST = register("fairkeeper_chest", FairkeeperChestBlockItem::new);
+    public static final Supplier<Item> WISE_FAIRKEEPER_CHEST = register("wise_fairkeeper_chest", WiseFairkeeperChestBlockItem::new);
+    public static final Supplier<Item> FIERCE_FAIRKEEPER_CHEST = register("fierce_fairkeeper_chest", FierceFairkeeperChestBlockItem::new);
     public static final Supplier<Item> FAIRKEEPER_SPAWNER = register("fairkeeper_spawner", () -> new BlockItem(DNLBlocks.FAIRKEEEPER_SPAWNER.get(), new Item.Properties()));
     public static final Supplier<Item> REDSTONE_LANE_I = register("redstone_lane_i", () -> new BlockItem(DNLBlocks.REDSTONE_LANE_I.get(), new Item.Properties()));
     public static final Supplier<Item> REDSTONE_LANE_L = register("redstone_lane_l", () -> new BlockItem(DNLBlocks.REDSTONE_LANE_L.get(), new Item.Properties()));

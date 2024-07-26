@@ -2,6 +2,9 @@
   "values": [
     "dungeonnowloading:wooden_wall_rack",
     "dungeonnowloading:wooden_wall_platform",
-    "dungeonnowloading:fairkeeper_chest"
+    "dungeonnowloading:fairkeeper_chest",
+    "dungeonnowloading:wise_fairkeeper_chest",
+    "dungeonnowloading:fierce_fairkeeper_chest",
+    "dungeonnowloading:fairkeeper_spawner"
   ]
 }

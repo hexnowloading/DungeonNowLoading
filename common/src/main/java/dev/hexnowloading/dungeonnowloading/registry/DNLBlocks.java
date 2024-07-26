@@ -64,6 +64,8 @@ public class DNLBlocks {
     //public static final Supplier<Block> WIND_ALTER = registerBlock("wind_alter", () -> new WindAlterBlock(BlockBehaviour.Properties.copy(Blocks.CHISELED_STONE_BRICKS).strength(4.0f).requiresCorrectToolForDrops()));
 
     public static Supplier<Block> FAIRKEEPER_CHEST;
+    public static Supplier<Block> WISE_FAIRKEEPER_CHEST;
+    public static Supplier<Block> FIERCE_FAIRKEEPER_CHEST;
     public static Supplier<Block> FAIRKEEEPER_SPAWNER;
     public static Supplier<Block> REDSTONE_LANE_I;
     public static Supplier<Block> REDSTONE_LANE_L;
@@ -137,8 +139,10 @@ public class DNLBlocks {
         CHAOS_SPAWNER_BARRIER_VERTEX = registerBlock("chaos_spawner_barrier_vertex", () -> new ChaosSpawnerBarrierVertexBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel((lightLevel) -> {return 15;}).noOcclusion().noLootTable()));
         //public static final Supplier<Block> WIND_ALTER = registerBlock("wind_alter", () -> new WindAlterBlock(BlockBehaviour.Properties.copy(Blocks.CHISELED_STONE_BRICKS).strength(4.0f).requiresCorrectToolForDrops()));
 
-        FAIRKEEPER_CHEST = registerBlock("fairkeeper_chest", () -> new FairkeeperChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(-1.0F, 3600000.0F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
-        FAIRKEEEPER_SPAWNER = registerBlock("fairkeeper_spawner", () -> new FairkeeperSpawnerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(-1.0F, 3600000.0F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
+        FAIRKEEPER_CHEST = registerBlock("fairkeeper_chest", () -> new FairkeeperChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F, 2.5F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7)));
+        WISE_FAIRKEEPER_CHEST = registerBlock("wise_fairkeeper_chest", () -> new DisabledFairkeeperChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F, 2.5F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7)));
+        FIERCE_FAIRKEEPER_CHEST = registerBlock("fierce_fairkeeper_chest", () -> new DisabledFairkeeperChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5F, 2.5F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7)));
+        FAIRKEEEPER_SPAWNER = registerBlock("fairkeeper_spawner", () -> new FairkeeperSpawnerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).noOcclusion().sound(SoundType.WOOD).lightLevel((lightLevel) -> 7).noLootTable()));
         REDSTONE_LANE_I = registerBlock("redstone_lane_i", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel(DNLBlocks::laneLight).noLootTable()));
         REDSTONE_LANE_L = registerBlock("redstone_lane_l", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel(DNLBlocks::laneLight).noLootTable()));
         REDSTONE_LANE_T = registerBlock("redstone_lane_t", () -> new RedstoneLaneBlock(BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).strength(-1.0F, 3600000.0F).sound(SoundType.METAL).lightLevel(DNLBlocks::laneLight).noLootTable()));
