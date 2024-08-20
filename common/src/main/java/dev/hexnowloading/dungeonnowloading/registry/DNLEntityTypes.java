@@ -32,7 +32,7 @@ public class DNLEntityTypes {
     // Monsters
     public static final Supplier<EntityType<HollowEntity>> HOLLOW = register("hollow", () -> EntityType.Builder.of(HollowEntity::new, MobCategory.MONSTER).sized(0.95F, 0.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "hollow").toString()));
     public static final Supplier<EntityType<SpawnerCarrierEntity>> SPAWNER_CARRIER = register("spawner_carrier", () -> EntityType.Builder.of(SpawnerCarrierEntity::new, MobCategory.MONSTER).sized(1.95F, 1.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "spawner_carrier").toString()));
-    public static final Supplier<EntityType<ScuttleEntity>> SCUTTLE = register("scuttle", () -> EntityType.Builder.of(ScuttleEntity::new, MobCategory.MONSTER).sized(0.95F, 1.95F).fireImmune().build(new ResourceLocation(DungeonNowLoading.MOD_ID, "scuttle").toString()));
+    public static final Supplier<EntityType<ScuttleEntity>> SCUTTLE = register("scuttle", () -> EntityType.Builder.of(ScuttleEntity::new, MobCategory.MONSTER).sized(0.97F, 1.95F).fireImmune().build(new ResourceLocation(DungeonNowLoading.MOD_ID, "scuttle").toString()));
 
     // Passive
     public static final Supplier<EntityType<SealedChaosEntity>> SEALED_CHAOS = register("sealed_chaos", () -> EntityType.Builder.of(SealedChaosEntity::new, MobCategory.CREATURE).sized(1F, 1F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "sealed_chaos").toString()));

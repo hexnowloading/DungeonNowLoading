@@ -1,8 +1,8 @@
 package dev.hexnowloading.dungeonnowloading;
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import dev.hexnowloading.dungeonnowloading.client.DNLForgeClientEvents;
 import dev.hexnowloading.dungeonnowloading.platform.ForgeCommonRegistryHelper;
-import dev.hexnowloading.dungeonnowloading.server.DNLForgeBlockEvents;
 import dev.hexnowloading.dungeonnowloading.server.DNLForgeEntityEvents;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -50,7 +50,5 @@ public class DNLForge {
     private void addForgeListeners() {
         MinecraftForge.EVENT_BUS.addListener(DNLForgeEntityEvents::onLivingDamageEvent);
         MinecraftForge.EVENT_BUS.addListener(DNLForgeEntityEvents::onLivingHurtEvent);
-        MinecraftForge.EVENT_BUS.addListener(DNLForgeBlockEvents::onPlayerBreakBlock);
-        MinecraftForge.EVENT_BUS.addListener(DNLForgeBlockEvents::onPlayerPlaceBlock);
     }
 }

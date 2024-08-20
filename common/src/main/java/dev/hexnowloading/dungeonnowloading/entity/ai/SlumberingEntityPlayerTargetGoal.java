@@ -16,7 +16,7 @@ public class SlumberingEntityPlayerTargetGoal extends NearestAttackableTargetGoa
     private Mob mob;
 
     public SlumberingEntityPlayerTargetGoal(Mob mob) {
-        super(mob, Player.class, 50, true, true, null);
+        super(mob, Player.class, 10, true, true, null);
         this.mob = mob;
         this.setFlags(EnumSet.of(Flag.TARGET));
     }

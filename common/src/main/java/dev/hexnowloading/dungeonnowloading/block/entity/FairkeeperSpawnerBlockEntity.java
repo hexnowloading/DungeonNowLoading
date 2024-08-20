@@ -24,6 +24,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -43,6 +44,8 @@ import net.minecraft.world.phys.AABB;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -55,7 +58,6 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
     private SimpleWeightedRandomList<SpawnData> spawnPotentials = SimpleWeightedRandomList.empty();
     private SpawnData nextSpawnData;
     private Entity displayEntity;
-    private int spawnerLevel;
     private int remainingStoredMobs;
     private int spawnDelay;
     private int startUpTick;
@@ -67,7 +69,6 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
 
     public FairkeeperSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(DNLBlockEntityTypes.FAIRKEEPER_SPAWNER.get(), blockPos, blockState);
-        this.spawnerLevel = 0;
         this.spawnDelay = 0;
         this.startUpTick = 40;
         this.destroyTick = -1;
@@ -77,7 +78,6 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag compoundTag) {
-        compoundTag.putInt("SpawnerLevel", this.spawnerLevel);
         compoundTag.putInt("RemainingStoredMobs", this.remainingStoredMobs);
         compoundTag.putInt("StartUpTick", this.startUpTick);
         compoundTag.putInt("SpawnDelay", this.spawnDelay);
@@ -94,7 +94,6 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
 
     @Override
     public void load(CompoundTag compoundTag) {
-        this.spawnerLevel = compoundTag.getInt("SpawnerLevel");
         this.remainingStoredMobs = compoundTag.getInt("RemainingStoredMobs");
         this.startUpTick = compoundTag.getInt("StartUpTick");
         this.spawnDelay = compoundTag.getInt("SpawnDelay");
@@ -255,6 +254,11 @@ public class FairkeeperSpawnerBlockEntity extends BlockEntity {
                 if (spawnData.getEntityToSpawn().size() == 1 && spawnData.getEntityToSpawn().contains("id", CompoundTag.OBJECT_HEADER)) { // adding this part ignores equipment attachment from the finalized spawn, which is good, but don't know why it happens...
                     ((Mob)mob).finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWNER, (SpawnGroupData)null, (CompoundTag)null);
                 }
+                /*Collection<MobEffectInstance> reapplyMobEffects = mob1.getActiveEffects();
+                mob1.removeAllEffects();
+                for (MobEffectInstance mobEffectInstance : reapplyMobEffects) {
+                    mob1.addEffect(mobEffectInstance);
+                }*/
             } else {
                 continue;
             }

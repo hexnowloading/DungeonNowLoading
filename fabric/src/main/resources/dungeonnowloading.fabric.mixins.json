@@ -6,12 +6,14 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "entities.EntityAvoidBlockMixin",
-    "structures.StructureProcessorAccessor",
-    "structures.StructureTemplateMixin",
     "fabric.block.BlockPlaceMixin",
+    "fabric.block.BucketItemMixin",
+    "fabric.block.FlintAndSteelMixin",
     "fabric.entities.LivingDamageMixin",
     "fabric.entities.PlayerDamageMixin",
-    "fabric.structures.StructurePoolMixin"
+    "fabric.structures.StructurePoolMixin",
+    "structures.StructureProcessorAccessor",
+    "structures.StructureTemplateMixin"
   ],
   "client": [
     "MaxHealthAttributeMixin",

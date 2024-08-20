@@ -36,6 +36,7 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
                 DNLBlocks.DUELING_STONE_EMBLEM.get(),
                 DNLBlocks.PUZZLING_STONE_EMBLEM.get(),
                 DNLBlocks.POLISHED_STONE.get(),
+                DNLBlocks.BORDERED_STONE.get(),
                 DNLBlocks.COBBLESTONE_PEBBLES.get(),
                 DNLBlocks.MOSSY_COBBLESTONE_PEBBLES.get(),
                 DNLBlocks.IRON_INGOT_PILE.get(),
@@ -61,7 +62,8 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
                 DNLBlocks.ECHO_STONE_NOTCH.get(),
                 DNLBlocks.DIAMOND_STONE_NOTCH.get(),
                 DNLBlocks.NETHERITE_STONE_NOTCH.get(),
-                DNLBlocks.SIGNAL_GATE.get()
+                DNLBlocks.SIGNAL_GATE.get(),
+                DNLBlocks.SCUTTLE_STATUE.get()
         );
 
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(
@@ -76,6 +78,10 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.WALLS).add(
                 DNLBlocks.COILING_STONE_PILLAR_WALL.get(),
                 DNLBlocks.STONE_TILE_WALL.get()
+        );
+
+        this.tag(BlockTags.INFINIBURN_OVERWORLD).add(
+                DNLBlocks.SCUTTLE_STATUE.get()
         );
     }
 }

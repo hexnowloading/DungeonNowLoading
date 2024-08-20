@@ -17,7 +17,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class FairkeeperSpawnerBlock extends BaseEntityBlock implements EntityBlock {
 
@@ -57,6 +60,24 @@ public class FairkeeperSpawnerBlock extends BaseEntityBlock implements EntityBlo
     @Override
     public RenderShape getRenderShape(BlockState renderShape) {
         return RenderShape.MODEL;
+    }
+
+
+
+    @Override
+    public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos1, boolean b) {
+        if (level.isClientSide) {
+            return;
+        }
+        if (!level.hasNeighborSignal(blockPos)) {
+            return;
+        }
+        FairkeeperSpawnerBlockEntity blockEntity = (FairkeeperSpawnerBlockEntity) level.getBlockEntity(blockPos);
+        if (blockEntity != null) {
+            AABB aabb = new AABB(blockPos).inflate(32);
+            List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, aabb);
+            blockEntity.alert(nearbyPlayers.size(), blockPos, blockEntity);
+        }
     }
 
     public static void setFairkeeperAlert(Level level, BlockPos blockPos, Boolean b) {

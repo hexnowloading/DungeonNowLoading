@@ -1,0 +1,42 @@
+{
+  "name": "dungeonnowloading:temple_of_duality/chamber/hard/group_1",
+  "fallback": "dungeonnowloading:temple_of_duality/chamber/end_fallback",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/archery",
+        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/arena",
+        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/lava_lane",
+        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/lava_pit",
+        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
+      }
+    }
+  ]
+}

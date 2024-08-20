@@ -1,0 +1,91 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "dungeonnowloading:redstone_chip"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/armor/easy_puzzle",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/equipment/easy_puzzle",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 4
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/material/easy_puzzle",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/food/easy_puzzle",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/potion/easy_puzzle",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/arrow/easy_puzzle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/garbage/easy_puzzle",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "dungeonnowloading:chests/temple_of_duality/wood/common",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

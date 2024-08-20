@@ -15,6 +15,7 @@
     "dungeonnowloading:dueling_stone_emblem",
     "dungeonnowloading:puzzling_stone_emblem",
     "dungeonnowloading:polished_stone",
+    "dungeonnowloading:bordered_stone",
     "dungeonnowloading:cobblestone_pebbles",
     "dungeonnowloading:mossy_cobblestone_pebbles",
     "dungeonnowloading:iron_ingot_pile",
@@ -40,6 +41,7 @@
     "dungeonnowloading:echo_stone_notch",
     "dungeonnowloading:diamond_stone_notch",
     "dungeonnowloading:netherite_stone_notch",
-    "dungeonnowloading:signal_gate"
+    "dungeonnowloading:signal_gate",
+    "dungeonnowloading:scuttle_statue"
   ]
 }

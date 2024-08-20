@@ -1,10 +1,9 @@
 package dev.hexnowloading.dungeonnowloading.entity.monster;
 
-import dev.hexnowloading.dungeonnowloading.entity.ai.ScuttleFlameThrowerAttackGoal;
-import dev.hexnowloading.dungeonnowloading.entity.ai.SlumberingEntityLookAtPlayerGoal;
-import dev.hexnowloading.dungeonnowloading.entity.ai.SlumberingEntityPlayerTargetGoal;
-import dev.hexnowloading.dungeonnowloading.entity.ai.SlumberingEntityRandomStrollGoal;
+import dev.hexnowloading.dungeonnowloading.entity.ai.*;
+import dev.hexnowloading.dungeonnowloading.entity.projectile.FlameProjectileEntity;
 import dev.hexnowloading.dungeonnowloading.entity.util.SlumberingEntity;
+import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLParticleTypes;
 import dev.hexnowloading.dungeonnowloading.registry.DNLSounds;
 import dev.hexnowloading.dungeonnowloading.registry.DNLTags;
@@ -24,8 +23,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -65,17 +68,18 @@ public class ScuttleEntity extends Monster implements Enemy, SlumberingEntity {
 
     public ScuttleEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+        this.setState(ScuttleState.SLUMBERING);
         this.xpReward = 20;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 115.0)
+                .add(Attributes.MAX_HEALTH, 50.0)
                 .add(Attributes.ATTACK_DAMAGE, 15.0)
                 .add(Attributes.ATTACK_KNOCKBACK, 1.25)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.5)
-                .add(Attributes.FOLLOW_RANGE, 16.0);
+                .add(Attributes.FOLLOW_RANGE, 32.0);
     }
 
     @Override
@@ -180,7 +184,7 @@ public class ScuttleEntity extends Monster implements Enemy, SlumberingEntity {
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance difficultyInstance, MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
-        this.setState(ScuttleState.SLUMBERING);
+        //this.setState(ScuttleState.SLUMBERING);
         return super.finalizeSpawn(serverLevelAccessor, difficultyInstance, mobSpawnType, spawnGroupData, compoundTag);
     }
 
@@ -191,10 +195,13 @@ public class ScuttleEntity extends Monster implements Enemy, SlumberingEntity {
 
     @Override
     public boolean hurt(DamageSource damageSource, float damage) {
+        if (damageSource.getDirectEntity() instanceof FlameProjectileEntity) {
+            return false;
+        }
         if (damageSource.is(DNLTags.SCUTTLE_HURTABLE) || this.isAttackingState() || damageSource.isCreativePlayer()) {
+            this.playDeflectSound();
             return super.hurt(damageSource, damage);
         }
-        this.playDeflectSound();
         return false;
     }
 

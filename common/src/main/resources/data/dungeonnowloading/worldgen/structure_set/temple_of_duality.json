@@ -9,8 +9,8 @@
     "type": "minecraft:random_spread",
     "salt": 83979417,
     "exclusion_zone": {
-      "other_set": "minecraft:jungle_temples",
-      "chunk_count": 1
+      "other_set": "minecraft:ancient_cities",
+      "chunk_count": 5
     },
     "spacing": 64,
     "separation": 16

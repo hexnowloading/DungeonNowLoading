@@ -12,7 +12,7 @@
       "other_set": "minecraft:mineshafts",
       "chunk_count": 5
     },
-    "spacing": 40,
-    "separation": 10
+    "spacing": 80,
+    "separation": 20
   }
 }

@@ -21,6 +21,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -147,7 +148,7 @@ public class FairkeeperChestBlock extends BaseEntityBlock implements SimpleWater
         }
         if (state.getValue(FAIRKEEPER_ALERT)) {
             AABB aabb = blockEntity.getBoundaryAABB();
-            List<Mob> list = level.getEntitiesOfClass(Mob.class, aabb);
+            List<Monster> list = level.getEntitiesOfClass(Monster.class, aabb);
             if (list.size() > 0) {
                 return InteractWithLockedFairkeeperChest(level, player, pos);
             }

@@ -1,5 +1,5 @@
 {
-  "name": "dungeonnowloading:temple_of_duality/boss_room",
+  "name": "dungeonnowloading:temple_of_duality/fairkeeper_spawner/level_1_basic",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/boss_room",
+        "location": "dungeonnowloading:temple_of_duality/fairkeeper_spawner/level_1_basic",
         "processors": "dungeonnowloading:labyrinth/generic_degradation"
       }
     }

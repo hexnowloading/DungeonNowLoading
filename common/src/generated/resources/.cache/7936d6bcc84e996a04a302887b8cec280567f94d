@@ -1,4 +1,5 @@
-// 1.20.1	2024-07-24T07:40:23.642573	Tags for minecraft:block mod id dungeonnowloading
+// 1.20.1	2024-08-15T18:19:53.5337182	Tags for minecraft:block mod id dungeonnowloading
+9d234881a09c002d8c931b3b43e8c9bbc711c8f4 data/minecraft/tags/blocks/infiniburn_overworld.json
 f21b4d01c1698096b5d774b40a8e0e4510985c30 data/minecraft/tags/blocks/mineable/axe.json
-727fa277b4505ad162c9948273fc3151ec301864 data/minecraft/tags/blocks/mineable/pickaxe.json
+1781a408201207a3b8885c34e9b33c892804ae7b data/minecraft/tags/blocks/mineable/pickaxe.json
 328ba56826e0ae3c483e05504c69ee0cb6f3048e data/minecraft/tags/blocks/walls.json

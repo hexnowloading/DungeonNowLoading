@@ -14,13 +14,13 @@ authors = "${mod_author}" #optional
 description = '''
 This is a long form description of the mod. You can write whatever you want here
 ''' #mandatory (Supports multiline text)
-[[dependencies.multiloader]] #optional
+[[dependencies.dungeonnowloading]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
 versionRange = "[46.0.0,)" #mandatory
 ordering = "NONE" # The order that this dependency should load in relation to your mod, required to be either 'BEFORE' or 'AFTER' if the dependency is not mandatory
 side = "BOTH" # Side this dependency is applied on - 'BOTH', 'CLIENT' or 'SERVER'
-[[dependencies.multiloader]]
+[[dependencies.dungeonnowloading]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20,1.21)"

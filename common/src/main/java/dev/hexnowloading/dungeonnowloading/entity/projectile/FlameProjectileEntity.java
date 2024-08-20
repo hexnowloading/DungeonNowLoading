@@ -11,6 +11,9 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
@@ -73,6 +76,15 @@ public class FlameProjectileEntity extends ThrowableItemProjectile {
         if (owner instanceof LivingEntity livingEntity) {
             double damageAmount = livingEntity.getAttributeValue(Attributes.ATTACK_DAMAGE);
             target.setSecondsOnFire(5);
+            if (!(target instanceof LivingEntity targetLivingEntity)) {
+                return;
+            }
+            if (targetLivingEntity.fireImmune()) {
+                return;
+            }
+            if (targetLivingEntity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                return;
+            }
             if (target.hurt(this.damageSources().mobProjectile(this, livingEntity), (float) damageAmount) && target.isAlive()) {
                 this.doEnchantDamageEffects(livingEntity, target);
             }
@@ -110,5 +122,10 @@ public class FlameProjectileEntity extends ThrowableItemProjectile {
     @Override
     protected float getGravity() {
         return 0.0F;
+    }
+
+    @Override
+    public boolean isOnFire() {
+        return false;
     }
 }

@@ -1,5 +1,7 @@
 package dev.hexnowloading.dungeonnowloading.entity.client.model;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.client.animation.ScuttleAnimation;
 import dev.hexnowloading.dungeonnowloading.entity.monster.ScuttleEntity;
