@@ -41,6 +41,7 @@ public class DNLItems {
     public static final Supplier<Item> SPAWNER_LEGGINGS = register("spawner_leggings", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.LEGGINGS));
     public static final Supplier<Item> SPAWNER_BOOTS = register("spawner_boots", () -> new SpawnerArmorItem(DNLArmorMaterial.SPAWNER, ArmorItem.Type.BOOTS));
     public static final Supplier<Item> SKULL_OF_CHAOS = register("skull_of_chaos", () -> new SkullOfChaosItem(new Item.Properties().rarity(Rarity.EPIC).durability(10)));
+    public static final Supplier<Item> REDSTONE_CATALYST = register("redstone_catalyst", () -> new RedstoneCatalystItem(new Item.Properties().rarity(Rarity.EPIC).durability(10)));
 
     // BLOCKS
     //public static final Supplier<Item> SKYLIGHT_STONE = register("skylight_stone", () -> new BlockItem(DNLBlocks.SKYLIGHT_STONE.get(), new Item.Properties()));
@@ -124,6 +125,7 @@ public class DNLItems {
     // SPAWN EGG
     //public static final Supplier<Item> WINDSTONE_SPAWNEGG = ITEMS.register("windstone_spawn_egg", () -> new SpawnEggItem(SkyislandEntityTypes.WINDSTONE.get(), 0xF6B201, 0xA80E0E, new Item.Properties()));
     public static final Supplier<Item> CHAOS_SPAWNER_SPAWNEGG = register("spawn_egg_chaos_spawner", Services.ITEM.makeSpawnEgg(DNLEntityTypes.CHAOS_SPAWNER::get, 0x182c39, 0x9abdd6, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final Supplier<Item> FAIRKEEPER_SPAWNEGG = register("spawn_egg_fairkeeper", Services.ITEM.makeSpawnEgg(DNLEntityTypes.FAIRKEEPER::get, 0x6a6d68, 0xff8800, new Item.Properties().rarity(Rarity.EPIC)));
     public static final Supplier<Item> HOLLOW_SPAWNEGG = register("spawn_egg_hollow", Services.ITEM.makeSpawnEgg(DNLEntityTypes.HOLLOW::get, 0x53455a, 0xf5d5e0, new Item.Properties().rarity(Rarity.COMMON)));
     public static final Supplier<Item> SPAWNER_CARRIER_SPAWNEGG = register("spawn_egg_spawner_carrier", Services.ITEM.makeSpawnEgg(DNLEntityTypes.SPAWNER_CARRIER::get, 0x6a6d68, 0x60c9f3, new Item.Properties().rarity(Rarity.COMMON)));
     public static final Supplier<Item> SCUTTLE_SPAWNEGG = register("spawn_egg_scuttle", Services.ITEM.makeSpawnEgg(DNLEntityTypes.SCUTTLE::get, 0x6a6d68, 0xff8800, new Item.Properties().rarity(Rarity.COMMON)));

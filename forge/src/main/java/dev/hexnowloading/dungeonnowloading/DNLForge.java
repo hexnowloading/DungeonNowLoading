@@ -1,6 +1,5 @@
 package dev.hexnowloading.dungeonnowloading;
 
-import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import dev.hexnowloading.dungeonnowloading.client.DNLForgeClientEvents;
 import dev.hexnowloading.dungeonnowloading.platform.ForgeCommonRegistryHelper;
 import dev.hexnowloading.dungeonnowloading.server.DNLForgeEntityEvents;

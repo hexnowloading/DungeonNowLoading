@@ -13,6 +13,7 @@ public class DNLCreativeModeTabs {
             (itemDisplayParameters, output) -> {
                 // Spawn Eggs
                 output.accept(DNLItems.CHAOS_SPAWNER_SPAWNEGG.get());
+                output.accept(DNLItems.FAIRKEEPER_SPAWNEGG.get());
                 output.accept(DNLItems.HOLLOW_SPAWNEGG.get());
                 output.accept(DNLItems.SPAWNER_CARRIER_SPAWNEGG.get());
                 output.accept(DNLItems.SCUTTLE_SPAWNEGG.get());
@@ -35,6 +36,7 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.LIFE_STEALER.get());
                 output.accept(DNLItems.SPAWNER_SWORD.get());
                 output.accept(DNLItems.SKULL_OF_CHAOS.get());
+                output.accept(DNLItems.REDSTONE_CATALYST.get());
                 // Items - Armors
                 output.accept(DNLItems.SPAWNER_HELMET.get());
                 output.accept(DNLItems.SPAWNER_CHESTPLATE.get());

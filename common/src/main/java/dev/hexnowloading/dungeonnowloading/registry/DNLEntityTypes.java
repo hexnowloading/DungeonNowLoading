@@ -2,6 +2,7 @@ package dev.hexnowloading.dungeonnowloading.registry;
 
 import dev.hexnowloading.dungeonnowloading.DungeonNowLoading;
 import dev.hexnowloading.dungeonnowloading.entity.boss.ChaosSpawnerEntity;
+import dev.hexnowloading.dungeonnowloading.entity.boss.FairkeeperEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.SpecialItemEntity;
 import dev.hexnowloading.dungeonnowloading.entity.misc.GreatExperienceBottleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.HollowEntity;
@@ -28,6 +29,7 @@ public class DNLEntityTypes {
     //public static final Supplier<EntityType<Entity>> WINDSTONE = register("windstone", () -> EntityType.Builder.of(WindstoneEntity::new, MobCategory.MISC).sized(1.0F, 1.0F).build(new ResourceLocation(Skyisland.MOD_ID, "windstone").toString()));
     // Bosses
     public static final Supplier<EntityType<ChaosSpawnerEntity>> CHAOS_SPAWNER = register("chaos_spawner", () -> EntityType.Builder.<ChaosSpawnerEntity>of(ChaosSpawnerEntity::new, MobCategory.MONSTER).fireImmune().sized(3.0F, 3.0F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "chaos_spawner").toString()));
+    public static final Supplier<EntityType<FairkeeperEntity>> FAIRKEEPER = register("fairkeeper", () -> EntityType.Builder.of(FairkeeperEntity::new, MobCategory.MONSTER).sized(4.97F, 4.97F).fireImmune().build(new ResourceLocation(DungeonNowLoading.MOD_ID, "fairkeeper").toString()));
 
     // Monsters
     public static final Supplier<EntityType<HollowEntity>> HOLLOW = register("hollow", () -> EntityType.Builder.of(HollowEntity::new, MobCategory.MONSTER).sized(0.95F, 0.95F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "hollow").toString()));
@@ -54,6 +56,7 @@ public class DNLEntityTypes {
         Map<EntityType<? extends LivingEntity>, AttributeSupplier> map = new HashMap<>();
 
         map.put(CHAOS_SPAWNER.get(), ChaosSpawnerEntity.createAttributes().build());
+        map.put(FAIRKEEPER.get(), FairkeeperEntity.createAttributes().build());
         map.put(HOLLOW.get(), HollowEntity.createAttributes().build());
         map.put(SPAWNER_CARRIER.get(), SpawnerCarrierEntity.createAttributes().build());
         map.put(SCUTTLE.get(), ScuttleEntity.createAttributes().build());

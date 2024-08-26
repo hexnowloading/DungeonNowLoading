@@ -62,6 +62,7 @@ public class DNLFabricClient implements ClientModInitializer {
     private void registerRenderers() {
         // Bosses
         EntityRendererRegistry.register(DNLEntityTypes.CHAOS_SPAWNER.get(), ChaosSpawnerRenderer::new);
+        EntityRendererRegistry.register(DNLEntityTypes.FAIRKEEPER.get(), FairkeeperRenderer::new);
 
         // Monsters
         EntityRendererRegistry.register(DNLEntityTypes.HOLLOW.get(), HollowRenderer::new);
@@ -91,6 +92,7 @@ public class DNLFabricClient implements ClientModInitializer {
     private void registerModelLayers() {
         // Bosses
         EntityModelLayerRegistry.registerModelLayer(ChaosSpawnerModel.LAYER_LOCATION, ChaosSpawnerModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(FairkeeperModel.LAYER_LOCATION, FairkeeperModel::createBodyLayer);
 
         // Monsters
         EntityModelLayerRegistry.registerModelLayer(HollowModel.LAYER_LOCATION, HollowModel::createBodyLayer);

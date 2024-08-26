@@ -29,6 +29,8 @@ public class DNLForgeItemModelProvider extends ItemModelProvider {
         simpleItem(DNLItems.REDSTONE_CORE.get());
         simpleItem(DNLItems.REDSTONE_CHIP.get());
         simpleItem(DNLItems.REDSTONE_CIRCUIT.get());
+        simpleItem(DNLItems.REDSTONE_CATALYST.get());
+        spawnEggItem(DNLItems.FAIRKEEPER_SPAWNEGG.get());
         spawnEggItem(DNLItems.SCUTTLE_SPAWNEGG.get());
     }
 
