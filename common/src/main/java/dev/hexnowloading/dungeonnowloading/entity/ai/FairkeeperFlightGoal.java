@@ -43,7 +43,7 @@ public class FairkeeperFlightGoal extends Goal {
         this.targetPos = new Vec3(dx, dy, dz);
         this.distanceToTarget = this.fairkeeperEntity.position().distanceToSqr(targetPos);
         //this.fairkeeperEntity.getMoveControl().setWantedPosition(dx, dy, dz, 1.0);
-        this.fairkeeperEntity.getNavigation().moveTo(dx, dy, dz, this.speedModifier);
+        this.fairkeeperEntity.getNavigation().moveTo(dx, dy, dz, this.speedModifier * 10.0);
         //this.distanceToTarget = this.targetPos.distanceToSqr(this.targetPos);
     }
 
@@ -53,7 +53,7 @@ public class FairkeeperFlightGoal extends Goal {
         this.fairkeeperEntity.getNavigation().stop();
     }
 
-    @Override
+    /*@Override
     public void tick() {
         double progressToTarget = this.fairkeeperEntity.position().distanceToSqr(this.targetPos) / this.distanceToTarget;
         //this.speedModifier = this.speedModifier * progressToTarget;
@@ -61,5 +61,5 @@ public class FairkeeperFlightGoal extends Goal {
         this.fairkeeperEntity.getNavigation().setSpeedModifier(this.speedModifier);
         //this.fairkeeperEntity.getNavigation().moveTo(this.targetPos.x, this.targetPos.y, this.targetPos.z, this.speedModifier);
         System.out.println(this.fairkeeperEntity.position().distanceToSqr(this.targetPos) + " / " + this.distanceToTarget + " / " + this.speedModifier);
-    }
+    }*/
 }

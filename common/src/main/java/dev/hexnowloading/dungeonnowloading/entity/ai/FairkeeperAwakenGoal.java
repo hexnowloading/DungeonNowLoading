@@ -8,15 +8,15 @@ import java.util.EnumSet;
 
 public class FairkeeperAwakenGoal extends Goal {
     private final FairkeeperEntity fairkeeperEntity;
-    private double speedModifier;
-    private double maxSpeed;
+    private final double maxSpeed;
+    private final double minSpeed;
     private double distanceToTarget;
     private Vec3 targetPos;
 
-    public FairkeeperAwakenGoal(FairkeeperEntity fairkeeperEntity, double speedModifier) {
+    public FairkeeperAwakenGoal(FairkeeperEntity fairkeeperEntity, double maxSpeed, double minSpeed) {
         this.fairkeeperEntity = fairkeeperEntity;
-        this.speedModifier = speedModifier;
-        this.maxSpeed = speedModifier;
+        this.maxSpeed = maxSpeed;
+        this.minSpeed = minSpeed;
         setFlags(EnumSet.of(Flag.MOVE));
     }
 
@@ -26,34 +26,25 @@ public class FairkeeperAwakenGoal extends Goal {
     }
 
     @Override
-    public boolean canContinueToUse() {
-        return this.fairkeeperEntity.position().distanceToSqr(targetPos) < 1.0E-4f;
-    }
-
-    @Override
     public void start() {
-        this.fairkeeperEntity.setState(FairkeeperEntity.FairkeeperState.IDLE);
         double dx = this.fairkeeperEntity.getX();
         double dy = this.fairkeeperEntity.getY() + 20.0;
         double dz = this.fairkeeperEntity.getZ();
         this.targetPos = new Vec3(dx, dy, dz);
-        this.distanceToTarget = this.fairkeeperEntity.position().distanceToSqr(targetPos);
-        //this.fairkeeperEntity.getMoveControl().setWantedPosition(dx, dy, dz, 1.0);
-        //this.distanceToTarget = this.targetPos.distanceToSqr(this.targetPos);
+        this.distanceToTarget = this.fairkeeperEntity.position().distanceTo(targetPos);
     }
 
     @Override
     public void stop() {
         this.fairkeeperEntity.setDeltaMovement(Vec3.ZERO);
-        this.fairkeeperEntity.getNavigation().stop();
     }
 
     @Override
     public void tick() {
-        double progressToTarget = this.fairkeeperEntity.position().distanceToSqr(this.targetPos) / this.distanceToTarget;
-        //this.speedModifier = this.speedModifier * progressToTarget;
-        this.speedModifier = 0.1 + (this.maxSpeed - 0.1) * (1 - progressToTarget * progressToTarget);
-        this.fairkeeperEntity.getMoveControl().setWantedPosition(this.targetPos.x, this.targetPos.y, this.targetPos.z, this.speedModifier);
-        System.out.println(this.fairkeeperEntity.position().distanceToSqr(this.targetPos) + " / " + this.distanceToTarget + " / " + this.speedModifier);
+        double t = 1 - this.fairkeeperEntity.position().distanceTo(this.targetPos) / this.distanceToTarget;
+        if (t >= 0.99) t = 1;
+        double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
+        this.fairkeeperEntity.setDeltaMovement(0, speed, 0);
+        if (t == 1) this.fairkeeperEntity.setState(FairkeeperEntity.FairkeeperState.IDLE);
     }
 }
