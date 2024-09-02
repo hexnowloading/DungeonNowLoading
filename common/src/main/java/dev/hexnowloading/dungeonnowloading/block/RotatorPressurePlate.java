@@ -3,21 +3,28 @@ package dev.hexnowloading.dungeonnowloading.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -26,14 +33,35 @@ public class RotatorPressurePlate extends PressurePlateBlock {
     private static final VoxelShape UNPRESSED_AABB = Block.box(3.0, 0.0, 3.0, 13.0, 1.0, 13.0);
     private static final net.minecraft.world.phys.AABB ROTATOR_TOUCH_AABB = new AABB(0.1875, 0.0, 0.1875, 0.8125, 0.25, 0.8125);
     private boolean hasArrow;
+    private final BlockSetType type;
 
     public RotatorPressurePlate(Properties properties, BlockSetType blockSetType) {
         super(Sensitivity.EVERYTHING, properties, blockSetType);
+        this.type = blockSetType;
     }
 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return this.getSignalForState(blockState) > 0 ? PRESSED_AABB : UNPRESSED_AABB;
+    }
+
+    @Override
+    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
+        if (blockState.getValue(POWERED)) {
+            return InteractionResult.CONSUME;
+        } else {
+            if (!level.isClientSide) {
+                this.rotateBlock((ServerLevel) level, blockPos);
+            }
+            BlockState poweredState = this.setSignalForState(blockState, 15);
+            level.setBlock(blockPos, poweredState, Block.UPDATE_CLIENTS);
+            this.updateNeighbours(level, blockPos);
+            level.setBlocksDirty(blockPos, blockState, poweredState);
+            level.scheduleTick(new BlockPos(blockPos), this, this.getPressedTime());
+            level.playSound(null, blockPos, this.type.pressurePlateClickOn(), SoundSource.BLOCKS);
+            level.gameEvent(player, GameEvent.BLOCK_ACTIVATE, blockPos);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
     }
 
     @Override
@@ -67,6 +95,29 @@ public class RotatorPressurePlate extends PressurePlateBlock {
         arrow.yRotO = arrow.getYRot();
         arrow.xRotO = arrow.getXRot();
     }
+
+    /*private void checkPressed(@Nullable Entity entity, Level level, BlockPos blockPos, BlockState blockState, int i) {
+        boolean bl2;
+        int j = this.getSignalStrength(level, blockPos);
+        boolean bl = i > 0;
+        boolean bl3 = bl2 = j > 0;
+        if (i != j) {
+            BlockState blockState2 = this.setSignalForState(blockState, j);
+            level.setBlock(blockPos, blockState2, 2);
+            this.updateNeighbours(level, blockPos);
+            level.setBlocksDirty(blockPos, blockState, blockState2);
+        }
+        if (!bl2 && bl) {
+            level.playSound(null, blockPos, this.type.pressurePlateClickOff(), SoundSource.BLOCKS);
+            level.gameEvent(entity, GameEvent.BLOCK_DEACTIVATE, blockPos);
+        } else if (bl2 && !bl) {
+            level.playSound(null, blockPos, this.type.pressurePlateClickOn(), SoundSource.BLOCKS);
+            level.gameEvent(entity, GameEvent.BLOCK_ACTIVATE, blockPos);
+        }
+        if (bl2) {
+            level.scheduleTick(new BlockPos(blockPos), this, this.getPressedTime());
+        }
+    }*/
 
 
     @Override

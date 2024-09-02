@@ -1,6 +1,8 @@
 package dev.hexnowloading.dungeonnowloading.entity.ai;
 
+import dev.hexnowloading.dungeonnowloading.entity.ai.control.FairkeeperFlyingMoveControl;
 import dev.hexnowloading.dungeonnowloading.entity.boss.FairkeeperEntity;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
 
@@ -10,13 +12,15 @@ public class FairkeeperAwakenGoal extends Goal {
     private final FairkeeperEntity fairkeeperEntity;
     private final double maxSpeed;
     private final double minSpeed;
+    private final double stopAccuracy;
     private double distanceToTarget;
     private Vec3 targetPos;
 
-    public FairkeeperAwakenGoal(FairkeeperEntity fairkeeperEntity, double maxSpeed, double minSpeed) {
+    public FairkeeperAwakenGoal(FairkeeperEntity fairkeeperEntity, double maxSpeed, double minSpeed, double stopAccuracy) {
         this.fairkeeperEntity = fairkeeperEntity;
         this.maxSpeed = maxSpeed;
         this.minSpeed = minSpeed;
+        this.stopAccuracy = stopAccuracy;
         setFlags(EnumSet.of(Flag.MOVE));
     }
 
@@ -27,24 +31,17 @@ public class FairkeeperAwakenGoal extends Goal {
 
     @Override
     public void start() {
-        double dx = this.fairkeeperEntity.getX();
-        double dy = this.fairkeeperEntity.getY() + 20.0;
-        double dz = this.fairkeeperEntity.getZ();
-        this.targetPos = new Vec3(dx, dy, dz);
-        this.distanceToTarget = this.fairkeeperEntity.position().distanceTo(targetPos);
-    }
-
-    @Override
-    public void stop() {
-        this.fairkeeperEntity.setDeltaMovement(Vec3.ZERO);
+        System.out.println(this.fairkeeperEntity.getY() + " / " + this.fairkeeperEntity.getSpawnPoint().getY());
+        double dx = this.fairkeeperEntity.getSpawnPoint().getX() + 0.5d;
+        double dy = this.fairkeeperEntity.getSpawnPoint().getY() + 20.0d;
+        double dz = this.fairkeeperEntity.getSpawnPoint().getZ() + 0.5d;
+        ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWantedPositionWithSpeed(dx, dy, dz, this.maxSpeed, this.minSpeed, this.stopAccuracy);
     }
 
     @Override
     public void tick() {
-        double t = 1 - this.fairkeeperEntity.position().distanceTo(this.targetPos) / this.distanceToTarget;
-        if (t >= 0.99) t = 1;
-        double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
-        this.fairkeeperEntity.setDeltaMovement(0, speed, 0);
-        if (t == 1) this.fairkeeperEntity.setState(FairkeeperEntity.FairkeeperState.IDLE);
+        if (!this.fairkeeperEntity.getMoveControl().hasWanted()) {
+            this.fairkeeperEntity.stopAttacking(20);
+        }
     }
 }

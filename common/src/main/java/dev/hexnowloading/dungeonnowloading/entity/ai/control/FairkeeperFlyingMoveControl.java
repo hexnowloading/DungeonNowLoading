@@ -7,53 +7,62 @@ import net.minecraft.world.phys.Vec3;
 
 public class FairkeeperFlyingMoveControl extends MoveControl {
 
+    private double maxSpeed;
+    private double minSpeed;
+    private double distanceToTarget;
+    private Vec3 targetPos;
+    private double stopAccuracy;
+
     public FairkeeperFlyingMoveControl(Mob mob) {
         super(mob);
     }
 
     @Override
+    public void setWantedPosition(double wantedX, double wantedY, double wantedZ, double speedModifier) {
+        this.maxSpeed = speedModifier;
+        this.minSpeed = 0.0;
+        this.targetPos = new Vec3(wantedX, wantedY, wantedZ);
+        this.distanceToTarget = this.mob.position().distanceTo(targetPos);
+        super.setWantedPosition(wantedX, wantedY, wantedZ, speedModifier);
+    }
+
+    public void setWantedPositionWithSpeed(double wantedX, double wantedY, double wantedZ, double maxSpeed, double minSpeed) {
+        this.maxSpeed = maxSpeed;
+        this.minSpeed = minSpeed;
+        this.targetPos = new Vec3(wantedX, wantedY, wantedZ);
+        this.distanceToTarget = this.mob.position().distanceTo(targetPos);
+        this.setWantedPositionWithSpeed(wantedX, wantedY, wantedZ, maxSpeed, minSpeed, 0.99d);
+    }
+
+    public void setWantedPositionWithSpeed(double wantedX, double wantedY, double wantedZ, double maxSpeed, double minSpeed, double stopAccuracy) {
+        this.maxSpeed = maxSpeed;
+        this.minSpeed = minSpeed;
+        this.targetPos = new Vec3(wantedX, wantedY, wantedZ);
+        this.distanceToTarget = this.mob.position().distanceTo(targetPos);
+        this.stopAccuracy = stopAccuracy;
+        super.setWantedPosition(wantedX, wantedY, wantedZ, speedModifier);
+    }
+
+
+    public void setWaitOperation() {
+        this.operation = Operation.WAIT;
+    }
+
+    @Override
     public void tick() {
-        if (this.operation == Operation.JUMPING) {
-            this.operation = Operation.WAIT;
+        if (this.operation == Operation.MOVE_TO) {
             this.mob.setNoGravity(true);
-            double dx = this.wantedX - this.mob.getX();
-            double dy = this.wantedY - this.mob.getY();
-            double dz = this.wantedZ - this.mob.getZ();
-            Vec3 vec3 = new Vec3(dx, dy, dz);
-            double dist = vec3.lengthSqr();
-            if (dist < 2.5000003E-7F) {
-                this.mob.setYya(0.0F);
-                this.mob.setZza(0.0F);
-                return;
+
+            Vec3 direction = targetPos.subtract(this.mob.position()).normalize();
+            double t = 1 - this.mob.position().distanceTo(this.targetPos) / this.distanceToTarget;
+            if (t >= this.stopAccuracy || t < 0 || Double.isNaN(t)) {
+                t = 1;
+                this.mob.setPos(this.wantedX, this.wantedY, this.wantedZ);
+                this.operation = Operation.WAIT;
             }
-
-            float sp = this.mob.onGround() ? (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)) : (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.FLYING_SPEED));
-
-            double distHorizontal = Math.sqrt(dx * dx + dz * dz);
-            if (Math.abs(dy) > 1.0E-5F || Math.abs(distHorizontal) > 1.0E-5F) {
-                this.mob.setYya(dy > 0.0 ? sp : -sp);
-            }
-
-        } else if (this.operation == Operation.MOVE_TO) {
-            this.operation = Operation.WAIT;
-            this.mob.setNoGravity(true);
-            double dx = this.wantedX - this.mob.getX();
-            double dy = this.wantedY - this.mob.getY();
-            double dz = this.wantedZ - this.mob.getZ();
-            Vec3 vec3 = new Vec3(dx, dy, dz);
-            double dist = vec3.lengthSqr();
-            if (dist < 2.5000003E-7F) {
-                this.mob.setYya(0.0F);
-                this.mob.setZza(0.0F);
-                return;
-            }
-
-            float sp = this.mob.onGround() ? (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)) : (float) (this.speedModifier * this.mob.getAttributeValue(Attributes.FLYING_SPEED));
-
-            double distHorizontal = Math.sqrt(dx * dx + dz * dz);
-            if (Math.abs(dy) > 1.0E-5F || Math.abs(distHorizontal) > 1.0E-5F) {
-                this.mob.setYya(dy > 0.0 ? sp : -sp);
-            }
+            double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
+            Vec3 velocity = direction.scale(speed);
+            this.mob.setDeltaMovement(velocity);
         } else {
             this.mob.setYya(0.0F);
             this.mob.setZza(0.0F);
