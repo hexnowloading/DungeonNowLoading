@@ -65,7 +65,7 @@ public class FairkeeperEntity extends Monster implements Boss, Enemy, Slumbering
         this.goalSelector.addGoal(3, new FairkeeperStrafeGoal(this, FairkeeperState.STRAFE, (int) this.getFollowDistance(), 6, 20, 15, 10, 5, 2, this.getFlySpeed(), 0.0, 0.9, 10, FairkeeperStrafeGoal.StrafeReference.SELF_EXCEPT_Y, true));
         this.goalSelector.addGoal(3, new FairkeeperGroundSmashGoal(this, FairkeeperState.GROUND_SMASH, 10, this.getFlySpeed(), 0.0, 0.9, 0.95f, 1.2, 12.0, 0.2, true, 0.55f, 40));
         this.goalSelector.addGoal(3, new FairkeeperOverheatLaneGoal(this, FairkeeperState.OVERHEAT_LANE, 20.0d, this.getFlySpeed(), 0.0, 0.99f, 20, 10, 5, 4, 4, 6));
-        this.goalSelector.addGoal(3, new FairkeeperStonePillarGoal(this, FairkeeperState.STONE_PILLAR, 20.0d, this.getFlySpeed(), 0.0, 0.99f, 60, 5, 4, 4, 7, 5, 2, this.getFlySpeed() * 2.0));
+        this.goalSelector.addGoal(3, new FairkeeperStonePillarGoal(this, FairkeeperState.STONE_PILLAR, 20.0d, 1.5f, 0.0, 0.9999f, 60, 5, 4, 4, 7, 5, 2, 1.0f));
         this.targetSelector.addGoal(2, new BossTargetSelectorGoal(this, this.getFollowDistance()));
     }
 

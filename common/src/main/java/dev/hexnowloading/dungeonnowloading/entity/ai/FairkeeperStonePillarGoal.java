@@ -62,7 +62,7 @@ public class FairkeeperStonePillarGoal extends Goal {
         this.hoverPos = new ArrayList<>();
         int actualSpacing = this.hoverRegionGridSpacing + 1;
         int halfGridLength = this.hoverRegionGridLength / 2;
-        BlockPos startPos = new BlockPos(this.fairkeeperEntity.getSpawnPoint().getX() - actualSpacing * halfGridLength, this.fairkeeperEntity.getSpawnPoint().getY(), this.fairkeeperEntity.getSpawnPoint().getZ() - actualSpacing * halfGridLength);
+        BlockPos startPos = new BlockPos(this.fairkeeperEntity.getSpawnPoint().getX() - actualSpacing * halfGridLength, this.fairkeeperEntity.blockPosition().getY(), this.fairkeeperEntity.getSpawnPoint().getZ() - actualSpacing * halfGridLength);
         List<BlockPos> possibleHoverPos = new ArrayList<>();
         for (int x = 0; x < this.hoverRegionGridLength; x++) {
             for (int z = 0; z < this.hoverRegionGridLength; z++) {
@@ -111,9 +111,9 @@ public class FairkeeperStonePillarGoal extends Goal {
             double hoverX = this.hoverPos.get(randomElement).getX() + this.hoverRegionVarity * (this.fairkeeperEntity.getRandom().nextFloat() - this.fairkeeperEntity.getRandom().nextFloat());
             double hoverY = this.hoverPos.get(randomElement).getY();
             double hoverZ = this.hoverPos.get(randomElement).getZ() + this.hoverRegionVarity * (this.fairkeeperEntity.getRandom().nextFloat() - this.fairkeeperEntity.getRandom().nextFloat());
-            System.out.println(this.hoverPos.get(randomElement));
+            Vec3 hoverVec = new Vec3(hoverX, hoverY, hoverZ);
             this.hoverPos.remove(randomElement);
-            StonePillarProjectileEntity stonePillar = new StonePillarProjectileEntity(this.fairkeeperEntity, this.fairkeeperEntity.level(), 0.5f, x, y, z, hoverX, hoverY, hoverZ, this.strafeMaxSpeed, this.strafeMinSpeed, 0.9d, 20, this.stonePillarDropSpeed);
+            StonePillarProjectileEntity stonePillar = new StonePillarProjectileEntity(this.fairkeeperEntity, this.fairkeeperEntity.level(), 0.5f, x, y, z, hoverVec, this.strafeMaxSpeed, this.strafeMinSpeed, 0.9d, 20, this.stonePillarDropSpeed, 60);
             stonePillar.level().addFreshEntity(stonePillar);
         }
     }
