@@ -113,7 +113,7 @@ public class FairkeeperStonePillarGoal extends Goal {
             double hoverZ = this.hoverPos.get(randomElement).getZ() + this.hoverRegionVarity * (this.fairkeeperEntity.getRandom().nextFloat() - this.fairkeeperEntity.getRandom().nextFloat());
             Vec3 hoverVec = new Vec3(hoverX, hoverY, hoverZ);
             this.hoverPos.remove(randomElement);
-            StonePillarProjectileEntity stonePillar = new StonePillarProjectileEntity(this.fairkeeperEntity, this.fairkeeperEntity.level(), 0.5f, x, y, z, hoverVec, this.strafeMaxSpeed, this.strafeMinSpeed, 0.9d, 20, this.stonePillarDropSpeed, 60);
+            StonePillarProjectileEntity stonePillar = new StonePillarProjectileEntity(this.fairkeeperEntity, this.fairkeeperEntity.level(), 0.5f, x, y, z, hoverVec, this.strafeMaxSpeed, this.strafeMinSpeed, 0.9d, 20, this.stonePillarDropSpeed, 1000);
             stonePillar.level().addFreshEntity(stonePillar);
         }
     }

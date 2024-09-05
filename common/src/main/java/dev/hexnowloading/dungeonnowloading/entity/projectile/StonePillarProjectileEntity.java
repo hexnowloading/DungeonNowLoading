@@ -10,7 +10,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -129,16 +134,12 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
         double t = 1 - this.position().distanceTo(this.targetPos) / this.distanceToTarget;
         if (t >= this.stopAccuracy || t < 0 || Double.isNaN(t)) {
             t = 1;
+            //this.setDeltaMovement(Vec3.ZERO);
+            //this.setPos(targetPos.x, targetPos.y, targetPos.z);
         }
         double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
         Vec3 velocity = direction.scale(speed);
         this.setDeltaMovement(velocity);
-    }
-
-    @Override
-    public void lerpMotion(double x, double y, double z) {
-        super.lerpMotion(x, y, z);
-        //this.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
     }
 
     @Override
@@ -151,7 +152,17 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
         compoundTag.put("HoverPos", NbtHelper.newDoubleList(this.targetPos.x, this.targetPos.y, this.targetPos.z));
     }
 
-    /*protected void onHitEntity(EntityHitResult entityHitResult) {
+    @Override
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
+        if (!this.level().isClientSide) {
+            this.level().setBlock(this.blockPosition(), Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
+            this.setDeltaMovement(Vec3.ZERO);
+        }
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult entityHitResult) {
         if (this.level().isClientSide)  {
             return;
         }
@@ -159,10 +170,6 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
         target.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), this.damage);
     }
 
-    protected void onHitBlock(BlockHitResult blockHitResult) {
-        super.onHitBlock(blockHitResult);
-        discard();
-    }*/
 
     /*private void stonePillarMoveControl(Vec3 targetPos, double totalDistance, double maxSpeed, double minSpeed, double stopAccuracy) {
         Vec3 direction = targetPos.subtract(this.position()).normalize();
