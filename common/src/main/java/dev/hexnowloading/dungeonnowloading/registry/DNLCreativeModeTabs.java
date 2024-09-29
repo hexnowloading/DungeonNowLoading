@@ -109,6 +109,8 @@ public class DNLCreativeModeTabs {
                 output.accept(DNLItems.NETHERITE_STONE_NOTCH.get());
                 output.accept(DNLItems.SIGNAL_GATE.get());
                 output.accept(DNLItems.SCUTTLE_STATUE.get());
+                output.accept(DNLItems.STONE_PILLAR.get());
+                output.accept(DNLItems.SHIELDING_STONE_PILLAR.get());
 
                 // Blocks - Trophies
                 output.accept(DNLItems.DNL_LOGO.get());

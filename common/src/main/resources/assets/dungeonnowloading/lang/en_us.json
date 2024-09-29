@@ -119,6 +119,8 @@
   "block.dungeonnowloading.signal_gate": "Signal Gate",
   "block.dungeonnowloading.labyrinth_trophy": "Labyrinth Trophy",
   "block.dungeonnowloading.scuttle_statue": "Scuttle Statue",
+  "block.dungeonnowloading.stone_pillar": "Stone Pillar",
+  "block.dungeonnowloading.shielding_stone_pillar": "Shielding Stone Pillar",
   "death.attack.dungeonnowloading.spike": "%1$s was spiked to death",
   "death.attack.dungeonnowloading.spike.player": "%1$s was spiked to death",
   "entity.dungeonnowloading.chaos_spawner": "Chaos Spawner",

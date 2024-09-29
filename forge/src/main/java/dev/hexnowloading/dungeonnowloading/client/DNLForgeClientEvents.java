@@ -36,6 +36,7 @@ public class DNLForgeClientEvents {
         // Projectiles
         event.registerLayerDefinition(ChaosSpawnerProjectileModel.LAYER_LOCATION, ChaosSpawnerProjectileModel::createBodyLayer);
         event.registerLayerDefinition(StonePillarProjectileModel.LAYER_LOCATION, StonePillarProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ShieldingStonePillarProjectileModel.LAYER_LOCATION, ShieldingStonePillarProjectileModel::createBodyLayer);
 
         event.registerLayerDefinition(FairkeeperChestModel.LAYER_LOCATION, FairkeeperChestModel::createBodyLayer);
         event.registerLayerDefinition(DisabledFairkeeperChestModel.LAYER_LOCATION, DisabledFairkeeperChestModel::createBodyLayer);
@@ -58,6 +59,7 @@ public class DNLForgeClientEvents {
         event.registerEntityRenderer(DNLEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);
         event.registerEntityRenderer(DNLEntityTypes.FLAME_PROJECTILE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(DNLEntityTypes.STONE_PILLAR_PROJECTILE.get(), StonePillarProjectileRenderer::new);
+        event.registerEntityRenderer(DNLEntityTypes.SHIELDING_STONE_PILLAR_PROJECTILE.get(), ShieldingStonePillarProjectileRenderer::new);
 
         // Misc
         event.registerEntityRenderer(DNLEntityTypes.SPECIAL_ITEM_ENTITY.get(), SpecialItemEntityRenderer::new);

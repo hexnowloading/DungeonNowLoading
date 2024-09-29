@@ -43,7 +43,6 @@ public class ScuttleStatueBlockEntity extends BlockEntity {
             case WEST -> 90.0F;
             default -> 180.0F;
         };
-        System.out.println(mobYRot);
         double x = blockPos.getX() + 0.5D, y = blockPos.getY(), z = blockPos.getZ() + 0.5D;
         mob = (ScuttleEntity) SpawnMobUtil.spawnEntityWithRot(mob, x, y, z, mobYRot, 0.0F, level);
         mob.setYBodyRot(mobYRot);

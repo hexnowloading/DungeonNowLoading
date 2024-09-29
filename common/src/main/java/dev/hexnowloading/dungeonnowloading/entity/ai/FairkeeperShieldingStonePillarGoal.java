@@ -2,7 +2,7 @@ package dev.hexnowloading.dungeonnowloading.entity.ai;
 
 import dev.hexnowloading.dungeonnowloading.entity.ai.control.FairkeeperFlyingMoveControl;
 import dev.hexnowloading.dungeonnowloading.entity.boss.FairkeeperEntity;
-import dev.hexnowloading.dungeonnowloading.entity.projectile.StonePillarProjectileEntity;
+import dev.hexnowloading.dungeonnowloading.entity.projectile.ShieldingStonePillarProjectileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.AABB;
@@ -11,7 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FairkeeperStonePillarGoal extends Goal {
+public class FairkeeperShieldingStonePillarGoal extends Goal {
 
     private final FairkeeperEntity fairkeeperEntity;
     private final FairkeeperEntity.FairkeeperState state;
@@ -39,7 +39,7 @@ public class FairkeeperStonePillarGoal extends Goal {
     private int tickCount;
     private int phase;
 
-    public FairkeeperStonePillarGoal(FairkeeperEntity fairkeeperEntity, FairkeeperEntity.FairkeeperState state, double altitude, double strafeMaxSpeed, double strafeMinSpeed, double strafeStopAccuracy, int strafeToAttackInterval, int stonePillarCount, int stonePillarSummonInterval, double hoverMinimumDistance, int hoverRegionGridLength, int hoverRegionGridSpacing, double hoverRegionVarity, float stonePillarDamagePercentage, double hoverMaxSpeed, double hoverMinSpeed, double hoverStopAccuracy, boolean triggerRequiredForDrop, int lastPillarSummonToDropInterval, int stonePillarHoverToDropInterval, double stonePillarDropSpeed) {
+    public FairkeeperShieldingStonePillarGoal(FairkeeperEntity fairkeeperEntity, FairkeeperEntity.FairkeeperState state, double altitude, double strafeMaxSpeed, double strafeMinSpeed, double strafeStopAccuracy, int strafeToAttackInterval, int stonePillarCount, int stonePillarSummonInterval, double hoverMinimumDistance, int hoverRegionGridLength, int hoverRegionGridSpacing, double hoverRegionVarity, float stonePillarDamagePercentage, double hoverMaxSpeed, double hoverMinSpeed, double hoverStopAccuracy, boolean triggerRequiredForDrop, int lastPillarSummonToDropInterval, int stonePillarHoverToDropInterval, double stonePillarDropSpeed) {
         this.fairkeeperEntity = fairkeeperEntity;
         this.state = state;
         this.altitude = altitude;
@@ -118,7 +118,7 @@ public class FairkeeperStonePillarGoal extends Goal {
             if (this.tickCount > 0) {
                 this.tickCount--;
                 return;
-             }
+            }
             int randomElement = this.fairkeeperEntity.getRandom().nextInt(this.hoverPos.size());
             this.tickCount = this.stonePillarSummonInterval;
             double x = this.fairkeeperEntity.getX();
@@ -130,7 +130,7 @@ public class FairkeeperStonePillarGoal extends Goal {
             Vec3 hoverVec = new Vec3(hoverX, hoverY, hoverZ);
 
             this.hoverPos.remove(randomElement);
-            StonePillarProjectileEntity stonePillar = new StonePillarProjectileEntity(this.fairkeeperEntity, this.fairkeeperEntity.level(), this.stonePillarDamagePercentage, x, y, z, hoverVec, this.hoverMaxSpeed, this.hoverMinSpeed, this.hoverStopAccuracy, this.triggerRequiredForDrop, this.stonePillarHoverToDropInterval, this.stonePillarDropSpeed, 1000, 3.0, 6.0, 0.2, true, 0.55f);
+            ShieldingStonePillarProjectileEntity stonePillar = new ShieldingStonePillarProjectileEntity(this.fairkeeperEntity, this.fairkeeperEntity.level(), this.stonePillarDamagePercentage, x, y, z, hoverVec, this.hoverMaxSpeed, this.hoverMinSpeed, this.hoverStopAccuracy, this.triggerRequiredForDrop, this.stonePillarHoverToDropInterval, this.stonePillarDropSpeed, 1000, 3.0, 6.0, 0.2, true, 0.55f);
             stonePillar.level().addFreshEntity(stonePillar);
         } else if (this.phase == 4) {
             if (this.tickCount > 0) {
@@ -146,8 +146,8 @@ public class FairkeeperStonePillarGoal extends Goal {
             double dy = this.fairkeeperEntity.getY() + 10.0;
             double dz = this.fairkeeperEntity.getZ() + actualSpacing * halfGridLength + hoverRegionVarity;
             AABB aabb = new AABB(x, y, z, dx, dy, dz);
-            List<StonePillarProjectileEntity> stonePillars = this.fairkeeperEntity.level().getEntitiesOfClass(StonePillarProjectileEntity.class, aabb);
-            for (StonePillarProjectileEntity stonePillarProjectileEntity : stonePillars) {
+            List<ShieldingStonePillarProjectileEntity> stonePillars = this.fairkeeperEntity.level().getEntitiesOfClass(ShieldingStonePillarProjectileEntity.class, aabb);
+            for (ShieldingStonePillarProjectileEntity stonePillarProjectileEntity : stonePillars) {
                 stonePillarProjectileEntity.triggerDrop();
             }
             this.fairkeeperEntity.stopAttacking(60);

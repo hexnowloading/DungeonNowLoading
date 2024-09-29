@@ -1,49 +1,53 @@
 package dev.hexnowloading.dungeonnowloading.entity.projectile;
 
 import dev.hexnowloading.dungeonnowloading.entity.util.ModelledProjectileEntity;
+import dev.hexnowloading.dungeonnowloading.registry.DNLBlocks;
 import dev.hexnowloading.dungeonnowloading.registry.DNLEntityTypes;
 import dev.hexnowloading.dungeonnowloading.util.NbtHelper;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.*;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
+import java.util.List;
 
 public class StonePillarProjectileEntity extends ModelledProjectileEntity {
 
-    private Vec3 targetPos;
-    private double hoverX;
-    private double hoverY;
-    private double hoverZ;
-    private double maxSpeed;
-    private double minSpeed;
-    private double stopAccuracy;
-    private double dropSpeed;
-    private int hoverToDropInterval;
-    private int dropToDespawnInterval;
+    protected Vec3 targetPos;
+    protected double hoverX;
+    protected double hoverY;
+    protected double hoverZ;
+    protected double maxSpeed;
+    protected double minSpeed;
+    protected double stopAccuracy;
+    protected double dropSpeed;
+    protected boolean triggerRequiredForDrop;
+    protected int hoverToDropInterval;
+    protected int dropToDespawnInterval;
+    protected double stonePillarImpactRange;
+    protected double horizontalKnockbackStrength;
+    protected double verticalKnockbackStrength;
+    protected boolean shieldPenetration;
+    protected float shieldDamageReduction;
 
-    private float damage;
-    private int phase;
-    private int tickCount;
-    private double distanceToTarget;
+    protected float damage;
+    protected int phase;
+    protected int tickCount;
+    protected double distanceToTarget;
+    protected boolean triggered;
 
     public StonePillarProjectileEntity(EntityType<? extends StonePillarProjectileEntity> entityType, Level level) {
         super(entityType, level);
     }
 
-    public StonePillarProjectileEntity(LivingEntity livingEntity, Level level, float damagePercentage, double x, double y, double z, Vec3 hoverPos, double hoverMaxSpeed, double hoverMinSpeed, double hoverStopAccuracy, int hoverToDropInterval, double dropSpeed, int dropToDespawnInterval) {
+    public StonePillarProjectileEntity(LivingEntity livingEntity, Level level, float damagePercentage, double x, double y, double z, Vec3 hoverPos, double hoverMaxSpeed, double hoverMinSpeed, double hoverStopAccuracy, boolean triggerRequiredForDrop, int hoverToDropInterval, double dropSpeed, int dropToDespawnInterval, double stonePillarImpactRange, double horizontalKnockbackStrength, double verticalKnockbackStrength, boolean shieldPenetration, float shieldDamageReduction) {
         this(DNLEntityTypes.STONE_PILLAR_PROJECTILE.get(), level);
         this.setOwner(livingEntity);
         this.moveTo(x, y, z, this.getYRot(), this.getXRot());
@@ -63,8 +67,15 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
         this.distanceToTarget = this.position().distanceTo(hoverPos);
         this.phase = 0;
         this.tickCount = 0;
+        this.triggerRequiredForDrop = triggerRequiredForDrop;
+        this.triggered = !triggerRequiredForDrop;
         this.dropToDespawnInterval = dropToDespawnInterval;
         this.hoverToDropInterval = hoverToDropInterval;
+        this.stonePillarImpactRange = stonePillarImpactRange;
+        this.horizontalKnockbackStrength = horizontalKnockbackStrength;
+        this.verticalKnockbackStrength = verticalKnockbackStrength;
+        this.shieldPenetration = shieldPenetration;
+        this.shieldDamageReduction = shieldDamageReduction;
     }
 
     @Override
@@ -76,27 +87,12 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
     public void tick() {
         super.tick();
         if (!this.level().isClientSide) {
-            //System.out.println("Phase" + this.phase);
             if (this.phase == 0) {
                 this.phase++;
-            } else if (this.phase == 1) {
-                //Vec3 direction = targetPos.subtract(this.position()).normalize();
-                double t = 1 - this.position().distanceTo(this.targetPos) / this.distanceToTarget;
-                if (t >= this.stopAccuracy || t < 0 || Double.isNaN(t)) {
-                    //t = 1;
-                    //this.setPos(this.targetPos.x, this.targetPos.y, this.targetPos.z);
-                    this.phase++;
-                    this.tickCount = this.hoverToDropInterval;
-                }
-                /*double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
-                Vec3 velocity = direction.scale(speed);
-                this.setDeltaMovement(velocity);
-                double d0 = this.getX() + getDeltaMovement().x;
-                double d1 = this.getY() + getDeltaMovement().y;
-                double d2 = this.getZ() + getDeltaMovement().z;
-                this.setPos(d0, d1, d2);*/
-                //System.out.println(t + "|||" + this.position().distanceTo(this.targetPos) + "|||" + this.distanceToTarget + "|||" + velocity + "|||" + this.getDeltaMovement());
             } else if (this.phase == 2) {
+                if (!this.triggered) {
+                    return;
+                }
                 if (this.tickCount > 0) {
                     this.tickCount--;
                     return;
@@ -104,13 +100,19 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
                 this.tickCount = this.dropToDespawnInterval;
                 this.phase++;
             } else if (this.phase == 3) {
-                this.setDeltaMovement(0, -this.dropSpeed, 0);
+                //this.setDeltaMovement(0, -this.dropSpeed, 0);
+                if (this.tickCount > 0) {
+                    this.tickCount--;
+                    return;
+                }
+                this.phase = 5;
+            } else if (this.phase == 4) {
                 if (this.tickCount > 0) {
                     this.tickCount--;
                     return;
                 }
                 this.phase++;
-            } else if (this.phase == 4) {
+            } else if (this.phase == 5) {
                 this.discard();
             }
         }
@@ -119,6 +121,22 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
     @Override
     protected void tickProjectile() {
         this.checkInsideBlocks();
+        if (this.phase == 1) {
+            Vec3 direction = targetPos.subtract(this.position()).normalize();
+            double t = 1 - this.position().distanceTo(this.targetPos) / this.distanceToTarget;
+            if (t >= this.stopAccuracy || t < 0 || Double.isNaN(t)) {
+                t = 1;
+                this.setDeltaMovement(Vec3.ZERO);
+                this.setPos(targetPos.x, targetPos.y, targetPos.z);
+                this.phase++;
+                this.tickCount = this.hoverToDropInterval;
+            }
+            double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
+            Vec3 velocity = direction.scale(speed);
+            this.setDeltaMovement(velocity);
+        } else if (this.phase == 3) {
+            this.setDeltaMovement(0, -this.dropSpeed, 0);
+        }
 
         Vec3 delta = this.getDeltaMovement();
         double d0 = this.getX() + delta.x;
@@ -126,20 +144,6 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
         double d2 = this.getZ() + delta.z;
         this.setPos(d0, d1, d2);
 
-        if (this.phase != 1) {
-            return;
-        }
-
-        Vec3 direction = targetPos.subtract(this.position()).normalize();
-        double t = 1 - this.position().distanceTo(this.targetPos) / this.distanceToTarget;
-        if (t >= this.stopAccuracy || t < 0 || Double.isNaN(t)) {
-            t = 1;
-            //this.setDeltaMovement(Vec3.ZERO);
-            //this.setPos(targetPos.x, targetPos.y, targetPos.z);
-        }
-        double speed = this.minSpeed + (this.maxSpeed - this.minSpeed) * (1 - t * t);
-        Vec3 velocity = direction.scale(speed);
-        this.setDeltaMovement(velocity);
     }
 
     @Override
@@ -153,15 +157,6 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
     }
 
     @Override
-    protected void onHit(HitResult hitResult) {
-        super.onHit(hitResult);
-        if (!this.level().isClientSide) {
-            this.level().setBlock(this.blockPosition(), Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
-            this.setDeltaMovement(Vec3.ZERO);
-        }
-    }
-
-    @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         if (this.level().isClientSide)  {
             return;
@@ -170,17 +165,53 @@ public class StonePillarProjectileEntity extends ModelledProjectileEntity {
         target.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), this.damage);
     }
 
-
-    /*private void stonePillarMoveControl(Vec3 targetPos, double totalDistance, double maxSpeed, double minSpeed, double stopAccuracy) {
-        Vec3 direction = targetPos.subtract(this.position()).normalize();
-        double t = 1 - this.position().distanceTo(targetPos) / totalDistance;
-        if (t >= stopAccuracy || t < 0 || Double.isNaN(t)) {
-            t = 1;
-            this.setPos(targetPos);
-            this.phase++;
+    @Override
+    protected void onHitBlock(BlockHitResult blockHitResult) {
+        if (this.level().isClientSide) {
+            return;
         }
-        double speed = minSpeed + (maxSpeed - minSpeed) * (1 - t * t);
-        Vec3 velocity = direction.scale(speed);
-        this.setDeltaMovement(velocity);
-    }*/
+        AABB aabb = this.getBoundingBox().inflate(this.stonePillarImpactRange);
+        List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, aabb);
+        for (LivingEntity mob : targets) {
+            this.pushNearbyMobs(mob);
+        }
+        if (this.level().getBlockState(this.blockPosition().below()).is(this.getPillarBlock())) {
+            this.level().destroyBlock(this.blockPosition().below(), false);
+            this.discard();
+        } else {
+            this.placePillarBlock();
+        }
+        this.setDeltaMovement(Vec3.ZERO);
+        this.phase++;
+        this.tickCount = 1;
+    }
+
+    private void pushNearbyMobs(LivingEntity mob) {
+        float actualDamage = this.damage;
+        if (mob instanceof Player player && this.shieldPenetration && player.isBlocking()) {
+            player.disableShield(true);
+            actualDamage *= 1.0F - this.shieldDamageReduction;
+        }
+        double x = mob.getX() - this.getX();
+        double z = mob.getZ() - this.getZ();
+        double a = x * x + z * z;
+
+        mob.push(x / a * this.horizontalKnockbackStrength, this.verticalKnockbackStrength, z / a * this.horizontalKnockbackStrength);
+        mob.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.getOwner()), actualDamage);
+    }
+
+    public void triggerDrop() {
+        this.triggered = true;
+        this.phase = 2;
+    }
+
+    protected Block getPillarBlock() {
+        return DNLBlocks.STONE_PILLAR.get();
+    }
+
+    protected void placePillarBlock() {
+        this.level().setBlock(this.blockPosition(), DNLBlocks.STONE_PILLAR.get().defaultBlockState(), Block.UPDATE_ALL);
+        this.level().setBlock(this.blockPosition().above(), DNLBlocks.STONE_PILLAR.get().defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF ,DoubleBlockHalf.UPPER), Block.UPDATE_ALL);
+    }
+
 }

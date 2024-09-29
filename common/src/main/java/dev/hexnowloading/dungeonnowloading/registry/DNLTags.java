@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 public class DNLTags {
     public static final TagKey<DamageType> HOLLOW_HURTABLE = registerDamageTypeTag("hollow_hurtable");
     public static final TagKey<DamageType> SCUTTLE_HURTABLE = registerDamageTypeTag("scuttle_hurtable");
+    public static final TagKey<DamageType> FAIRKEEPER_HURTABLE = registerDamageTypeTag("fairkeeper_hurtable");
     public static final TagKey<Item> STONE_NOTCH_MATERIAL = registerItemTag("stone_notch_material");
     public static final TagKey<Block> FAIRKEEPER_CHEST_IGNORE = registerBlockTag("fairkeeper_chest_ignore");
 

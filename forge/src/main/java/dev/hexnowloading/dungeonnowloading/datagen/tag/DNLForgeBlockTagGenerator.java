@@ -63,7 +63,9 @@ public class DNLForgeBlockTagGenerator extends BlockTagsProvider {
                 DNLBlocks.DIAMOND_STONE_NOTCH.get(),
                 DNLBlocks.NETHERITE_STONE_NOTCH.get(),
                 DNLBlocks.SIGNAL_GATE.get(),
-                DNLBlocks.SCUTTLE_STATUE.get()
+                DNLBlocks.SCUTTLE_STATUE.get(),
+                DNLBlocks.STONE_PILLAR.get(),
+                DNLBlocks.SHIELDING_STONE_PILLAR.get()
         );
 
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(

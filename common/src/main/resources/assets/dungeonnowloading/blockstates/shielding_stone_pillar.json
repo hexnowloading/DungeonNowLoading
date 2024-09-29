@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=upper": { "model": "dungeonnowloading:block/shielding_stone_pillar_upper_half"},
+    "half=lower": { "model": "dungeonnowloading:block/shielding_stone_pillar_lower_half"}
+  }
+}

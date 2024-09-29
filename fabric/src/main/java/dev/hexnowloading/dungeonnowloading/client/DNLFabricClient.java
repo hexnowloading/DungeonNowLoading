@@ -78,6 +78,7 @@ public class DNLFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(DNLEntityTypes.CHAOS_SPAWNER_PROJECTILE.get(), ChaosSpawnerProjectileRenderer::new);
         EntityRendererRegistry.register(DNLEntityTypes.FLAME_PROJECTILE.get(), ThrownItemRenderer::new);
         EntityRendererRegistry.register(DNLEntityTypes.STONE_PILLAR_PROJECTILE.get(), StonePillarProjectileRenderer::new);
+        EntityRendererRegistry.register(DNLEntityTypes.SHIELDING_STONE_PILLAR_PROJECTILE.get(), ShieldingStonePillarProjectileRenderer::new);
 
         // Misc
         EntityRendererRegistry.register(DNLEntityTypes.SPECIAL_ITEM_ENTITY.get(), SpecialItemEntityRenderer::new);
@@ -109,6 +110,7 @@ public class DNLFabricClient implements ClientModInitializer {
         //Projectiles
         EntityModelLayerRegistry.registerModelLayer(ChaosSpawnerProjectileModel.LAYER_LOCATION, ChaosSpawnerProjectileModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(StonePillarProjectileModel.LAYER_LOCATION, StonePillarProjectileModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ShieldingStonePillarProjectileModel.LAYER_LOCATION, ShieldingStonePillarProjectileModel::createBodyLayer);
 
         // Block Entities
         EntityModelLayerRegistry.registerModelLayer(FairkeeperChestModel.LAYER_LOCATION, FairkeeperChestModel::createBodyLayer);

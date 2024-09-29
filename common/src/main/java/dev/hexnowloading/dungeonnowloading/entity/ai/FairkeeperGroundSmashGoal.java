@@ -5,9 +5,14 @@ import dev.hexnowloading.dungeonnowloading.entity.boss.FairkeeperEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -71,7 +76,7 @@ public class FairkeeperGroundSmashGoal extends Goal {
     public void tick() {
         if (this.phase == 0) {
             this.altitude = this.fairkeeperEntity.getY();
-            ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWantedPositionWithSpeed(targetBlockPos.getX(), altitude, targetBlockPos.getZ(), this.strafeMaxSpeed, this.strafeMinSpeed, this.strafeStopAccuracy);
+            ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWantedPositionWithSpeed(targetBlockPos.getX() + 0.5, altitude, targetBlockPos.getZ() + 0.5, this.strafeMaxSpeed, this.strafeMinSpeed, this.strafeStopAccuracy);
             this.phase++;
         } else if (this.phase == 1) {
             if (!this.fairkeeperEntity.getMoveControl().hasWanted()) {
@@ -86,19 +91,51 @@ public class FairkeeperGroundSmashGoal extends Goal {
             }
             this.phase++;
         } else if (this.phase == 3) {
-            ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWantedPositionWithSpeed(targetBlockPos.getX(), this.fairkeeperEntity.getSpawnPoint().getY() - 3, targetBlockPos.getZ(), this.strafeMaxSpeed * 2.0, this.strafeMaxSpeed * 2.0, this.strafeStopAccuracy);
-            //this.fairkeeperEntity.setNoGravity(false);
+            ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWantedPositionWithSpeed(targetBlockPos.getX() + 0.5, this.fairkeeperEntity.getSpawnPoint().getY(), targetBlockPos.getZ() + 0.5, this.strafeMaxSpeed * 2.0, this.strafeMaxSpeed * 2.0, this.strafeStopAccuracy);
+            //this.fairkeeperEntity.setNoGravity(true);
             this.phase++;
         } else if (this.phase == 4) {
             if (this.fairkeeperEntity.getDeltaMovement().length() < 0.001f) {
-                this.fairkeeperEntity.setDeltaMovement(Vec3.ZERO);
-                ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWaitOperation();
-                ((ServerLevel) this.fairkeeperEntity.level()).sendParticles(ParticleTypes.POOF, this.fairkeeperEntity.getX(), this.fairkeeperEntity.getY(), this.fairkeeperEntity.getZ(), 50, 5.0D, 0.0D, 5.0D, 0.0D);
+                int x = Mth.floor(this.fairkeeperEntity.getX());
+                int y = Mth.floor(this.fairkeeperEntity.getY());
+                int z = Mth.floor(this.fairkeeperEntity.getZ());
+                boolean collidedWithBlock = false;
+
+                if (this.fairkeeperEntity.distanceToSqr(this.fairkeeperEntity.getMoveControl().getWantedX(), this.fairkeeperEntity.getMoveControl().getWantedY(), this.fairkeeperEntity.getMoveControl().getWantedZ()) > 0.1) {
+                    y -= 1;
+                    collidedWithBlock = true;
+                }
+
+                for (int ix = -2; ix <= 2; ix++) {
+                    for (int iz = -2; iz <= 2; iz++) {
+                        for (int iy = 0; iy <= 4; iy++) {
+                            int dx = x + ix;
+                            int dy = y + iy;
+                            int dz = z + iz;
+                            BlockPos blockPos = new BlockPos(dx, dy, dz);
+                            BlockState blockState = this.fairkeeperEntity.level().getBlockState(blockPos);
+                            if (!blockState.isAir()) {
+                                if (!blockState.is(BlockTags.WITHER_IMMUNE)) {
+                                    this.fairkeeperEntity.level().destroyBlock(blockPos, true, this.fairkeeperEntity);
+                                } else {
+                                    collidedWithBlock = false;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 AABB aabb = this.fairkeeperEntity.getBoundingBox().inflate(this.groundSmashRange);
                 List<LivingEntity> targets = this.fairkeeperEntity.level().getEntitiesOfClass(LivingEntity.class, aabb).stream().filter(livingEntity -> !(livingEntity instanceof FairkeeperEntity)).toList();
                 for (LivingEntity mob : targets) {
                     this.pushNearbyMobs(mob);
                 }
+                if (collidedWithBlock) {
+                    return;
+                }
+                ((ServerLevel) this.fairkeeperEntity.level()).sendParticles(ParticleTypes.POOF, this.fairkeeperEntity.getX(), this.fairkeeperEntity.getY(), this.fairkeeperEntity.getZ(), 50, 5.0D, 0.0D, 5.0D, 0.0D);
+                this.fairkeeperEntity.setDeltaMovement(Vec3.ZERO);
+                ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWaitOperation();
                 this.phase++;
                 this.tickCount = this.postSmashInterval;
             }
@@ -111,7 +148,7 @@ public class FairkeeperGroundSmashGoal extends Goal {
             }
             this.phase++;
         } else if (this.phase == 6) {
-            //this.fairkeeperEntity.setNoGravity(true);
+            //this.fairkeeperEntity.setNoGravity(false);
             ((FairkeeperFlyingMoveControl) this.fairkeeperEntity.getMoveControl()).setWantedPositionWithSpeed(targetBlockPos.getX(), this.altitude, targetBlockPos.getZ(), this.strafeMaxSpeed, this.strafeMinSpeed, this.strafeStopAccuracy);
             this.phase++;
         } else if (this.phase == 7) {

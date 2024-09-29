@@ -1,12 +1,18 @@
 package dev.hexnowloading.dungeonnowloading.entity.boss;
 
+import dev.hexnowloading.dungeonnowloading.block.entity.ShieldingStonePillarBlockEntity;
 import dev.hexnowloading.dungeonnowloading.entity.ai.*;
 import dev.hexnowloading.dungeonnowloading.entity.ai.control.FairkeeperFlyingMoveControl;
 import dev.hexnowloading.dungeonnowloading.entity.util.Boss;
 import dev.hexnowloading.dungeonnowloading.entity.util.EntityStates;
+import dev.hexnowloading.dungeonnowloading.entity.util.MoveSet;
 import dev.hexnowloading.dungeonnowloading.entity.util.SlumberingEntity;
+import dev.hexnowloading.dungeonnowloading.registry.DNLTags;
 import dev.hexnowloading.dungeonnowloading.util.NbtHelper;
+import dev.hexnowloading.dungeonnowloading.util.WeightedRandomBag;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,27 +20,40 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class FairkeeperEntity extends Monster implements Boss, Enemy, SlumberingEntity {
 
     private static final EntityDataAccessor<FairkeeperState> STATE = SynchedEntityData.defineId(FairkeeperEntity.class, EntityStates.FAIRKEEPER_STATE);
     private static final EntityDataAccessor<BlockPos> SPAWN_POINT = SynchedEntityData.defineId(FairkeeperEntity.class, EntityDataSerializers.BLOCK_POS);
+
+    private MoveSet<FairkeeperState> stateSelector = new MoveSet<>();
 
     private int attackTick;
 
@@ -65,7 +84,8 @@ public class FairkeeperEntity extends Monster implements Boss, Enemy, Slumbering
         this.goalSelector.addGoal(3, new FairkeeperStrafeGoal(this, FairkeeperState.STRAFE, (int) this.getFollowDistance(), 6, 20, 15, 10, 5, 2, this.getFlySpeed(), 0.0, 0.9, 10, FairkeeperStrafeGoal.StrafeReference.SELF_EXCEPT_Y, true));
         this.goalSelector.addGoal(3, new FairkeeperGroundSmashGoal(this, FairkeeperState.GROUND_SMASH, 10, this.getFlySpeed(), 0.0, 0.9, 0.95f, 1.2, 12.0, 0.2, true, 0.55f, 40));
         this.goalSelector.addGoal(3, new FairkeeperOverheatLaneGoal(this, FairkeeperState.OVERHEAT_LANE, 20.0d, this.getFlySpeed(), 0.0, 0.99f, 20, 10, 5, 4, 4, 6));
-        this.goalSelector.addGoal(3, new FairkeeperStonePillarGoal(this, FairkeeperState.STONE_PILLAR, 20.0d, 1.0f, 0.0, 0.9999f, 60, 5, 4, 4, 7, 5, 2, 0.1f));
+        this.goalSelector.addGoal(3, new FairkeeperStonePillarGoal(this, FairkeeperState.STONE_PILLAR, 20.0d, 1.0f, 0.0, 0.99f, 20, 10, 2, 4, 7, 6, 4, 0.5f, 1.5f, 0.0f, 0.99f, true, 60, 10, 1.5F));
+        this.goalSelector.addGoal(3, new FairkeeperShieldingStonePillarGoal(this, FairkeeperState.SHIELDING_STONE_PILLAR, 20.0d, 1.0f, 0.0, 0.99f, 20, 3, 2, 4, 7, 6, 4, 0.5f, 1.5f, 0.0f, 0.99f, true, 60, 10, 1.5F));
         this.targetSelector.addGoal(2, new BossTargetSelectorGoal(this, this.getFollowDistance()));
     }
 
@@ -125,12 +145,21 @@ public class FairkeeperEntity extends Monster implements Boss, Enemy, Slumbering
     protected void customServerAiStep() {
         //System.out.println(this.getState());
         if (this.isState(FairkeeperState.AWAKENING)) this.enableBossBar();
-        if (this.isState(FairkeeperState.IDLE)) this.abilitySelectionTick();
+        this.abilitySelectionTick();
         super.customServerAiStep();
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
     private void abilitySelectionTick() {
+
+        stateSelector.tick();
+
+        //System.out.println(this.getState());
+
+        if (!this.isState(FairkeeperState.IDLE)) {
+            return;
+        }
+
         if (this.attackTick > 0) {
             --this.attackTick;
             return;
@@ -140,7 +169,13 @@ public class FairkeeperEntity extends Monster implements Boss, Enemy, Slumbering
 
         if (this.getTarget() == null) return;
 
-        this.setState(FairkeeperState.STONE_PILLAR);
+        if (stateSelector.isEmpty()) {
+            stateSelector.addMove(FairkeeperState.STRAFE, 5, 60, 0);
+            stateSelector.addMove(FairkeeperState.GROUND_SMASH, 5, 400, 0);
+            stateSelector.addMove(FairkeeperState.STONE_PILLAR, 5, 400, 0);
+            stateSelector.addMove(FairkeeperState.SHIELDING_STONE_PILLAR, 4, 800, 200);
+        }
+        this.setState(stateSelector.selectMove());
     }
 
     public void stopAttacking(int cooldown) {
@@ -183,6 +218,73 @@ public class FairkeeperEntity extends Monster implements Boss, Enemy, Slumbering
         this.setPos(this.getSpawnPoint().getX() + 0.5, this.getSpawnPoint().getY(), this.getSpawnPoint().getZ() + 0.5);
         this.setState(FairkeeperState.SLUMBERING);
         this.setTarget(null);
+        this.stateSelector.clear();
+    }
+
+    @Override
+    public boolean hurt(DamageSource damageSource, float amount) {
+        if (damageSource.isCreativePlayer()) {
+            return super.hurt(damageSource, amount);
+        }
+        if (this.isSlumbering()) {
+            return false;
+        }
+        if (damageSource.is(DNLTags.FAIRKEEPER_HURTABLE)) {
+            return super.hurt(damageSource, amount);
+        }
+
+        double RANGE = this.getFollowDistance();
+
+        double maxRangeX = this.getX() + RANGE;
+        double minRangeX = this.getX() - RANGE;
+        double maxRangeY = this.getY() + RANGE;
+        double minRangeY = this.getY() - RANGE;
+        double maxRangeZ = this.getZ() + RANGE;
+        double minRangeZ = this.getZ() - RANGE;
+
+        Map<BlockPos, BlockEntity> map = new HashMap<>();
+        int chunkMinX = SectionPos.blockToSectionCoord(minRangeX);
+        int chunkMinZ = SectionPos.blockToSectionCoord(minRangeZ);
+        int chunkMaxX = SectionPos.blockToSectionCoord(maxRangeX);
+        int chunkMaxZ = SectionPos.blockToSectionCoord(maxRangeZ);
+        for (int x = 0; chunkMinX + x <= chunkMaxX; x++) {
+            for (int z = 0; chunkMinZ + z <= chunkMaxZ; z++) {
+                map.putAll(this.level().getChunk(chunkMinX + x, chunkMinZ + z).getBlockEntities());
+            }
+        }
+
+        Map<BlockPos, BlockEntity> filtered = map.entrySet()
+                .stream()
+                .filter(e -> (e.getValue() instanceof ShieldingStonePillarBlockEntity blockEntity && blockEntity.getBlockState().getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER))
+                .filter(e -> e.getKey().getX() < maxRangeX && e.getKey().getX() >= minRangeX && e.getKey().getY() < maxRangeY && e.getKey().getY() >= minRangeY && e.getKey().getZ() < maxRangeZ && e.getKey().getZ() >= minRangeZ)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        //System.out.println(this.level() + " / " + filtered.isEmpty());
+
+        if (!filtered.isEmpty()) {
+            List<BlockPos> blockPosList = filtered.keySet().stream().toList();
+            for (BlockPos blockPos : blockPosList) {
+                this.redstoneBeam(this.level(), this.blockPosition(), blockPos);
+            }
+            return false;
+        }
+
+        return super.hurt(damageSource, amount);
+    }
+
+    private void redstoneBeam(Level level, BlockPos originPos, BlockPos targetPos) {
+        double d = (double) (targetPos.getX() - originPos.getX());
+        double e = (double) (targetPos.getY() - originPos.getY());
+        double f = (double) (targetPos.getZ() - originPos.getZ());
+        double s = Math.sqrt(d * d + e * e + f * f);
+        d /= s;
+        e /= s;
+        f /= s;
+        double r = level.random.nextDouble();
+        while (r < s) {
+            r += 0.2;
+            level.addAlwaysVisibleParticle(DustParticleOptions.REDSTONE, (double) originPos.getX() + 0.5D + d * r, (double) originPos.getY() + 0.5D + e * r, (double) originPos.getZ() + 0.5D + f * r, 0.0, 0.0, 0.0);
+        }
     }
 
     @Override
@@ -261,6 +363,7 @@ public class FairkeeperEntity extends Monster implements Boss, Enemy, Slumbering
         GROUND_SMASH,
         OVERHEAT_LANE,
         STONE_PILLAR,
+        SHIELDING_STONE_PILLAR,
         DYING;
 
         private FairkeeperState() {}

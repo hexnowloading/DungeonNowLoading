@@ -22,6 +22,10 @@ public class WeightedRandomBag<T extends Object> {
         entries.add(e);
     }
 
+    public void removeEntry(T object) {
+        entries.remove(object);
+    }
+
     public T getRandom() {
         double r = rand.nextDouble() * accumulatedWeight;
 
@@ -31,5 +35,9 @@ public class WeightedRandomBag<T extends Object> {
             }
         }
         return null;
+    }
+
+    public boolean isEmpty() {
+        return entries.isEmpty();
     }
 }

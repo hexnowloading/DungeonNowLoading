@@ -64,7 +64,7 @@ public class FairkeeperStrafeGoal extends Goal {
     public void tick() {
 
         if (this.strafeCount == this.maxStrafeCount && !this.fairkeeperEntity.getMoveControl().hasWanted()) {
-            this.fairkeeperEntity.stopAttacking(40);
+            this.fairkeeperEntity.stopAttacking(10);
             return;
         }
 
