@@ -34,7 +34,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/easy/timing_it_right",
+        "location": "dungeonnowloading:temple_of_duality/chamber/easy/piston_lotus",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },

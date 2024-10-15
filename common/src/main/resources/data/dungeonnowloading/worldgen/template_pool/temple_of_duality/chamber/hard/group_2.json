@@ -34,7 +34,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/hard/stone_notch_9",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/round_parkour",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },
@@ -43,7 +43,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/hard/tnt",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/creeper",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     }

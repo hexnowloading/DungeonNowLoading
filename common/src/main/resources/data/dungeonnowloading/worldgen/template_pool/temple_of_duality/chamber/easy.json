@@ -7,6 +7,15 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
+        "location": "dungeonnowloading:temple_of_duality/chamber/easy/arrow_lane",
+        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
         "location": "dungeonnowloading:temple_of_duality/chamber/easy/combat",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
@@ -25,7 +34,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/easy/item_throw",
+        "location": "dungeonnowloading:temple_of_duality/chamber/easy/lava",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },
@@ -34,7 +43,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/easy/lava",
+        "location": "dungeonnowloading:temple_of_duality/chamber/easy/piston_lotus",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },
@@ -71,15 +80,6 @@
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
         "location": "dungeonnowloading:temple_of_duality/chamber/easy/stone_notch",
-        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/easy/timing_it_right",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },

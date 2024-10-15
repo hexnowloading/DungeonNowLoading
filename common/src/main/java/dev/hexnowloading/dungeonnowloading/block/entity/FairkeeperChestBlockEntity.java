@@ -73,7 +73,7 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
     private BlockPos minRegion;
     private int playerCount;
     private boolean disabled;
-    private static final double PLAYER_RANGE = 32.0D;
+    private static final double PLAYER_RANGE = 48.0D;
     private static final int START_UP_TICK = 60;
     private static final int OPEN_CLOSE_ANIMATION_DURATION = 10;
     private int openCloseAnimationProgress = 0;
@@ -523,9 +523,9 @@ public class FairkeeperChestBlockEntity extends RandomizableContainerBlockEntity
                 blockEntity.startUpTick--;
             } else {
                 blockEntity.startUpTick = 20;
-                if (level.hasNearbyAlivePlayer(pos.getX(), pos.getY(), pos.getZ(), 32.0D)) {
+                if (level.hasNearbyAlivePlayer(pos.getX(), pos.getY(), pos.getZ(), PLAYER_RANGE)) {
                     updateActualRegion(level, pos, state, blockEntity);
-                    AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ()).inflate(32.0D);
+                    AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ()).inflate(PLAYER_RANGE);
                     List<Player> nearbyPlayers = level.getEntitiesOfClass(Player.class, aabb);
                     nearbyPlayers.forEach(player -> Services.DATA.addFairkeeperChestPositionList(player, blockEntity.getBlockPos()));
                 }

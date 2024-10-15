@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/hard/archery",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/plate_hunt",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },
@@ -16,7 +16,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dungeonnowloading:temple_of_duality/chamber/hard/arena",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/signal_tracker",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     },
@@ -35,6 +35,15 @@
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
         "location": "dungeonnowloading:temple_of_duality/chamber/hard/lava_pit",
+        "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:temple_of_duality/chamber/hard/stone_notch_9",
         "processors": "dungeonnowloading:temple_of_duality/generic_degradation"
       }
     }

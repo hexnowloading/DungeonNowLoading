@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [48, 48],
+	"textures": {
+		"0": "dungeonnowloading:block/stone_pillar",
+		"particle": "dungeonnowloading:block/stone_pillar"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 16, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"faces": {
+				"north": {"uv": [12, 5.33333, 16, 10.66667], "texture": "#0"},
+				"east": {"uv": [8, 5.33333, 12, 10.66667], "texture": "#0"},
+				"south": {"uv": [0, 5.33333, 4, 10.66667], "texture": "#0"},
+				"west": {"uv": [4, 5.33333, 8, 10.66667], "texture": "#0"},
+				"up": {"uv": [4, 1.33333, 8, 5.33333], "texture": "#0"},
+				"down": {"uv": [8, 1.33333, 12, 5.33333], "texture": "#0"}
+			}
+		}
+	],
+	"display": {}
+}

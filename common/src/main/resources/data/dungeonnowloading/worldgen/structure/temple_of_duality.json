@@ -7,7 +7,7 @@
       "spawns": []
     }
   },
-  "step": "surface_structures",
+  "step": "underground_structures",
   "terrain_adaptation": "none",
   "start_pool": "dungeonnowloading:temple_of_duality/starts",
   "size": 30,
