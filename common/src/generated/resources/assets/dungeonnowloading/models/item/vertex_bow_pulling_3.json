@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/bow",
+  "textures": {
+    "layer0": "dungeonnowloading:item/vertex_bow_pulling_3"
+  }
+}

@@ -10,10 +10,7 @@ import dev.hexnowloading.dungeonnowloading.entity.monster.ScuttleEntity;
 import dev.hexnowloading.dungeonnowloading.entity.monster.SpawnerCarrierEntity;
 import dev.hexnowloading.dungeonnowloading.entity.passive.SealedChaosEntity;
 import dev.hexnowloading.dungeonnowloading.entity.passive.WhimperEntity;
-import dev.hexnowloading.dungeonnowloading.entity.projectile.ChaosSpawnerProjectileEntity;
-import dev.hexnowloading.dungeonnowloading.entity.projectile.FlameProjectileEntity;
-import dev.hexnowloading.dungeonnowloading.entity.projectile.ShieldingStonePillarProjectileEntity;
-import dev.hexnowloading.dungeonnowloading.entity.projectile.StonePillarProjectileEntity;
+import dev.hexnowloading.dungeonnowloading.entity.projectile.*;
 import dev.hexnowloading.dungeonnowloading.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -47,6 +44,7 @@ public class DNLEntityTypes {
     public static final Supplier<EntityType<FlameProjectileEntity>> FLAME_PROJECTILE = register("flame_projectile", () -> EntityType.Builder.<FlameProjectileEntity>of(FlameProjectileEntity::new, MobCategory.MISC).sized(1.0f, 1.0f).clientTrackingRange(4).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "flame_projectile").toString()));
     public static final Supplier<EntityType<StonePillarProjectileEntity>> STONE_PILLAR_PROJECTILE = register("stone_pillar_projectile", () -> EntityType.Builder.<StonePillarProjectileEntity>of(StonePillarProjectileEntity::new, MobCategory.MISC).sized(0.75F, 2.0F).clientTrackingRange(4).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "stone_pillar_projectile").toString()));
     public static final Supplier<EntityType<ShieldingStonePillarProjectileEntity>> SHIELDING_STONE_PILLAR_PROJECTILE = register("shielding_stone_pillar_projectile", () -> EntityType.Builder.<ShieldingStonePillarProjectileEntity>of(ShieldingStonePillarProjectileEntity::new, MobCategory.MISC).sized(0.75F, 2.0F).clientTrackingRange(4).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "shielding_stone_pillar_projectile").toString()));
+    public static final Supplier<EntityType<VertexArrowEntity>> VERTEX_ARROW_PROJECTILE = register("vertex_arrow_projectile", () -> EntityType.Builder.<VertexArrowEntity>of(VertexArrowEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "vertex_arrow_projectile").toString()));
 
     // Misc
     public static final Supplier<EntityType<SpecialItemEntity>> SPECIAL_ITEM_ENTITY = register("special_item_entity", () -> EntityType.Builder.<SpecialItemEntity>of(SpecialItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build(new ResourceLocation(DungeonNowLoading.MOD_ID, "special_item_entity").toString()));

@@ -28,6 +28,7 @@ public class DungeonNowLoading {
         DNLBlockEntityTypes.init();
         DNLProperties.init();
         DNLItems.init();
+        DNLMobEffects.init();
         DNLSounds.init();
         DNLParticleTypes.init();
         DNLFeatures.init();

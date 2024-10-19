@@ -31,7 +31,6 @@ public class DNLFabricBlockEvents {
         registerBlockPlacedCallback();
     }
 
-
     public static void onPlayerBreakBlock(Level level, Player player, BlockPos brokenBlockPos, BlockState state, BlockEntity blockEntity) {
 
         if (level.isClientSide) return;

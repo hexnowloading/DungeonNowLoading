@@ -17,6 +17,7 @@
         "forge.blockentities.FierceFairkeeperChestBlockItemMixin"
     ],
     "client": [
+        "client.AbstractClientPlayerMixin",
         "MixinTitleScreen",
         "MaxHealthAttributeMixin"
     ],
